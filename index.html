@@ -810,7 +810,11 @@ async function adminAddInvite(){
   if(!secret) { document.getElementById('adminResult').textContent = 'Cancelled.'; return; }
   document.getElementById('adminResult').textContent = 'Adding...';
   try{
-    const res = await fetch(url, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ secret, email, name }) });
+    const res = await fetch(url, { method:'POST', body: new URLSearchParams({ secret, email, name }) });
+    if(!res.ok){
+      const text = await res.text();
+      throw new Error(`Server ${res.status}: ${text}`);
+    }
     const j = await res.json();
     if(j.ok){
       const token = j.token;
@@ -819,7 +823,7 @@ async function adminAddInvite(){
     } else {
       document.getElementById('adminResult').textContent = 'Error: ' + (j.err||'unknown');
     }
-  }catch(e){ document.getElementById('adminResult').textContent = 'Request failed.' }
+  }catch(e){ document.getElementById('adminResult').textContent = 'Request failed: ' + e.message }
 }
 
 function buildInviteLink(token){

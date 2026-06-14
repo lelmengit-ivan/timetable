@@ -26,7 +26,7 @@ function doGet(e){
 
 function doPost(e){
   try{
-    const payload = JSON.parse(e.postData.contents || '{}');
+    const payload = parsePayload(e);
     if(payload.secret !== OWNER_SECRET) return ContentService.createTextOutput(JSON.stringify({ok:false,err:'unauthorized'})).setMimeType(ContentService.MimeType.JSON);
     const ss = SpreadsheetApp.openById(SHEET_ID);
     const sheet = ss.getSheetByName('friends');
@@ -37,4 +37,11 @@ function doPost(e){
   }catch(err){
     return ContentService.createTextOutput(JSON.stringify({ok:false,err:err.message})).setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+function parsePayload(e){
+  if(e && e.postData && e.postData.type && e.postData.type.indexOf('application/json') !== -1){
+    return JSON.parse(e.postData.contents || '{}');
+  }
+  return (e && e.parameter) || {};
 }
