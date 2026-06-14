@@ -49,31 +49,11 @@ function doPost(e){
     const sheet = sheetResult.sheet;
     const token = payload.token || Utilities.getUuid();
     sheet.appendRow([payload.email||'', payload.name||'', token, new Date()]);
-    if(payload.invitePageUrl){
-      try{
-        sendInviteEmail(payload.email, payload.name, token, payload.invitePageUrl);
-      }catch(emailErr){
-        return sendJson({ok:false,err:'email_failed',emailError:emailErr.message});
-      }
-    }
+    // create invite and return token (no server-side email send)
     return sendJson({ok:true,token:token});
   }catch(err){
     return sendJson({ok:false,err:err.message});
   }
-}
-
-function sendInviteEmail(email, name, token, invitePageUrl){
-  const safeName = name || 'friend';
-  const inviteUrl = invitePageUrl + (invitePageUrl.indexOf('?') === -1 ? '?' : '&') + 'invite=' + encodeURIComponent(token);
-  const subject = 'Your NCK revision invite';
-  const body = `Hello ${safeName},\n\n` +
-    `You have been invited to use the NCK Nursing Revision Timetable. ` +
-    `Open the following link to access your invite and save your progress:\n\n` +
-    `${inviteUrl}\n\n` +
-    `If the link does not work, paste it into your browser address bar.\n\n` +
-    `Good luck with your revision!\n` +
-    `- NCK Timetable`;
-  MailApp.sendEmail(email, subject, body);
 }
 
 function parsePayload(e){

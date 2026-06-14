@@ -810,8 +810,7 @@ async function adminAddInvite(){
   if(!secret) { document.getElementById('adminResult').textContent = 'Cancelled.'; return; }
   document.getElementById('adminResult').textContent = 'Adding...';
   try{
-    const invitePageUrl = location.href.split('?')[0];
-    const res = await fetch(url, { method:'POST', body: new URLSearchParams({ secret, email, name, invitePageUrl }) });
+    const res = await fetch(url, { method:'POST', body: new URLSearchParams({ secret, email, name }) });
     if(!res.ok){
       const text = await res.text();
       throw new Error(`Server ${res.status}: ${text}`);
@@ -820,8 +819,7 @@ async function adminAddInvite(){
     if(j.ok){
       const token = j.token;
       const link = buildInviteLink(token);
-      const emailNote = invitePageUrl ? 'An email has also been sent to your friend.' : 'No email URL was provided.';
-      document.getElementById('adminResult').innerHTML = `Invite created. Token: <strong>${token}</strong><br><a href="${link}" target="_blank">Open invite link</a><br>${emailNote}`;
+      document.getElementById('adminResult').innerHTML = `Invite created. Token: <strong>${token}</strong><br><a href="${link}" target="_blank">Open invite link</a>`;
     } else {
       let msg = 'Error: ' + (j.err||'unknown');
       if(j.err === 'email_failed' && j.emailError) msg += ` (${j.emailError})`;
