@@ -821,7 +821,10 @@ async function adminAddInvite(){
       const link = buildInviteLink(token);
       document.getElementById('adminResult').innerHTML = `Invite created. Token: <strong>${token}</strong><br><a href="${link}" target="_blank">Open invite link</a>`;
     } else {
-      document.getElementById('adminResult').textContent = 'Error: ' + (j.err||'unknown');
+      let msg = 'Error: ' + (j.err||'unknown');
+      if(j.expectedSheet) msg += ` (expected sheet: ${j.expectedSheet})`;
+      if(j.availableSheets) msg += `; available sheets: ${j.availableSheets.join(', ')}`;
+      document.getElementById('adminResult').textContent = msg;
     }
   }catch(e){ document.getElementById('adminResult').textContent = 'Request failed: ' + e.message }
 }
