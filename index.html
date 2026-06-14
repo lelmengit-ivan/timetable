@@ -1,258 +1,394 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NCK Nursing Revision Timetable – 10 Weeks</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Google Analytics: replace G-XXXXXXX with your measurement ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);} 
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXX', { 'anonymize_ip': true });
-    </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --green-50:#EAF3DE;--green-100:#C0DD97;--green-200:#97C459;--green-600:#3B6D11;--green-800:#27500A;
-  --amber-50:#FAEEDA;--amber-100:#FAC775;--amber-200:#EF9F27;--amber-600:#854F0B;--amber-800:#633806;
-  --blue-50:#E6F1FB;--blue-100:#B5D4F4;--blue-200:#85B7EB;--blue-600:#185FA5;--blue-800:#0C447C;
-  --purple-50:#EEEDFE;--purple-100:#CECBF6;--purple-200:#AFA9EC;--purple-600:#534AB7;--purple-800:#3C3489;
-  --teal-50:#E1F5EE;--teal-100:#9FE1CB;--teal-200:#5DCAA5;--teal-600:#0F6E56;--teal-800:#085041;
-  --coral-50:#FAECE7;--coral-100:#F5C4B3;--coral-200:#F0997B;--coral-600:#993C1D;--coral-800:#712B13;
-  --pink-50:#FBEAF0;--pink-100:#F4C0D1;--pink-200:#ED93B1;--pink-600:#993556;--pink-800:#72243E;
-  --red-50:#FCEBEB;--red-100:#F7C1C1;--red-200:#F09595;--red-600:#A32D2D;--red-800:#791F1F;
-  --gray-50:#F1EFE8;--gray-100:#D3D1C7;--gray-200:#B4B2A9;--gray-600:#5F5E5A;--gray-800:#444441;
-  --bg:#ffffff;--bg2:#f8f7f4;--bg3:#f0ede8;--bg4:#e8e5e0;
-  --text:#16150f;--text2:#5a5854;--text3:#8a8780;
-  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);--border3:rgba(0,0,0,0.22);
-  --radius:8px;--radius-lg:14px;--radius-xl:18px;
-  --shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md:0 4px 12px rgba(0,0,0,0.08),0 2px 4px rgba(0,0,0,0.04);
+
+/* ══════════════════════════════════
+   THEME VARIABLES
+══════════════════════════════════ */
+[data-theme="light"]{
+  --bg:#ffffff;--bg2:#f8f7f4;--bg3:#f1ede8;--bg4:#e6e1da;--bg5:#ddd8d0;
+  --text:#16150f;--text2:#5a5854;--text3:#8a8780;--text4:#b0aca6;
+  --border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.12);--border3:rgba(0,0,0,0.2);
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.05),0 1px 2px rgba(0,0,0,0.03);
+  --shadow:0 2px 8px rgba(0,0,0,0.07),0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md:0 8px 24px rgba(0,0,0,0.1),0 2px 6px rgba(0,0,0,0.05);
+  --shadow-lg:0 20px 60px rgba(0,0,0,0.13),0 4px 12px rgba(0,0,0,0.06);
+
+  --green-50:#eaf3de;--green-100:#c8e09b;--green-200:#97c459;--green-400:#5d9e28;--green-600:#3b6d11;--green-800:#27500a;
+  --amber-50:#faeeda;--amber-100:#fac775;--amber-200:#ef9f27;--amber-400:#c97d10;--amber-600:#854f0b;
+  --blue-50:#e6f1fb;--blue-100:#b5d4f4;--blue-200:#85b7eb;--blue-400:#4090d4;--blue-600:#185fa5;--blue-800:#0c447c;
+  --purple-50:#eeedfe;--purple-100:#cecbf6;--purple-200:#afa9ec;--purple-600:#534ab7;
+  --teal-50:#e1f5ee;--teal-100:#9fe1cb;--teal-200:#5dcaa5;--teal-600:#0f6e56;
+  --coral-50:#faece7;--coral-100:#f5c4b3;--coral-200:#f0997b;--coral-600:#993c1d;
+  --pink-50:#fbeaf0;--pink-200:#ed93b1;--pink-600:#993556;
+  --red-50:#fcebeb;--red-100:#f7c1c1;--red-200:#f09595;--red-600:#a32d2d;
+  --indigo-50:#eef0fd;--indigo-200:#a5adee;--indigo-600:#3d47b5;
+
+  --card-analytics-grad:linear-gradient(135deg,#1a2a4a 0%,#1e3a5f 40%,#0f4d3a 100%);
+  --card-ring-text:#fff;
+  --analytics-card:#ffffff14;
+  --analytics-border:rgba(255,255,255,0.15);
+  --analytics-label:rgba(255,255,255,0.65);
+  --analytics-val:#ffffff;
 }
-@media(prefers-color-scheme:dark){
-  :root{
-    --bg:#181815;--bg2:#21201c;--bg3:#2a2925;--bg4:#343330;
-    --text:#f2ede6;--text2:#a09c96;--text3:#67635e;
-    --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--border3:rgba(255,255,255,0.2);
-    --shadow:0 1px 3px rgba(0,0,0,0.3);--shadow-md:0 4px 12px rgba(0,0,0,0.4);
-    --green-50:#0e1f08;--green-100:#1a3210;--green-600:#97C459;--green-800:#C0DD97;
-    --amber-50:#1e1505;--amber-100:#2e1f08;--amber-200:#EF9F27;--amber-600:#EF9F27;--amber-800:#FAC775;
-    --blue-50:#080f1c;--blue-100:#0d1b30;--blue-600:#85B7EB;--blue-800:#B5D4F4;
-    --purple-50:#0e0d24;--purple-100:#1a183a;--purple-600:#AFA9EC;--purple-800:#CECBF6;
-    --teal-50:#041610;--teal-100:#082419;--teal-600:#5DCAA5;--teal-800:#9FE1CB;
-    --coral-50:#1e0c07;--coral-100:#2e1308;--coral-600:#F0997B;--coral-800:#F5C4B3;
-    --pink-50:#1e0910;--pink-100:#2e0e19;--pink-600:#ED93B1;--pink-800:#F4C0D1;
-    --red-50:#1e0808;--red-100:#2e0e0e;--red-600:#F09595;--red-800:#F7C1C1;
-  }
+[data-theme="dark"]{
+  --bg:#141412;--bg2:#1e1d1a;--bg3:#272622;--bg4:#31302c;--bg5:#3c3a36;
+  --text:#f0ebe3;--text2:#a09a92;--text3:#68645e;--text4:#47443e;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);--border3:rgba(255,255,255,0.18);
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.4);
+  --shadow:0 2px 8px rgba(0,0,0,0.45);
+  --shadow-md:0 8px 24px rgba(0,0,0,0.55);
+  --shadow-lg:0 20px 60px rgba(0,0,0,0.7);
+
+  --green-50:#0d1e08;--green-100:#172e0d;--green-200:#97c459;--green-400:#75a83a;--green-600:#97c459;--green-800:#c0dd97;
+  --amber-50:#1d1306;--amber-100:#2a1d08;--amber-200:#ef9f27;--amber-400:#ef9f27;--amber-600:#fac775;
+  --blue-50:#07101f;--blue-100:#0c1b32;--blue-200:#85b7eb;--blue-400:#85b7eb;--blue-600:#85b7eb;--blue-800:#b5d4f4;
+  --purple-50:#0d0c22;--purple-100:#18163a;--purple-200:#afa9ec;--purple-600:#afa9ec;
+  --teal-50:#041510;--teal-100:#07211a;--teal-200:#5dcaa5;--teal-600:#5dcaa5;
+  --coral-50:#1c0c07;--coral-100:#2c1309;--coral-200:#f0997b;--coral-600:#f0997b;
+  --pink-50:#1c090f;--pink-200:#ed93b1;--pink-600:#ed93b1;
+  --red-50:#1c0808;--red-100:#2c0f0f;--red-200:#f09595;--red-600:#f09595;
+  --indigo-50:#0d0f22;--indigo-200:#a5adee;--indigo-600:#a5adee;
+
+  --card-analytics-grad:linear-gradient(135deg,#0d1117 0%,#111827 40%,#0a1f18 100%);
+  --card-ring-text:#f0ebe3;
+  --analytics-card:rgba(255,255,255,0.05);
+  --analytics-border:rgba(255,255,255,0.1);
+  --analytics-label:rgba(240,235,227,0.55);
+  --analytics-val:#f0ebe3;
 }
 
-/* Explicit theme override when user chooses light/dark toggle */
-html[data-theme="dark"]{
-  --bg:#181815;--bg2:#21201c;--bg3:#2a2925;--bg4:#343330;
-  --text:#f2ede6;--text2:#a09c96;--text3:#67635e;
-  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--border3:rgba(255,255,255,0.2);
-  --shadow:0 1px 3px rgba(0,0,0,0.3);--shadow-md:0 4px 12px rgba(0,0,0,0.4);
-}
-html[data-theme="light"]{
-  --bg:#ffffff;--bg2:#f8f7f4;--bg3:#f0ede8;--bg4:#e8e5e0;
-  --text:#16150f;--text2:#5a5854;--text3:#8a8780;
-  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);--border3:rgba(0,0,0,0.22);
-  --shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md:0 4px 12px rgba(0,0,0,0.08),0 2px 4px rgba(0,0,0,0.04);
-}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;line-height:1.5;font-size:14px}
+/* ══════════════════════════════════
+   BASE
+══════════════════════════════════ */
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;line-height:1.5;font-size:14px;transition:background 0.3s,color 0.3s}
 
-/* ── HERO HEADER ── */
-.hero{background:var(--bg);border-bottom:0.5px solid var(--border2);padding:28px 0 0;margin-bottom:0;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
-.hero{background-image:linear-gradient(90deg, rgba(83,74,183,0.04), rgba(8,111,165,0.03));backdrop-filter:blur(4px)}
-.hero-inner{max-width:1120px;margin:0 auto;padding:0 20px}
-.hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
-.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue-600);margin-bottom:4px}
-.hero-title{font-size:24px;font-weight:700;color:var(--text);letter-spacing:-0.3px;line-height:1.2}
-.hero-sub{font-size:12px;color:var(--text2);margin-top:4px}
-.hero-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;flex-shrink:0}
-.btn{font-family:'Inter',system-ui,sans-serif;font-size:12px;font-weight:500;padding:7px 14px;border-radius:var(--radius);border:0.5px solid var(--border2);background:var(--bg2);color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.15s;white-space:nowrap}
-.btn:hover{background:var(--bg3);border-color:var(--border3)}
-.btn-primary{background:var(--blue-600);color:#fff;border-color:var(--blue-600)}
-.btn-primary:hover{opacity:0.88;background:var(--blue-600)}
-.btn-locked{background:var(--bg2);color:var(--text3);border-color:var(--border);cursor:not-allowed;opacity:0.7}
-.btn-locked:hover{background:var(--bg2);border-color:var(--border)}
+/* ══════════════════════════════════
+   STICKY NAV BAR
+══════════════════════════════════ */
+.navbar{position:sticky;top:0;z-index:200;background:var(--bg);border-bottom:0.5px solid var(--border2);box-shadow:var(--shadow-sm);transition:background 0.3s}
+.navbar-inner{max-width:1160px;margin:0 auto;padding:0 20px;height:54px;display:flex;align-items:center;gap:12px}
+.nav-brand{display:flex;flex-direction:column;gap:0;flex:1;min-width:0}
+.nav-title{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-0.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-sub{font-size:10px;color:var(--text3);font-weight:500;letter-spacing:0.02em}
+.nav-actions{display:flex;gap:6px;flex-shrink:0;align-items:center}
+.btn{font-family:'Inter',system-ui,sans-serif;font-size:12px;font-weight:500;padding:6px 13px;border-radius:7px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all 0.15s;white-space:nowrap;line-height:1.4}
+.btn:hover{background:var(--bg3);border-color:var(--border3);color:var(--text)}
+.btn-primary{background:var(--blue-600);color:#fff;border-color:transparent}
+.btn-primary:hover{opacity:0.88;color:#fff}
+.btn-theme{font-size:15px;padding:6px 10px;border-radius:7px}
+.btn-locked{opacity:0.7;cursor:not-allowed}
+.btn-locked:hover{background:var(--bg2);border-color:var(--border2);color:var(--text2)}
 
-/* ── STATS STRIP ── */
-.stats-strip{display:flex;gap:0;border-top:0.5px solid var(--border);margin:0 -20px}
-.stat-pill{flex:1;padding:10px 16px;text-align:center;border-right:0.5px solid var(--border)}
-.stat-pill:last-child{border-right:none}
-.stat-num{font-size:20px;font-weight:700;color:var(--text);line-height:1}
-.stat-num.green{color:var(--green-600)}
-.stat-num.amber{color:var(--amber-200)}
-.stat-num.blue{color:var(--blue-600)}
-.stat-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;color:var(--text3);margin-top:2px}
+/* ══════════════════════════════════
+   ANALYTICS DASHBOARD
+══════════════════════════════════ */
+.analytics{background:var(--card-analytics-grad);padding:28px 0 24px;margin-bottom:0;position:relative;overflow:hidden}
+.analytics::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.analytics::after{content:'';position:absolute;top:-80px;right:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(97,196,89,0.12) 0%,transparent 70%);pointer-events:none}
+.analytics-inner{max-width:1160px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
 
-/* ── PROGRESS RING ── */
-.progress-ring-wrap{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.ring-label{font-size:11px;color:var(--text2)}
+/* Top row: ring + headline stats */
+.analytics-top{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;margin-bottom:24px}
+.ring-col{display:flex;flex-direction:column;align-items:center;gap:8px}
+.ring-wrap{position:relative;width:120px;height:120px}
+.ring-svg{width:120px;height:120px;transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:rgba(255,255,255,0.1);stroke-width:10}
+.ring-fill{fill:none;stroke-width:10;stroke-linecap:round;stroke:#97c459;transition:stroke-dashoffset 0.8s cubic-bezier(0.4,0,0.2,1),stroke 0.4s}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-pct{font-size:26px;font-weight:800;color:var(--card-ring-text);line-height:1;letter-spacing:-1px}
+.ring-pct-label{font-size:10px;font-weight:500;color:rgba(255,255,255,0.55);margin-top:2px;text-transform:uppercase;letter-spacing:0.05em}
+.ring-caption{font-size:11px;color:rgba(255,255,255,0.5);font-weight:500}
 
-/* ── TOOLBAR ── */
-.toolbar{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.stats-headline{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat-card{background:var(--analytics-card);border:0.5px solid var(--analytics-border);border-radius:12px;padding:14px 16px;backdrop-filter:blur(8px)}
+.stat-card-val{font-size:28px;font-weight:800;color:var(--analytics-val);line-height:1;letter-spacing:-1px}
+.stat-card-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--analytics-label);margin-top:4px}
+.stat-card-sub{font-size:11px;color:var(--analytics-label);margin-top:2px;opacity:0.8}
+.stat-card.green .stat-card-val{color:#97c459}
+.stat-card.amber .stat-card-val{color:#ef9f27}
+.stat-card.blue .stat-card-val{color:#85b7eb}
+
+/* Bar charts row */
+.analytics-charts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.chart-card{background:var(--analytics-card);border:0.5px solid var(--analytics-border);border-radius:12px;padding:16px;backdrop-filter:blur(8px)}
+.chart-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--analytics-label);margin-bottom:12px}
+.week-bars{display:flex;flex-direction:column;gap:6px}
+.week-bar-row{display:flex;align-items:center;gap:8px}
+.week-bar-label{font-size:10px;color:var(--analytics-label);width:40px;flex-shrink:0;font-weight:500}
+.week-bar-bg{flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,0.08);overflow:hidden}
+.week-bar-fill{height:6px;border-radius:3px;transition:width 0.6s cubic-bezier(0.4,0,0.2,1)}
+.week-bar-pct{font-size:10px;color:var(--analytics-label);width:28px;text-align:right;flex-shrink:0}
+
+/* Milestone badges */
+.milestones{display:flex;gap:8px;flex-wrap:wrap}
+.milestone{background:var(--analytics-card);border:0.5px solid var(--analytics-border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px}
+.milestone-icon{font-size:16px;line-height:1}
+.milestone-text{font-size:11px;color:var(--analytics-label);font-weight:500;line-height:1.3}
+.milestone-text strong{color:var(--analytics-val);display:block;font-size:12px}
+.milestone.achieved{border-color:rgba(151,196,89,0.4);background:rgba(151,196,89,0.08)}
+.milestone.achieved .milestone-text{color:rgba(151,196,89,0.9)}
+
+/* Streak / motivational strip */
+.analytics-footer{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:0.5px solid var(--analytics-border);flex-wrap:wrap;gap:10px}
+.analytics-footer-left{font-size:12px;color:var(--analytics-label)}
+.analytics-footer-left strong{color:var(--analytics-val)}
+.time-estimate{font-size:11px;color:var(--analytics-label);background:var(--analytics-card);border:0.5px solid var(--analytics-border);border-radius:6px;padding:5px 10px}
+
+/* ══════════════════════════════════
+   OVERALL PROGRESS BAR BELOW ANALYTICS
+══════════════════════════════════ */
+.overall-bar-strip{background:var(--bg);border-bottom:0.5px solid var(--border);padding:10px 20px}
+.overall-bar-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.overall-bar-bg{flex:1;height:8px;background:var(--bg4);border-radius:4px;overflow:hidden}
+.overall-bar-fill{height:8px;border-radius:4px;background:linear-gradient(90deg,#185fa5,#0f6e56,#97c459);background-size:200% 100%;transition:width 0.6s cubic-bezier(0.4,0,0.2,1);animation:shimmer 3s ease infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.overall-bar-text{font-size:12px;font-weight:600;color:var(--text2);white-space:nowrap}
+
+/* ══════════════════════════════════
+   TOOLBAR + LEGEND
+══════════════════════════════════ */
+.toolbar{max-width:1160px;margin:0 auto;padding:12px 20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);font-weight:500}
+.legend-dot{width:9px;height:9px;border-radius:50%}
 .toolbar-sep{flex:1}
 
-/* ── LEGEND ── */
-.legend{display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:0 20px;max-width:1120px;margin:0 auto 16px}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);font-weight:500}
-.legend-dot{width:10px;height:10px;border-radius:50%}
-
-/* ── WEEK CARDS ── */
-.page{max-width:1120px;margin:0 auto;padding:20px 20px 60px}
-.week{background:var(--bg);border:0.5px solid var(--border2);border-radius:var(--radius-xl);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow 0.2s}
-.week:hover{box-shadow:var(--shadow-md)}
-.week-accent{height:5px;background:var(--accent,#534AB7)}
-.week-header{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;user-select:none}
+/* ══════════════════════════════════
+   WEEK CARDS
+══════════════════════════════════ */
+.page{max-width:1160px;margin:0 auto;padding:14px 20px 60px}
+.week{background:var(--bg);border:0.5px solid var(--border2);border-radius:16px;margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow 0.2s,border-color 0.2s}
+.week:hover{box-shadow:var(--shadow);border-color:var(--border3)}
+.week-accent{height:4px}
+.week-header{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;user-select:none;transition:background 0.15s}
 .week-header:hover{background:var(--bg2)}
-.week-num-badge{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;background:var(--accent-bg,#EEEDFE);color:var(--accent,#534AB7)}
+.week-num-badge{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
 .week-info{flex:1;min-width:0}
-.week-label{font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.week-meta{font-size:11px;color:var(--text3);margin-top:1px}
-.week-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.week-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--bg3);color:var(--text2);border:0.5px solid var(--border);min-width:54px;text-align:center}
+.week-label{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.week-meta{font-size:10px;color:var(--text3);margin-top:1px;font-weight:500}
+.week-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.week-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--bg3);color:var(--text3);border:0.5px solid var(--border);min-width:50px;text-align:center;letter-spacing:0.02em}
 .week-badge.full{background:var(--green-50);color:var(--green-600);border-color:var(--green-100)}
 .week-badge.partial{background:var(--amber-50);color:var(--amber-600);border-color:var(--amber-100)}
-.chevron{font-size:16px;color:var(--text3);transition:transform 0.22s;line-height:1}
+.chevron{font-size:14px;color:var(--text4);transition:transform 0.22s;line-height:1;flex-shrink:0}
 .chevron.open{transform:rotate(180deg)}
-.progress-bar-wrap{height:2px;background:var(--bg3);margin:0}
-.progress-bar-fill{height:2px;transition:width 0.4s cubic-bezier(0.4,0,0.2,1)}
+.week-prog-bar{height:2px;background:var(--bg3)}
+.week-prog-fill{height:2px;transition:width 0.5s cubic-bezier(0.4,0,0.2,1)}
 .week-body{display:none}
 .week-body.open{display:block}
 
-/* ── SECTIONS ── */
-.section-header{display:flex;align-items:center;gap:8px;padding:14px 18px 6px}
-.section-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text3)}
-.topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:7px;padding:0 14px 16px}
+/* ══════════════════════════════════
+   SECTIONS & TOPICS
+══════════════════════════════════ */
+.section-hd{display:flex;align-items:center;gap:7px;padding:12px 16px 5px}
+.section-pip{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.section-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3)}
+.new-badge{font-size:8px;font-weight:800;letter-spacing:0.05em;padding:1px 5px;border-radius:3px;background:var(--blue-50);color:var(--blue-600);border:0.5px solid var(--blue-100);text-transform:uppercase;vertical-align:middle}
+.topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px;padding:0 12px 14px}
 
-/* ── TOPIC CARDS ── */
-.topic{border:0.5px solid var(--border);border-radius:var(--radius);padding:10px 12px 10px 10px;cursor:pointer;display:flex;gap:9px;align-items:flex-start;transition:border-color 0.15s,background 0.15s,transform 0.1s;background:var(--bg);position:relative}
-.topic:hover{border-color:var(--border3);background:var(--bg2);transform:translateY(-1px)}
-.topic:active{transform:translateY(0)}
-.topic.done{background:var(--green-50);border-color:var(--green-100)}
-.topic.done .topic-name{color:var(--green-600);text-decoration:line-through;text-decoration-color:var(--green-100)}
-.topic.done .topic-sub{color:var(--green-600);opacity:0.7}
+.topic{border:0.5px solid var(--border);border-radius:9px;padding:10px 11px;cursor:pointer;display:flex;gap:9px;align-items:flex-start;transition:border-color 0.15s,background 0.15s,box-shadow 0.15s,transform 0.1s;background:var(--bg);position:relative;overflow:hidden}
+.topic:hover{border-color:var(--border3);background:var(--bg2);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.topic:active{transform:translateY(0);box-shadow:none}
+
+/* in-progress */
 .topic.progress{background:var(--amber-50);border-color:var(--amber-100)}
 .topic.progress .topic-name{color:var(--amber-600)}
-.topic.progress .topic-sub{color:var(--amber-600);opacity:0.7}
-.chk{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border2);flex-shrink:0;margin-top:0px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;transition:all 0.15s}
-.topic.done .chk{background:var(--green-600);border-color:var(--green-600);color:#fff}
+.topic.progress .topic-sub{color:var(--amber-600);opacity:0.75}
 .topic.progress .chk{background:var(--amber-200);border-color:var(--amber-200);color:#fff}
+
+/* done - stays done, no revert */
+.topic.done{background:var(--green-50);border-color:var(--green-100);cursor:default}
+.topic.done:hover{transform:none;box-shadow:none;background:var(--green-50);border-color:var(--green-100)}
+.topic.done::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(151,196,89,0.06) 0%,transparent 60%);pointer-events:none}
+.topic.done .topic-name{color:var(--green-600);text-decoration:line-through;text-decoration-color:var(--green-100)}
+.topic.done .topic-sub{color:var(--green-400);opacity:0.8}
+.topic.done .chk{background:var(--green-600);border-color:var(--green-600);color:#fff;box-shadow:0 0 0 3px var(--green-50)}
+
+.chk{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;transition:all 0.2s;letter-spacing:0}
 .topic-name{font-size:12px;font-weight:600;color:var(--text);line-height:1.35}
-.topic-sub{font-size:11px;color:var(--text2);margin-top:2px;line-height:1.35}
-.new-tag{position:absolute;top:6px;right:6px;font-size:9px;font-weight:700;letter-spacing:0.04em;padding:1px 5px;border-radius:4px;background:var(--blue-50);color:var(--blue-600);border:0.5px solid var(--blue-100);text-transform:uppercase}
+.topic-sub{font-size:10.5px;color:var(--text2);margin-top:2px;line-height:1.35}
+.topic-new-tag{position:absolute;top:5px;right:5px;font-size:8px;font-weight:800;letter-spacing:0.04em;padding:1px 5px;border-radius:3px;background:var(--blue-50);color:var(--blue-600);border:0.5px solid var(--blue-100);text-transform:uppercase}
 
-/* ── PIN MODAL ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:999;display:none;align-items:center;justify-content:center}
+/* ══════════════════════════════════
+   PIN MODAL
+══════════════════════════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-overlay.show{display:flex}
-.modal{background:var(--bg);border-radius:var(--radius-xl);border:0.5px solid var(--border2);padding:28px;max-width:340px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.18)}
-.modal h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px}
-.modal p{font-size:13px;color:var(--text2);margin-bottom:18px;line-height:1.5}
-.pin-dots{display:flex;gap:10px;justify-content:center;margin-bottom:18px}
-.pin-dot{width:14px;height:14px;border-radius:50%;background:var(--border2);transition:background 0.15s}
-.pin-dot.filled{background:var(--blue-600)}
-.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.pin-key{padding:14px;border-radius:var(--radius);border:0.5px solid var(--border2);background:var(--bg2);font-size:16px;font-weight:600;color:var(--text);cursor:pointer;font-family:'Inter',system-ui,sans-serif;transition:all 0.1s;text-align:center}
+.modal{background:var(--bg);border-radius:18px;border:0.5px solid var(--border2);padding:28px 24px;max-width:320px;width:90%;box-shadow:var(--shadow-lg)}
+.modal-icon{font-size:32px;text-align:center;margin-bottom:10px}
+.modal h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px;text-align:center}
+.modal p{font-size:12px;color:var(--text2);margin-bottom:20px;line-height:1.6;text-align:center}
+.pin-dots{display:flex;gap:10px;justify-content:center;margin-bottom:14px}
+.pin-dot{width:13px;height:13px;border-radius:50%;background:var(--bg4);border:1.5px solid var(--border2);transition:all 0.15s}
+.pin-dot.filled{background:var(--blue-600);border-color:var(--blue-600)}
+.pin-error{color:var(--red-600);font-size:11px;text-align:center;margin-bottom:10px;min-height:15px;font-weight:500}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px}
+.pin-key{padding:13px;border-radius:9px;border:0.5px solid var(--border2);background:var(--bg2);font-size:17px;font-weight:600;color:var(--text);cursor:pointer;font-family:'Inter',system-ui,sans-serif;transition:all 0.12s;text-align:center}
 .pin-key:hover{background:var(--bg3);border-color:var(--border3)}
-.pin-key:active{transform:scale(0.95)}
-.pin-key.del{font-size:13px;color:var(--text2)}
+.pin-key:active{transform:scale(0.94);background:var(--bg4)}
+.pin-key.del{font-size:14px;color:var(--text2)}
 .pin-key.empty{background:transparent;border-color:transparent;cursor:default}
-.pin-error{color:var(--red-600);font-size:12px;text-align:center;margin-top:-10px;margin-bottom:8px;min-height:16px}
-.modal-close{margin-top:12px;width:100%}
 
-/* ── OVERALL PROGRESS BAR ── */
-.overall-bar-wrap{max-width:1120px;margin:0 auto;padding:10px 20px 0}
-.overall-bar-bg{height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
-.overall-bar-fill{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--blue-600),var(--teal-600));transition:width 0.5s cubic-bezier(0.4,0,0.2,1)}
-.overall-bar-label{font-size:11px;color:var(--text3);margin-top:4px;text-align:right}
+/* ══════════════════════════════════
+   SCROLL TO TOP BTN
+══════════════════════════════════ */
+.fab{position:fixed;bottom:24px;right:24px;z-index:150;width:44px;height:44px;border-radius:12px;background:var(--blue-600);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:0 4px 16px rgba(24,95,165,0.4);display:flex;align-items:center;justify-content:center;transition:all 0.2s;opacity:0;transform:translateY(10px)}
+.fab.show{opacity:1;transform:translateY(0)}
+.fab:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(24,95,165,0.5)}
 
-/* ── RESPONSIVE ── */
-@media(max-width:640px){
-  .hero-title{font-size:18px}
-  .stats-strip{flex-wrap:wrap}
-  .stat-pill{min-width:50%;border-bottom:0.5px solid var(--border)}
+/* ══════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════ */
+@media(max-width:700px){
+  .analytics-top{grid-template-columns:1fr;gap:16px}
+  .ring-col{flex-direction:row;align-items:center;gap:16px}
+  .stats-headline{grid-template-columns:repeat(2,1fr)}
+  .analytics-charts{grid-template-columns:1fr}
   .topics-grid{grid-template-columns:1fr 1fr}
-  .week-label{font-size:13px}
-  .toolbar{padding:8px 14px}
-  .page{padding:14px 12px 60px}
+  .nav-title{font-size:13px}
+  .week-label{font-size:12px}
 }
+@media(max-width:420px){
+  .topics-grid{grid-template-columns:1fr}
+  .stats-headline{grid-template-columns:1fr 1fr}
+}
+
+/* ══════════════════════════════════
+   PRINT
+══════════════════════════════════ */
 @media print{
-  .hero{position:static;box-shadow:none}
-  .hero-actions,.toolbar,.modal-overlay{display:none!important}
-  .week{box-shadow:none;break-inside:avoid;border:1px solid #ddd}
+  .navbar,.analytics,.overall-bar-strip,.toolbar,.fab,.modal-overlay{display:none!important}
   .week-body{display:block!important}
-  .topic.done{background:#EAF3DE!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .topic.progress{background:#FAEEDA!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .week{box-shadow:none;border:1px solid #ddd;break-inside:avoid}
+  .topic.done{background:#eaf3de!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .topic.progress{background:#faeeda!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .week-accent{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
 </head>
 <body>
 
-<!-- STICKY HERO -->
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-top">
-      <div class="hero-title-group">
-        <div class="hero-eyebrow">NCK Examination Preparation</div>
-        <div class="hero-title">Nursing Revision Timetable</div>
-        <div class="hero-sub">Click any topic once → In progress &nbsp;·&nbsp; Click again → Done &nbsp;·&nbsp; Progress saved in browser</div>
-        <div id="guestNotice" style="font-size:12px;color:var(--text2);margin-top:6px;display:none">You're viewing via an invite link — your progress is saved separately.</div>
-      </div>
-      <div class="hero-actions">
-        <button class="btn btn-primary" onclick="window.print()">🖨 Print / Save PDF</button>
-        <button class="btn" onclick="expandAll()">↕ Expand all</button>
-        <button class="btn" onclick="collapseAll()">↕ Collapse all</button>
-        <button id="themeToggle" class="btn" onclick="toggleTheme()" title="Toggle light / dark theme">🌙 Dark</button>
-        <button id="adminToggle" class="btn" onclick="openAdmin()" title="Owner admin">⚙️ Admin</button>
-        <button class="btn btn-locked" onclick="openPinModal()" title="PIN protected">🔒 Reset progress</button>
-      </div>
+<!-- NAV BAR -->
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="nav-brand">
+      <div class="nav-title">NCK Nursing Revision Timetable</div>
+      <div class="nav-sub">10 Weeks · Click topic → In Progress → Done (locked) · Progress auto-saved</div>
     </div>
-    <div class="stats-strip">
-      <div class="stat-pill"><div class="stat-num green" id="stat-done">0</div><div class="stat-label">Done</div></div>
-      <div class="stat-pill"><div class="stat-num amber" id="stat-prog">0</div><div class="stat-label">In progress</div></div>
-      <div class="stat-pill"><div class="stat-num" id="stat-rem">0</div><div class="stat-label">Remaining</div></div>
-      <div class="stat-pill"><div class="stat-num blue" id="stat-total">0</div><div class="stat-label">Total topics</div></div>
-      <div class="stat-pill"><div class="stat-num green" id="stat-pct">0%</div><div class="stat-label">Complete</div></div>
+    <div class="nav-actions">
+      <button class="btn btn-theme" id="themeBtn" onclick="toggleTheme()" title="Toggle dark/light mode">🌙</button>
+      <button class="btn btn-primary" onclick="window.print()">🖨 Print / PDF</button>
+      <button class="btn" onclick="expandAll()">↕ All</button>
+      <button class="btn" id="adminToggle" onclick="openAdmin()" title="Owner admin">⚙️ Admin</button>
+      <button class="btn btn-locked" onclick="openPinModal()" title="PIN protected — cannot undo done">🔒 Reset</button>
     </div>
   </div>
 </div>
 
-<!-- OVERALL BAR -->
-<div class="overall-bar-wrap">
-  <div class="overall-bar-bg"><div class="overall-bar-fill" id="overall-fill" style="width:0%"></div></div>
-  <div class="overall-bar-label" id="overall-label">0 of 0 topics completed</div>
+<!-- ANALYTICS DASHBOARD -->
+<div class="analytics">
+  <div class="analytics-inner">
+
+    <!-- Ring + headline stats -->
+    <div class="analytics-top">
+      <div class="ring-col">
+        <div class="ring-wrap">
+          <svg class="ring-svg" viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="50"/>
+            <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-pct" id="ringPct">0%</div>
+            <div class="ring-pct-label">Done</div>
+          </div>
+        </div>
+        <div class="ring-caption" id="ringCaption">0 of 0 completed</div>
+      </div>
+
+      <div>
+        <div class="stats-headline">
+          <div class="stat-card green">
+            <div class="stat-card-val" id="sDone">0</div>
+            <div class="stat-card-label">Completed</div>
+            <div class="stat-card-sub">topics done ✓</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-card-val" id="sProg">0</div>
+            <div class="stat-card-label">In Progress</div>
+            <div class="stat-card-sub">started · not done</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-val" id="sRem">0</div>
+            <div class="stat-card-label">Remaining</div>
+            <div class="stat-card-sub">not yet started</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-card-val" id="sTotal">0</div>
+            <div class="stat-card-label">Total Topics</div>
+            <div class="stat-card-sub">across 10 weeks</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bar charts -->
+    <div class="analytics-charts">
+      <div class="chart-card">
+        <div class="chart-title">Progress by Week</div>
+        <div class="week-bars" id="weekBars"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Milestones</div>
+        <div class="milestones" id="milestones"></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="analytics-footer">
+      <div class="analytics-footer-left" id="motiveLine">Keep going — you've got this! 💪</div>
+      <div class="time-estimate" id="timeEst">⏱ Estimated time remaining: calculating…</div>
+    </div>
+
+  </div>
 </div>
 
-<!-- LEGEND -->
-<div class="toolbar" style="padding-top:14px">
+<!-- OVERALL BAR -->
+<div class="overall-bar-strip">
+  <div class="overall-bar-inner">
+    <div class="overall-bar-bg"><div class="overall-bar-fill" id="overallFill" style="width:0%"></div></div>
+    <div class="overall-bar-text" id="overallText">0%</div>
+  </div>
+</div>
+
+<!-- TOOLBAR / LEGEND -->
+<div class="toolbar">
   <div class="legend-item"><div class="legend-dot" style="background:var(--border2)"></div>Not started</div>
   <div class="legend-item"><div class="legend-dot" style="background:var(--amber-200)"></div>In progress</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--green-200)"></div>Done ✓</div>
-  <div class="legend-item" style="margin-left:8px"><span style="background:var(--blue-50);color:var(--blue-600);font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;border:0.5px solid var(--blue-100);text-transform:uppercase">NEW</span> = Added/expanded topic</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--green-200)"></div>Done ✓ (locked)</div>
+  <div class="legend-item"><span class="new-badge">NEW</span>&nbsp;= Newly added subject</div>
+  <div class="toolbar-sep"></div>
+  <button class="btn" onclick="collapseAll()">Collapse all</button>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- WEEKS -->
 <div class="page" id="timetable"></div>
 
 <!-- PIN MODAL -->
 <div class="modal-overlay" id="pinModal">
   <div class="modal">
-    <h3>🔒 Enter PIN to reset</h3>
-    <p>Reset is locked to prevent accidental loss of progress. Enter PIN to confirm.</p>
+    <div class="modal-icon">🔒</div>
+    <h3>Reset Protection</h3>
+    <p>Topics marked <strong>Done</strong> cannot be undone without a PIN. This prevents accidental loss of progress.<br><br>PIN: <strong>1234</strong></p>
     <div class="pin-dots" id="pinDots">
-      <div class="pin-dot" id="dot0"></div>
-      <div class="pin-dot" id="dot1"></div>
-      <div class="pin-dot" id="dot2"></div>
-      <div class="pin-dot" id="dot3"></div>
+      <div class="pin-dot" id="dot0"></div><div class="pin-dot" id="dot1"></div>
+      <div class="pin-dot" id="dot2"></div><div class="pin-dot" id="dot3"></div>
     </div>
     <div class="pin-error" id="pinError"></div>
     <div class="pin-pad">
@@ -269,7 +405,61 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg3);color:var(--
       <button class="pin-key" onclick="pinPress('0')">0</button>
       <button class="pin-key del" onclick="pinDel()">⌫</button>
     </div>
-    <button class="btn modal-close" onclick="closePinModal()">Cancel</button>
+    <button class="btn" style="width:100%;justify-content:center" onclick="closePinModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- SCROLL FAB -->
+<button class="fab" id="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- CONFETTI CANVAS -->
+<canvas id="confettiCanvas" style="position:fixed;inset:0;pointer-events:none;z-index:9998;display:none"></canvas>
+
+<!-- BADGE TOAST -->
+<div id="badgeToast" style="
+  position:fixed;bottom:90px;right:24px;z-index:9997;
+  background:var(--bg);border:0.5px solid var(--border2);
+  border-radius:16px;box-shadow:var(--shadow-lg);
+  padding:14px 18px;display:none;align-items:center;gap:12px;
+  max-width:300px;animation:slideUp 0.4s cubic-bezier(0.34,1.56,0.64,1)">
+  <div id="badgeToastIcon" style="font-size:32px;line-height:1"></div>
+  <div>
+    <div id="badgeToastTitle" style="font-size:13px;font-weight:700;color:var(--text)"></div>
+    <div id="badgeToastDesc" style="font-size:11px;color:var(--text2);margin-top:2px"></div>
+  </div>
+</div>
+
+<!-- ALL BADGES MODAL -->
+<div class="modal-overlay" id="badgesModal">
+  <div class="modal" style="max-width:480px;max-height:80vh;overflow-y:auto">
+    <div class="modal-icon">🏆</div>
+    <h3>Achievement Badges</h3>
+    <p>Earn badges as you complete your NCK revision journey!</p>
+    <div id="badgesGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;margin-bottom:16px"></div>
+    <button class="btn" style="width:100%;justify-content:center" onclick="document.getElementById('badgesModal').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="modal-overlay" id="shareModal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-icon">📤</div>
+    <h3>Share My Progress</h3>
+    <p>Copy the link below — it encodes your progress so anyone who opens it sees your current completion status.</p>
+    <div id="sharePreview" style="background:var(--bg2);border:0.5px solid var(--border2);border-radius:10px;padding:14px;margin-bottom:14px;text-align:center">
+      <div style="font-size:28px;margin-bottom:6px" id="shareEmoji">🎯</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text)" id="shareTitle">My NCK Progress</div>
+      <div style="font-size:12px;color:var(--text2);margin-top:4px" id="shareSubtitle"></div>
+      <div style="margin-top:10px;height:8px;background:var(--bg4);border-radius:4px;overflow:hidden">
+        <div id="shareBar" style="height:8px;border-radius:4px;background:linear-gradient(90deg,#534AB7,#0F6E56);transition:width 0.4s"></div>
+      </div>
+    </div>
+    <textarea id="shareLink" readonly style="width:100%;font-size:10px;padding:8px;border-radius:8px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--text2);resize:none;height:60px;font-family:monospace;margin-bottom:10px"></textarea>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="copyShareLink()">📋 Copy Link</button>
+      <button class="btn" style="flex:1;justify-content:center" onclick="document.getElementById('shareModal').classList.remove('show')">Close</button>
+    </div>
+    <div id="shareCopied" style="text-align:center;font-size:11px;color:var(--green-600);margin-top:8px;min-height:16px;font-weight:600"></div>
   </div>
 </div>
 
@@ -288,509 +478,634 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg3);color:var(--
     <div style="display:flex;gap:8px">
       <button class="btn btn-primary" onclick="adminAddInvite()">Add invite</button>
       <button class="btn" onclick="saveWebAppUrl()">Save URL</button>
-      <button class="btn modal-close" onclick="closeAdmin()">Close</button>
+      <button class="btn" onclick="closeAdmin()">Close</button>
     </div>
   </div>
 </div>
 
+<style>
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes badgePop{0%{transform:scale(0.5);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.badge-item{border-radius:12px;padding:12px;border:1.5px solid var(--border);background:var(--bg2);display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;transition:all 0.2s;opacity:0.35;filter:grayscale(1)}
+.badge-item.earned{opacity:1;filter:none;border-color:var(--amber-100);background:var(--amber-50);animation:badgePop 0.5s cubic-bezier(0.34,1.56,0.64,1)}
+.badge-item .b-icon{font-size:28px;line-height:1}
+.badge-item .b-name{font-size:11px;font-weight:700;color:var(--text)}
+.badge-item .b-desc{font-size:10px;color:var(--text2)}
+.badge-item.earned .b-name{color:var(--amber-600)}
+</style>
+
 <script>
-const WEEK_COLORS = [
-  {accent:'#534AB7',bg:'#EEEDFE'}, // purple
-  {accent:'#0F6E56',bg:'#E1F5EE'}, // teal
-  {accent:'#993C1D',bg:'#FAECE7'}, // coral
-  {accent:'#185FA5',bg:'#E6F1FB'}, // blue
-  {accent:'#854F0B',bg:'#FAEEDA'}, // amber
-  {accent:'#993556',bg:'#FBEAF0'}, // pink
-  {accent:'#3B6D11',bg:'#EAF3DE'}, // green
-  {accent:'#A32D2D',bg:'#FCEBEB'}, // red
-  {accent:'#0F6E56',bg:'#E1F5EE'}, // teal again
-  {accent:'#534AB7',bg:'#EEEDFE'}, // purple again
-];
-
-const weeks = [
-  // ═══════════════════════════════════════════════
-  // WEEK 1
-  // ═══════════════════════════════════════════════
-  { week:1, label:"Fundamentals of Nursing", sections:[
-    { title:"Introduction & core concepts", topics:[
-      {name:"History & philosophy of nursing", sub:"Florence Nightingale, nursing theorists, evolution of profession"},
-      {name:"Nursing as a profession", sub:"Characteristics, accountability, nursing code of ethics"},
-      {name:"Nursing theories & models", sub:"Orem, Roy, Henderson, Neuman, Watson"},
-      {name:"Nursing process – ADPIE", sub:"Assessment, diagnosis, planning, implementation, evaluation in depth"},
-      {name:"Critical thinking in nursing", sub:"Clinical reasoning, evidence-based practice, reflective practice"},
-    ]},
-    { title:"Basic nursing skills", topics:[
-      {name:"Patient admission & discharge", sub:"Admission procedure, orientation, discharge planning, referral"},
-      {name:"Vital signs assessment", sub:"Temperature, pulse, respiration, BP, SpO2, pain – normal ranges & documentation"},
-      {name:"Physical assessment", sub:"Head-to-toe assessment, inspection, palpation, percussion, auscultation"},
-      {name:"Bed making & positioning", sub:"Types of beds, Fowler's, Trendelenburg, lateral, prone, supine positioning"},
-      {name:"Personal hygiene & comfort", sub:"Bed bath, oral care, hair care, nail care, pressure ulcer prevention"},
-      {name:"Nutrition & feeding", sub:"Nutritional assessment, nasogastric tube, PEG feeding, dietary types"},
-      {name:"Elimination needs", sub:"Urinary catheterisation, enema, colostomy care, stool chart, fluid chart"},
-      {name:"Wound care & dressings", sub:"Wound healing phases, aseptic technique, types of dressings, suture removal"},
-      {name:"Medication administration", sub:"5 rights, oral, IM, IV, SC, intradermal, topical, inhalers, patches"},
-      {name:"Specimen collection", sub:"Blood, urine, stool, sputum, swabs – correct technique & labelling"},
-      {name:"Oxygen therapy", sub:"Nasal prongs, face mask, venturi mask, non-rebreather, humidification"},
-      {name:"Intravenous therapy", sub:"IV cannulation, fluid types, flow rate calculation, complications"},
-    ]},
-    { title:"Safety & documentation", topics:[
-      {name:"Patient safety & falls prevention", sub:"SBAR, incident reporting, restraints, bed rails, call bells"},
-      {name:"Infection prevention & control", sub:"Hand hygiene (WHO 5 moments), PPE, isolation, standard precautions"},
-      {name:"Legal & ethical issues in nursing", sub:"Consent, confidentiality, negligence, liability, duty of care"},
-      {name:"Documentation & record keeping", sub:"Nursing notes, Kardex, care plans, legal requirements, electronic records"},
-    ]},
-  ]},
-
-  // ═══════════════════════════════════════════════
-  // WEEK 2
-  // ═══════════════════════════════════════════════
-  { week:2, label:"Anatomy, Physiology, Biochemistry & Nutrition", sections:[
-    { title:"Human anatomy", topics:[
-      {name:"Body organisation & terminology", sub:"Planes, cavities, directional terms, homeostasis, levels of organisation"},
-      {name:"Skeletal system", sub:"Bone types, joints, cartilage, common fractures & repair"},
-      {name:"Muscular system", sub:"Skeletal, smooth & cardiac muscle; contraction mechanism; disorders"},
-      {name:"Nervous system anatomy", sub:"CNS, PNS, autonomic nervous system, cranial nerves"},
-      {name:"Cardiovascular anatomy", sub:"Heart chambers, valves, coronary circulation, conduction system"},
-      {name:"Respiratory anatomy", sub:"Upper & lower airways, lung lobes, pleura, diaphragm"},
-      {name:"Digestive system anatomy", sub:"GI tract organs, accessory organs, peritoneum, mesentery"},
-      {name:"Renal & urinary anatomy", sub:"Nephron structure, kidney position, ureters, bladder, urethra"},
-      {name:"Reproductive anatomy", sub:"Male & female reproductive structures, menstrual cycle anatomy"},
-      {name:"Endocrine glands", sub:"Pituitary, thyroid, parathyroid, adrenal, pancreas, gonads"},
-      {name:"Lymphatic & immune anatomy", sub:"Lymph nodes, spleen, thymus, MALT, lymphatic vessels"},
-      {name:"Integumentary system", sub:"Skin layers, hair, nails, sweat glands, functions & wound healing"},
-    ]},
-    { title:"Physiology", topics:[
-      {name:"Cell physiology", sub:"Membrane transport, cell cycle, organelles, cell signalling"},
-      {name:"Blood & haemopoiesis", sub:"RBC, WBC, platelets, clotting cascade, blood groups, transfusion"},
-      {name:"Cardiac physiology", sub:"Cardiac cycle, output, ECG basics, Frank-Starling law"},
-      {name:"Respiratory physiology", sub:"Ventilation, gas exchange, oxygen-haemoglobin curve, control of breathing"},
-      {name:"Renal physiology", sub:"GFR, tubular reabsorption & secretion, ADH, aldosterone, RAS"},
-      {name:"Fluid & electrolyte physiology", sub:"Osmolality, body compartments, Na/K/Ca/Mg regulation"},
-      {name:"Acid-base balance", sub:"Buffers, pH, ABG interpretation, compensation mechanisms"},
-      {name:"Neurophysiology", sub:"Action potentials, synaptic transmission, reflexes, neurotransmitters"},
-      {name:"Endocrine physiology", sub:"Hormone mechanisms, feedback loops, stress response"},
-    ]},
-    { title:"Biochemistry", topics:[
-      {name:"Biochemistry essentials", sub:"Enzymes, metabolism, ATP, glycolysis, Krebs cycle, oxidative phosphorylation"},
-      {name:"Carbohydrates, proteins & lipids", sub:"Digestion, absorption, metabolism, clinical relevance"},
-    ]},
-    { title:"Nutrition", isNew:true, topics:[
-      {name:"Nutritional assessment", sub:"Anthropometric, biochemical, clinical, dietary (ABCD) assessment; BMI; MUAC"},
-      {name:"Macronutrients", sub:"Carbohydrates, proteins, fats – functions, sources, recommended intakes"},
-      {name:"Micronutrients", sub:"Vitamins A, B, C, D, E, K; minerals: iron, iodine, zinc, calcium, folate"},
-      {name:"Nutritional disorders", sub:"Marasmus, kwashiorkor, obesity, anaemia, rickets, scurvy, pellagra"},
-      {name:"Therapeutic diets", sub:"Diabetic, low-salt, renal, low-fat, high-protein, gluten-free, soft diets"},
-      {name:"Enteral & parenteral nutrition", sub:"NG tube, PEG, TPN – indications, complications, nursing care"},
-      {name:"Nutrition in special populations", sub:"Pregnant & lactating women, infants, elderly, HIV-positive clients"},
-      {name:"Food safety & hygiene", sub:"Food-borne illness, food handling, storage, HACCP principles"},
-    ]},
-  ]},
-
-  // ═══════════════════════════════════════════════
-  // WEEK 3
-  // ═══════════════════════════════════════════════
-  { week:3, label:"Microbiology, Immunology, Haematology & Pharmacology", sections:[
-    { title:"Microbiology", topics:[
-      {name:"Bacteriology", sub:"Gram staining, culture & sensitivity, pathogenic bacteria, antibiotic resistance"},
-      {name:"Virology", sub:"Virus structure, replication, HIV life cycle, hepatitis types, COVID-19"},
-      {name:"Mycology & parasitology", sub:"Candida, malaria lifecycle, helminths, protozoa, schistosomiasis"},
-      {name:"Infection control & asepsis", sub:"Sterilization, disinfection, PPE, isolation categories, hand hygiene"},
-      {name:"Nosocomial infections (HAIs)", sub:"CAUTI, CLABSI, VAP, SSI – prevention bundles & surveillance"},
-    ]},
-    { title:"Immunology", isNew:true, topics:[
-      {name:"Innate vs adaptive immunity", sub:"Physical barriers, inflammation, complement, B & T lymphocytes"},
-      {name:"Humoral immunity", sub:"Antibody classes (IgG, IgM, IgA, IgE, IgD), B cell activation, memory"},
-      {name:"Cell-mediated immunity", sub:"T helper, T cytotoxic, T regulatory cells; MHC class I & II; antigen presentation"},
-      {name:"Hypersensitivity reactions", sub:"Type I–IV (Gell & Coombs), anaphylaxis management, allergen avoidance"},
-      {name:"Autoimmune disorders", sub:"Rheumatoid arthritis, SLE, multiple sclerosis, type 1 diabetes – immunopathology"},
-      {name:"Immunodeficiency", sub:"Primary (SCID, DiGeorge) vs secondary (HIV/AIDS); opportunistic infections"},
-      {name:"Vaccines & immunisation", sub:"Active vs passive immunity, vaccine types, adjuvants, cold chain, AEFI"},
-      {name:"Immunosuppressive therapy", sub:"Corticosteroids, biologics, nursing care of immunocompromised patients"},
-    ]},
-    { title:"Haematology", isNew:true, topics:[
-      {name:"Blood composition & functions", sub:"Plasma, RBC, WBC, platelets – normal values, lifespan, production"},
-      {name:"Anaemia", sub:"Iron deficiency, B12/folate deficiency, haemolytic, aplastic, sickle cell – management"},
-      {name:"Sickle cell disease", sub:"Pathophysiology, vaso-occlusive crisis, nursing care, hydroxyurea"},
-      {name:"Leukaemia", sub:"ALL, AML, CLL, CML – classification, bone marrow, treatment, nursing care"},
-      {name:"Lymphoma", sub:"Hodgkin vs non-Hodgkin, staging (Ann Arbor), chemotherapy protocols"},
-      {name:"Bleeding & clotting disorders", sub:"Haemophilia, ITP, DIC, thrombocytopaenia – management"},
-      {name:"Blood transfusion", sub:"Blood groups, cross-matching, transfusion reactions, safe administration"},
-      {name:"Bone marrow & stem cell transplant", sub:"Indications, GVHD, nursing care, infection risk"},
-      {name:"Anticoagulant therapy", sub:"Heparin, warfarin, DOACs – monitoring, reversal, nursing precautions"},
-    ]},
-    { title:"Pharmacology", topics:[
-      {name:"Pharmacokinetics (ADME)", sub:"Absorption, distribution, metabolism, excretion; half-life; bioavailability"},
-      {name:"Pharmacodynamics", sub:"Receptor theory, agonists/antagonists, dose-response curve, therapeutic index"},
-      {name:"Cardiovascular drugs", sub:"Antihypertensives, diuretics, anticoagulants, antiarrhythmics, cardiac glycosides"},
-      {name:"CNS drugs", sub:"Analgesics, opioids, sedatives, antiepileptics, general & local anaesthetics"},
-      {name:"Antimicrobials in practice", sub:"Penicillins, cephalosporins, aminoglycosides, macrolides, antifungals, antivirals"},
-      {name:"Endocrine & GI drugs", sub:"Insulin types, oral hypoglycaemics, corticosteroids, PPIs, antacids, laxatives"},
-      {name:"Drug calculations", sub:"Oral dosage, IV drip rate, weight-based paediatric, concentration calculations"},
-      {name:"Adverse drug reactions & pharmacovigilance", sub:"Type A/B ADRs, reporting, anaphylaxis, yellow card system"},
-    ]},
-  ]},
-
-  // ═══════════════════════════════════════════════
-  // WEEK 4
-  // ═══════════════════════════════════════════════
-  { week:4, label:"Medical-Surgical Nursing", sections:[
-    { title:"Cardiovascular & respiratory", topics:[
-      {name:"Hypertension", sub:"Classification (JNC 8), lifestyle modification, pharmacological management, hypertensive crisis"},
-      {name:"Coronary artery disease & MI", sub:"Risk factors, pathophysiology, STEMI/NSTEMI, thrombolytics, PCI nursing"},
-      {name:"Heart failure", sub:"Left vs right, systolic vs diastolic, compensatory mechanisms, medical & nursing management"},
-      {name:"Cardiac arrhythmias", sub:"Sinus, atrial, ventricular rhythms; defibrillation; cardioversion; pacing"},
-      {name:"Peripheral vascular disease", sub:"DVT, PAD, varicose veins – anticoagulation, compression, nursing care"},
-      {name:"Asthma", sub:"Pathophysiology, stepwise BTS treatment, peak flow, nebulisers, written action plan"},
-      {name:"COPD", sub:"Emphysema vs chronic bronchitis, GOLD staging, LTOT, NIV, pulmonary rehab"},
-      {name:"Pneumonia & TB", sub:"CAP vs HAP, DOTS therapy, sputum AFB, contact tracing, infection control"},
-      {name:"Pleural disorders", sub:"Pleural effusion, pneumothorax, haemothorax, chest drain management"},
-    ]},
-    { title:"Gastrointestinal & hepatic", topics:[
-      {name:"Peptic ulcer disease", sub:"H. pylori, NSAID use, endoscopy, triple therapy, H2 blockers, PPIs"},
-      {name:"Liver disease", sub:"Hepatitis A-E, cirrhosis, portal hypertension, ascites, HE, liver biopsy care"},
-      {name:"Inflammatory bowel disease", sub:"Crohn's vs UC, colonoscopy preparation, biologic therapy, stoma care"},
-      {name:"Gastrointestinal bleeding", sub:"Upper & lower GI bleed, haematemesis, melaena, endoscopy, resuscitation"},
-    ]},
-    { title:"Renal, endocrine & oncology", topics:[
-      {name:"Acute kidney injury (AKI)", sub:"Pre-renal, intrinsic, post-renal causes; staging; management; nursing care"},
-      {name:"Chronic kidney disease (CKD)", sub:"Staging, dialysis (HD vs PD), renal diet, ESKD, transplant preparation"},
-      {name:"Diabetes mellitus", sub:"T1 vs T2, insulin regimes, oral agents, HbA1c targets, sick-day rules, complications"},
-      {name:"Thyroid disorders", sub:"Hypothyroidism, hyperthyroidism, goitre, thyroid storm, post-thyroidectomy care"},
-      {name:"Adrenal disorders", sub:"Cushing's syndrome, Addison's disease, adrenal crisis, phaeochromocytoma"},
-      {name:"Cancer nursing & oncology", sub:"Chemotherapy, radiotherapy, immunotherapy, symptom control, safe handling"},
-    ]},
-    { title:"Neurological & musculoskeletal", topics:[
-      {name:"Stroke & TIA", sub:"Ischaemic vs haemorrhagic, FAST, thrombolysis, stroke unit, rehab"},
-      {name:"Epilepsy & seizures", sub:"Classification, first aid, status epilepticus, antiepileptic drugs, lifestyle"},
-      {name:"Head injury & raised ICP", sub:"GCS, Monro-Kellie doctrine, ICP monitoring, herniation syndromes"},
-      {name:"Meningitis & encephalitis", sub:"Bacterial vs viral, lumbar puncture care, chemoprophylaxis, isolation"},
-      {name:"Spinal cord injuries", sub:"Level classification, autonomic dysreflexia, bladder & bowel management, rehab"},
-      {name:"Musculoskeletal disorders", sub:"Fractures, traction, external fixators, arthritis, gout, osteoporosis, osteomyelitis"},
-      {name:"Pre & post-operative care", sub:"Pre-op checklist, informed consent, anaesthesia types, post-op complications"},
-    ]},
-  ]},
-
-  // ═══════════════════════════════════════════════
-  // WEEK 5
-  // ═══════════════════════════════════════════════
-  { week:5, label:"Communicable Diseases, Critical Care & Emergency Nursing", sections:[
-    { title:"Communicable diseases", isNew:true, topics:[
-      {name:"Principles of communicable disease", sub:"Chain of infection, modes of transmission, epidemiological triad, breaking the chain"},
-      {name:"HIV/AIDS", sub:"Pathophysiology, WHO staging, ART regimes, adherence, opportunistic infections, disclosure"},
-      {name:"Tuberculosis (TB)", sub:"PTB vs EPTB, DOTS, drug regimes, MDR-TB, co-infection with HIV, contact tracing"},
-      {name:"Malaria", sub:"Plasmodium species, severe malaria, ACT treatment, IV quinine/artesunate, nursing care"},
-      {name:"Viral haemorrhagic fevers", sub:"Ebola, Marburg, Lassa – isolation protocols, PPE donning/doffing, surveillance"},
-      {name:"Cholera & typhoid", sub:"Pathophysiology, rehydration, IV fluids, antibiotics, sanitation, outbreak response"},
-      {name:"Sexually transmitted infections", sub:"Syphilis, gonorrhoea, chlamydia, HPV, HSV – diagnosis, treatment, partner notification"},
-      {name:"Respiratory infections", sub:"Influenza, COVID-19, RSV, whooping cough – management, vaccination, isolation"},
-      {name:"Vaccine-preventable diseases", sub:"Measles, mumps, rubella, polio, meningococcal disease – case management"},
-      {name:"Zoonoses & neglected tropical diseases", sub:"Rabies, brucellosis, schistosomiasis, kala-azar – endemic in East Africa"},
-      {name:"Outbreak investigation", sub:"Epidemic curve, case definition, attack rate, contact tracing, WHO reporting"},
-    ]},
-    { title:"Critical care nursing", isNew:true, topics:[
-      {name:"ICU environment & equipment", sub:"Bed space set-up, monitors, ventilators, infusion pumps, defibrillators"},
-      {name:"Haemodynamic monitoring", sub:"Arterial line, CVP, pulmonary artery catheter, PICCO – interpretation & nursing"},
-      {name:"Mechanical ventilation", sub:"Modes (CMV, SIMV, CPAP, BiPAP), settings, weaning criteria, VAP prevention"},
-      {name:"Shock management", sub:"Types: hypovolaemic, distributive, cardiogenic, obstructive – assessment & resuscitation"},
-      {name:"Sepsis & septic shock", sub:"Sepsis-3 definition, Surviving Sepsis Bundle, lactate, vasopressors, antibiotics"},
-      {name:"Acute respiratory distress syndrome", sub:"Berlin criteria, lung-protective ventilation, prone positioning, nursing care"},
-      {name:"Multi-organ dysfunction syndrome", sub:"MODS pathophysiology, organ support, scoring systems (APACHE, SOFA)"},
-      {name:"ICU sedation & analgesia", sub:"Sedation scales (RASS), analgesia-first approach, daily awakening, delirium"},
-      {name:"Nutrition in critical illness", sub:"Early enteral nutrition, caloric targets, refeeding syndrome, GRV monitoring"},
-      {name:"ICU rehabilitation & family care", sub:"Early mobilisation, sleep promotion, ICU diaries, family communication"},
-    ]},
-    { title:"Emergency nursing", topics:[
-      {name:"Emergency triage systems", sub:"Manchester, START, SALT, SIEVE/SORT – colour-coding, re-triage"},
-      {name:"Primary & secondary survey (ABCDE)", sub:"Airway, breathing, circulation, disability, exposure – structured assessment"},
-      {name:"Cardiopulmonary resuscitation", sub:"Adult BLS & ALS algorithms, CPR quality, defibrillation, ROSC, post-resuscitation"},
-      {name:"Major trauma nursing", sub:"Haemostasis, damage control surgery, permissive hypotension, transfusion protocol"},
-      {name:"Poisoning & overdose", sub:"General principles, activated charcoal, antidotes (naloxone, N-acetylcysteine), toxidromes"},
-      {name:"Burns nursing", sub:"Rule of nines, Parkland formula, escharotomy, dressing, inhalation injury"},
-      {name:"Disaster & mass casualty nursing", sub:"Hospital incident command, surge capacity, triage in MCI, decontamination"},
-    ]},
-  ]},
-
-  // ═══════════════════════════════════════════════
-  // WEEK 6
-  // ═══════════════════════════════════════════════
-  { week:6, label:"Maternal, Newborn, Gynaecology & Reproductive Health", sections:[
-    { title:"Antenatal care & obstetric complications", topics:[
-      {name:"Reproductive anatomy & physiology", sub:"Menstrual cycle, fertilisation, implantation, placental function"},
-      {name:"Fetal development", sub:"Embryology by trimester, fetal circulation, teratogens, fetal wellbeing monitoring"},
-      {name:"Antenatal care (ANC)", sub:"WHO focused ANC, danger signs, PMTCT, supplements, symphysis-fundal height"},
-      {name:"Minor disorders of pregnancy", sub:"Nausea/vomiting, heartburn, oedema, varicosities, backache, constipation"},
-      {name:"Hypertensive disorders of pregnancy", sub:"PIH, pre-eclampsia, eclampsia – magnesium sulphate protocol, delivery timing"},
-      {name:"Antepartum haemorrhage", sub:"Placenta praevia, placental abruption – assessment, management, emergency care"},
-      {name:"Medical conditions in pregnancy", sub:"Anaemia, GDM, malaria, cardiac disease, HIV – multidisciplinary care"},
-      {name:"Normal labour & delivery", sub:"Stages of labour, mechanism of labour, partograph completion, active management"},
-      {name:"Intrapartum complications", sub:"PPH (primary & secondary), obstructed labour, cord prolapse, shoulder dystocia"},
-      {name:"Pain management in labour", sub:"Non-pharmacological, Entonox, epidural, opioids – nursing support"},
-    ]},
-    { title:"Postnatal care & newborn", topics:[
-      {name:"Normal puerperium", sub:"Uterine involution, lochia assessment, lactation physiology, postnatal visits"},
-      {name:"Postnatal complications", sub:"Secondary PPH, puerperal sepsis, mastitis, DVT, postnatal depression/psychosis"},
-      {name:"Newborn assessment", sub:"APGAR scoring, head-to-toe assessment, gestational age tools (Ballard/Dubowitz)"},
-      {name:"Essential newborn care", sub:"Cord care, eye prophylaxis, Vitamin K, thermal protection, early breastfeeding"},
-      {name:"Neonatal resuscitation", sub:"NLS algorithm, bag-mask ventilation, chest compressions, drugs, post-resuscitation care"},
-      {name:"Neonatal complications", sub:"LBW, prematurity, NNJ, hypoglycaemia, neonatal sepsis, RDS, NEC"},
-      {name:"Breastfeeding", sub:"Benefits, positioning, attachment, common problems, exclusive BF counselling"},
-      {name:"Family planning", sub:"Combined pill, POP, DMPA, implants, IUDs, condoms, sterilisation, LAM, natural methods"},
-    ]},
-    { title:"Gynaecology", isNew:true, topics:[
-      {name:"Gynaecological assessment", sub:"History taking, bimanual examination, speculum examination, cervical smear"},
-      {name:"Menstrual disorders", sub:"Amenorrhoea, dysmenorrhoea, menorrhagia, irregular cycles – causes & management"},
-      {name:"Polycystic ovary syndrome (PCOS)", sub:"Pathophysiology, Rotterdam criteria, fertility implications, metformin, lifestyle"},
-      {name:"Endometriosis & fibroids", sub:"Staging, symptoms, medical & surgical management, impact on fertility"},
-      {name:"Pelvic inflammatory disease", sub:"Ascending infection, Fitz-Hugh-Curtis, antibiotic regimes, complications"},
-      {name:"Sexually transmitted infections (gynaecology)", sub:"Trichomonas, candidiasis, BV, cervicitis – diagnosis & treatment"},
-      {name:"Cervical & uterine cancer", sub:"HPV, cervical screening, colposcopy, LLETZ, staging, hysterectomy nursing care"},
-      {name:"Ovarian pathology", sub:"Ovarian cysts, ovarian torsion, ovarian cancer, CA-125, oophorectomy care"},
-      {name:"Urinary incontinence & prolapse", sub:"Stress, urge, overflow incontinence; pelvic floor exercises; pessary; surgery"},
-      {name:"Infertility", sub:"Male & female factors, investigations, IVF, emotional support, counselling"},
-      {name:"Menopause & HRT", sub:"Perimenopause, symptoms, HRT types, risks & benefits, alternatives"},
-      {name:"Ectopic pregnancy", sub:"Risk factors, clinical features, rupture, laparoscopic vs medical management"},
-    ]},
-  ]},
-
-  // ═══════════════════════════════════════════════
-  // WEEK 7
-  // ═══════════════════════════════════════════════
-  { week:7, label:"Paediatric Nursing, Mental Health & Psychology", sections:[
-    { title:"Child health & paediatrics", topics:[
-      {name:"Growth & development milestones", sub:"Gross motor, fine motor, language, social-emotional – WHO standards by age"},
-      {name:"Child nutrition", sub:"Infant feeding, complementary foods, micronutrient supplementation, growth monitoring"},
-      {name:"Malnutrition management", sub:"SAM vs MAM, MUAC, F-75/F-100, RUTF, refeeding syndrome, therapeutic care"},
-      {name:"KEPI immunisation schedule", sub:"BCG, OPV, IPV, PCV, rotavirus, measles, yellow fever – doses & timing"},
-      {name:"IMCI approach", sub:"Assess, classify, treat/refer, counsel – danger signs, triage, referral criteria"},
-      {name:"Febrile child", sub:"Malaria, fever assessment, antipyretics, febrile convulsion, when to refer"},
-      {name:"Pneumonia in children", sub:"WHO classification, fast breathing, chest indrawing, oxygen, antibiotics"},
-      {name:"Diarrhoeal disease management", sub:"Dehydration assessment, ORS protocol, zinc, continued feeding, IV fluids"},
-      {name:"Child with HIV", sub:"PMTCT cascade, paediatric ART, WHO staging in children, disclosure to child"},
-      {name:"Paediatric emergencies", sub:"Croup, epiglottitis, status epilepticus, severe dehydration, anaphylaxis, drowning"},
-      {name:"Child abuse & protection", sub:"Physical, sexual, emotional abuse, neglect – recognition, mandatory reporting, safeguarding"},
-    ]},
-    { title:"Mental health nursing", topics:[
-      {name:"Mental status examination", sub:"Appearance, mood, affect, thought form & content, perception, cognition, insight/judgement"},
-      {name:"Schizophrenia & psychosis", sub:"Positive/negative symptoms, antipsychotics, depot injections, relapse prevention"},
-      {name:"Mood disorders", sub:"MDD, bipolar I & II, cyclothymia, ECT indications, antidepressants, mood stabilisers"},
-      {name:"Anxiety & related disorders", sub:"GAD, panic disorder, phobias, OCD, PTSD – CBT, EMDR, pharmacotherapy"},
-      {name:"Substance use disorders", sub:"Alcohol, opioids, cannabis, khat – withdrawal syndromes, CAGE, AUDIT, rehab"},
-      {name:"Personality disorders", sub:"Cluster A/B/C, BPD, dialectical behaviour therapy, therapeutic boundaries"},
-      {name:"Psychotropic medications", sub:"Antipsychotics, antidepressants, anxiolytics, mood stabilisers – side effects & monitoring"},
-      {name:"Mental Health Act Kenya 2022", sub:"Voluntary vs involuntary admission, patient rights, Mental Health Policy"},
-    ]},
-    { title:"Psychology & educational psychology", topics:[
-      {name:"Foundations of psychology", sub:"Behaviourism, psychoanalysis, humanism, cognitivism, biopsychosocial model"},
-      {name:"Developmental psychology", sub:"Freud, Erikson, Piaget, Vygotsky, Kohlberg – stages & nursing applications"},
-      {name:"Learning & behaviour theories", sub:"Classical & operant conditioning, Bandura's social learning, behaviour modification"},
-      {name:"Stress & coping", sub:"GAS (Selye), coping strategies, resilience, stress & illness relationship"},
-      {name:"Educational psychology in nursing", sub:"Andragogy, multiple intelligences, learning styles, self-efficacy in nursing students"},
-      {name:"Motivation & health behaviour", sub:"Maslow's hierarchy, health belief model, stages of change (Prochaska), motivational interviewing"},
-    ]},
-  ]},
-
-  // ═══════════════════════════════════════════════
-  // WEEK 8
-  // ═══════════════════════════════════════════════
-  { week:8, label:"Community Health, Sociology, Anthropology & Communication", sections:[
-    { title:"Community & public health nursing", topics:[
-      {name:"Primary health care (PHC)", sub:"Alma Ata 1978, Astana 2018, levels of care, UHC, Kenya's PHC system"},
-      {name:"Epidemiology", sub:"Types, attack rate, incidence, prevalence, OR, RR, cohort, case-control, RCT"},
-      {name:"Disease surveillance", sub:"Passive vs active surveillance, notifiable diseases, EWARS, outbreak steps"},
-      {name:"Health promotion & education", sub:"Ottawa Charter, Lalonde model, primary/secondary/tertiary prevention, advocacy"},
-      {name:"School & occupational health", sub:"School health programme, child screening, workplace hazards, ergonomics"},
-      {name:"Home-based care", sub:"HIV, palliative, elderly, caregiver support, CHEW role, community mobilisation"},
-      {name:"Environmental health", sub:"Water & sanitation (WASH), solid waste, vectors, indoor air quality, climate & health"},
-    ]},
-    { title:"Biostatistics", isNew:true, topics:[
-      {name:"Data types & collection", sub:"Nominal, ordinal, interval, ratio; primary vs secondary data; data collection tools"},
-      {name:"Measures of central tendency", sub:"Mean, median, mode – calculation, use cases, skewed distributions"},
-      {name:"Measures of dispersion", sub:"Range, variance, standard deviation, coefficient of variation, IQR"},
-      {name:"Probability & distributions", sub:"Normal distribution, binomial, Poisson, z-scores, confidence intervals"},
-      {name:"Hypothesis testing", sub:"Null & alternative hypotheses, Type I & II errors, p-value, significance level"},
-      {name:"Statistical tests", sub:"t-test, chi-square, ANOVA, Mann-Whitney, Pearson & Spearman correlation"},
-      {name:"Vital statistics", sub:"CBR, CDR, IMR, MMR, fertility rates, life expectancy – calculation & interpretation"},
-      {name:"Health indicators", sub:"MDG vs SDG health targets, DHS data, Kenya health statistics"},
-      {name:"Data presentation", sub:"Tables, bar charts, histograms, frequency polygons, pie charts, scatter plots"},
-    ]},
-    { title:"Sociology & anthropology", topics:[
-      {name:"Introduction to sociology", sub:"Sociological imagination, functionalism, conflict theory, symbolic interactionism"},
-      {name:"Socialisation & culture", sub:"Primary/secondary socialisation, agents, norms, values, cultural relativism"},
-      {name:"Social stratification & health", sub:"Class, gender, poverty, inequality – social determinants of health model"},
-      {name:"Sociology of health & illness", sub:"Sick role (Parsons), medicalisation, biomedicine vs lay beliefs, stigma"},
-      {name:"Family structures & health", sub:"Nuclear, extended, single-parent, polygamous – family functions, dynamics"},
-      {name:"Medical anthropology", sub:"Ethnomedical systems, explanatory models of illness, healing rituals, bodily beliefs"},
-      {name:"Cultural beliefs & health practices", sub:"FGM, male circumcision, dietary taboos, birth practices, death rites"},
-      {name:"Cultural competence in nursing", sub:"LEARN model, cultural safety, implicit bias, cross-cultural communication"},
-      {name:"Traditional medicine in Kenya", sub:"Herbalism, faith healing, TBA role, WHO TM strategy, integration"},
-    ]},
-    { title:"Communication", topics:[
-      {name:"Communication theory & models", sub:"Shannon-Weaver, transactional model, sender-message-receiver-feedback-noise"},
-      {name:"Types of communication", sub:"Verbal, non-verbal, written, digital, paralanguage, proxemics, formal vs informal"},
-      {name:"Therapeutic communication", sub:"Active listening, open-ended questions, silence, empathy, clarification, summarising"},
-      {name:"Barriers & facilitation", sub:"Language, literacy, disability, culture, power dynamics – strategies to overcome"},
-      {name:"Health communication & IEC/BCC", sub:"IEC vs BCC, mass media, social media, community engagement, health campaigns"},
-      {name:"SBAR & clinical handover", sub:"SBAR tool, bedside handover, shift report, ward round communication"},
-      {name:"Conflict resolution & assertiveness", sub:"Sources of conflict, negotiation, assertive vs passive vs aggressive, DESC model"},
-      {name:"Documentation as communication", sub:"Nursing notes, referral letters, discharge summaries, medico-legal implications"},
-    ]},
-  ]},
-
-  // ═══════════════════════════════════════════════
-  // WEEK 9
-  // ═══════════════════════════════════════════════
-  { week:9, label:"Palliative Care, Environment & Occupational Health, Leadership, Forensics & Ethics", sections:[
-    { title:"Palliative & end-of-life care", isNew:true, topics:[
-      {name:"Philosophy of palliative care", sub:"WHO definition, palliative care vs curative care, when to initiate, hospice model"},
-      {name:"Pain assessment & management", sub:"Pain scales, WHO analgesic ladder, opioid titration, adjuvant analgesia, breakthrough pain"},
-      {name:"Symptom management", sub:"Nausea, dyspnoea, constipation, fatigue, anorexia, delirium – pharmacological & non-pharmacological"},
-      {name:"Psychosocial & spiritual care", sub:"Kubler-Ross grief stages, existential distress, spiritual assessment, chaplaincy"},
-      {name:"Communication in palliative care", sub:"Breaking bad news (SPIKES), goals of care conversations, advance care planning"},
-      {name:"Palliative care in Kenya", sub:"KEHPCA, hospice services, opioid access, community-based palliative care"},
-      {name:"Paediatric palliative care", sub:"Age-appropriate communication, family-centred care, symptom control in children"},
-      {name:"End-of-life care", sub:"Care in the last days/hours, Liverpool care pathway, death certification, last offices"},
-      {name:"Bereavement & grief support", sub:"Normal vs complicated grief, counselling, support groups, cultural mourning practices"},
-    ]},
-    { title:"Environmental & occupational health nursing", isNew:true, topics:[
-      {name:"Environmental health principles", sub:"Environmental determinants of health, burden of disease, planetary health"},
-      {name:"Water safety & sanitation", sub:"Water quality standards, treatment methods, waterborne diseases, WASH in health facilities"},
-      {name:"Air quality & respiratory hazards", sub:"Indoor & outdoor air pollution, silica, asbestos, fumes – occupational lung diseases"},
-      {name:"Occupational health legislation", sub:"Work Injury Benefits Act (WIBA), OSHA Kenya, ILO conventions, employer duties"},
-      {name:"Occupational hazards classification", sub:"Physical, chemical, biological, ergonomic, psychosocial hazards – examples"},
-      {name:"Occupational diseases", sub:"Silicosis, asbestosis, farmer's lung, byssinosis, occupational asthma, noise-induced hearing loss"},
-      {name:"Work-related injuries", sub:"Needlestick, musculoskeletal disorders, slips/trips, machinery injuries – prevention & management"},
-      {name:"Occupational health nursing roles", sub:"Pre-employment, periodic medical exams, workplace health promotion, first aid, liaison"},
-      {name:"Climate change & health", sub:"Heat stress, vector distribution shifts, food security, extreme weather events, health adaptation"},
-      {name:"Waste management in health care", sub:"Segregation, colour-coding (Kenya), sharps, anatomical, pharmaceutical, cytotoxic waste"},
-    ]},
-    { title:"Leadership & management in nursing", isNew:true, topics:[
-      {name:"Leadership theories", sub:"Trait, situational, transactional, transformational, servant, authentic leadership"},
-      {name:"Management functions", sub:"Planning, organising, directing, staffing, controlling – application in ward management"},
-      {name:"Nursing administration", sub:"Ward organisation, duty rota, bed management, resource allocation, stores management"},
-      {name:"Human resource management", sub:"Recruitment, performance appraisal, disciplinary process, staff motivation, retention"},
-      {name:"Financial management in nursing", sub:"Budget types, variance analysis, cost-containment, resource justification"},
-      {name:"Quality improvement (QI)", sub:"QI tools: PDSA cycle, fish-bone diagram, run charts, FMEA, audit cycle"},
-      {name:"Patient safety", sub:"WHO patient safety goals, incident reporting, root cause analysis, near-miss reporting"},
-      {name:"Change management", sub:"Lewin's model, Kotter's 8 steps, resistance to change, nursing as change agent"},
-      {name:"Delegation & supervision", sub:"Principles of delegation, accountability chain, task vs function delegation, supervision models"},
-      {name:"Strategic planning & policy", sub:"Kenya Health Sector Strategic Plan, NHS Act, health systems strengthening, SDGs"},
-    ]},
-    { title:"Forensic nursing", topics:[
-      {name:"Introduction to forensic nursing", sub:"Scope, SANE role, medico-legal interface, forensic nurse examiner competencies"},
-      {name:"Evidence collection & chain of custody", sub:"Specimen handling, packaging, documentation, court admissibility"},
-      {name:"SGBV nursing care", sub:"Trauma-informed care, forensic examination, PEP, post-exposure prophylaxis, safe reporting"},
-      {name:"Child abuse & elder abuse", sub:"Recognition, mandatory reporting, multi-agency safeguarding, legal protection"},
-      {name:"Substance abuse & toxicology", sub:"Drug screening, BAC, poisoning management, tox screen interpretation"},
-      {name:"Legal documentation & courtroom testimony", sub:"Nursing notes as legal evidence, testifying, expert witness, confidentiality"},
-    ]},
-    { title:"Nursing ethics & professional practice", topics:[
-      {name:"Ethical principles in nursing", sub:"Beneficence, non-maleficence, autonomy, justice, fidelity, veracity – case application"},
-      {name:"Ethical theories", sub:"Utilitarianism, deontology, virtue ethics, care ethics, divine command theory"},
-      {name:"Ethical dilemmas", sub:"End-of-life, resource allocation, truth-telling, euthanasia, refusal of treatment"},
-      {name:"NNC Act & regulation", sub:"Licensure, scope of practice, disciplinary hearings, continuing professional development"},
-      {name:"Patients' rights in Kenya", sub:"Constitution Article 43, patient charter, informed consent, confidentiality"},
-    ]},
-  ]},
-
-  // ═══════════════════════════════════════════════
-  // WEEK 10
-  // ═══════════════════════════════════════════════
-  { week:10, label:"Research, Teaching Methodology & Final Revision", sections:[
-    { title:"Nursing research & evidence-based practice", topics:[
-      {name:"Introduction to nursing research", sub:"Importance of EBP, historical milestones, research-practice gap"},
-      {name:"Research problem & literature review", sub:"Research question, PICO framework, database searching, critical appraisal tools"},
-      {name:"Research designs", sub:"Qualitative (phenomenology, grounded theory, ethnography) vs quantitative (descriptive, correlational, experimental)"},
-      {name:"Sampling methods", sub:"Probability (random, stratified, cluster) vs non-probability (purposive, snowball); sample size"},
-      {name:"Data collection tools", sub:"Questionnaires (Likert, closed/open), interviews, observation checklists, physiological measures"},
-      {name:"Data analysis", sub:"Descriptive stats, inferential tests, thematic analysis, content analysis, SPSS basics"},
-      {name:"Research ethics", sub:"Informed consent, confidentiality, beneficence, NACOSTI registration, Helsinki Declaration"},
-      {name:"Research proposal writing", sub:"Chapter structure: intro, lit review, methodology – format, headings, referencing (APA/Harvard)"},
-      {name:"Research report & dissemination", sub:"Results, discussion, conclusions, recommendations, publication, conference presentations"},
-    ]},
-    { title:"Teaching methodology & health education", topics:[
-      {name:"Principles of adult learning", sub:"Andragogy (Knowles 5 assumptions), experiential learning (Kolb cycle), transformative learning"},
-      {name:"Curriculum development", sub:"Tyler's model, Taba model, Bloom's taxonomy (3 domains), learning objectives writing"},
-      {name:"Teaching methods in nursing education", sub:"Lecture, demonstration, role-play, simulation, PBL, case studies, flipped classroom"},
-      {name:"Teaching aids & technology", sub:"Flip charts, models, mannequins, A-V aids, e-learning, simulation labs, social media"},
-      {name:"Patient & community health education", sub:"Needs assessment, lesson plan (SMART objectives), delivery, evaluation"},
-      {name:"Clinical teaching & preceptorship", sub:"Preceptor roles, Pendleton feedback model, reflective practice (Gibbs), mentorship"},
-      {name:"Evaluation of teaching & learning", sub:"Kirkpatrick's 4 levels, summative vs formative, OSCE, competency sign-off"},
-    ]},
-    { title:"Sociology of nursing education", topics:[
-      {name:"Sociology in professional education", sub:"Hidden curriculum, professional socialisation, role models, institutional culture"},
-      {name:"Interprofessional education (IPE)", sub:"WHO IPE framework, collaborative practice, team roles, breaking down silos"},
-    ]},
-    { title:"Comprehensive final revision", topics:[
-      {name:"Drug calculations mega-practice", sub:"Full set: oral, IV bolus, infusion rates, paediatric weight-based, reconstitution"},
-      {name:"Mock exam I – basic sciences", sub:"100 MCQs: anatomy, physiology, pharmacology, microbiology, haematology"},
-      {name:"Mock exam II – clinical nursing", sub:"100 MCQs: med-surg, maternal, paeds, mental health, critical care"},
-      {name:"Mock exam III – community & professional", sub:"100 MCQs: community, ethics, research, sociology, communication, law"},
-      {name:"Mock exam IV – comprehensive", sub:"150 MCQs: mixed across all subjects – simulate NCK exam conditions"},
-      {name:"Weak area consolidation", sub:"Review all amber topics; create flashcards, mind maps, summary sheets"},
-      {name:"Past paper analysis", sub:"Identify high-yield NCK topics, common question patterns, recurring themes"},
-      {name:"Exam technique & strategy", sub:"MCQ strategies, time management (90 sec/Q), eliminating distractors, educated guessing"},
-      {name:"Final 48 hours review", sub:"Light revision only: key drugs, normal values, formulas, ethical principles"},
-    ]},
-  ]},
-];
-
-// Invite token & per-user storage key
-const INVITE_TOKEN = new URLSearchParams(location.search).get('invite');
-const STORAGE_KEY = INVITE_TOKEN ? `nck_v3_invite_${INVITE_TOKEN}` : 'nck_v3';
-const IS_GUEST = !!INVITE_TOKEN;
-
-// ── PIN MODAL LOGIC ──
-const CORRECT_PIN = '1234'; // Change this to your desired PIN
-let pinEntry = '';
-
-function openPinModal() {
-  pinEntry = '';
-  updatePinDots();
-  document.getElementById('pinError').textContent = '';
-  document.getElementById('pinModal').classList.add('show');
+/* ══════════════════════════════════
+   THEME
+══════════════════════════════════ */
+let theme = localStorage.getItem('nck_theme') || 'light';
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('themeBtn').textContent = t==='dark'?'☀️':'🌙';
+  localStorage.setItem('nck_theme',t);
 }
-function closePinModal() {
-  document.getElementById('pinModal').classList.remove('show');
-  pinEntry = '';
-  updatePinDots();
-}
-function pinPress(d) {
-  if (pinEntry.length >= 4) return;
-  pinEntry += d;
-  updatePinDots();
-  if (pinEntry.length === 4) {
-    setTimeout(() => {
-      if (pinEntry === CORRECT_PIN) {
-        states = {}; save();
-        closePinModal();
-        render();
-      } else {
-        document.getElementById('pinError').textContent = 'Incorrect PIN. Try again.';
-        pinEntry = '';
-        updatePinDots();
-      }
-    }, 250);
-  }
-}
-function pinDel() {
-  pinEntry = pinEntry.slice(0, -1);
-  updatePinDots();
-  document.getElementById('pinError').textContent = '';
-}
-function updatePinDots() {
-  for (let i = 0; i < 4; i++) {
-    document.getElementById('dot'+i).classList.toggle('filled', i < pinEntry.length);
-  }
-}
-document.getElementById('pinModal').addEventListener('click', function(e) {
-  if (e.target === this) closePinModal();
+function toggleTheme(){ theme = theme==='dark'?'light':'dark'; applyTheme(theme); }
+applyTheme(theme);
+
+/* ══════════════════════════════════
+   FAB
+══════════════════════════════════ */
+window.addEventListener('scroll',()=>{
+  document.getElementById('fab').classList.toggle('show',window.scrollY>400);
 });
+
+/* ══════════════════════════════════
+   WEEK COLOUR PALETTE
+══════════════════════════════════ */
+const PALETTE=[
+  {a:'#534AB7',bg:'rgba(83,74,183,0.12)',bar:'#534AB7'},
+  {a:'#0F6E56',bg:'rgba(15,110,86,0.12)',bar:'#0F6E56'},
+  {a:'#993C1D',bg:'rgba(153,60,29,0.12)',bar:'#993C1D'},
+  {a:'#185FA5',bg:'rgba(24,95,165,0.12)',bar:'#185FA5'},
+  {a:'#854F0B',bg:'rgba(133,79,11,0.12)',bar:'#854F0B'},
+  {a:'#993556',bg:'rgba(153,53,86,0.12)',bar:'#993556'},
+  {a:'#3B6D11',bg:'rgba(59,109,17,0.12)',bar:'#3B6D11'},
+  {a:'#A32D2D',bg:'rgba(163,45,45,0.12)',bar:'#A32D2D'},
+  {a:'#3D47B5',bg:'rgba(61,71,181,0.12)',bar:'#3D47B5'},
+  {a:'#0F6E56',bg:'rgba(15,110,86,0.12)',bar:'#0F6E56'},
+];
+
+/* ══════════════════════════════════
+   DATA
+══════════════════════════════════ */
+const weeks=[
+  {week:1,label:"Fundamentals of Nursing",isNew:true,sections:[
+    {title:"Introduction & philosophy",topics:[
+      {name:"History & philosophy of nursing",sub:"Nightingale, nursing theorists, evolution of the profession, nursing models"},
+      {name:"Nursing as a profession",sub:"Characteristics, accountability, autonomy, code of ethics, professionalism"},
+      {name:"Nursing theories & models",sub:"Orem, Roy, Henderson, Neuman, Watson – assumptions, application"},
+      {name:"Nursing process – ADPIE",sub:"Assessment, diagnosis, planning, implementation, evaluation – depth application"},
+      {name:"Critical thinking & clinical reasoning",sub:"Reflection, EBP, Tanner's clinical judgement model"},
+    ]},
+    {title:"Core clinical skills",topics:[
+      {name:"Patient admission & discharge",sub:"Admission procedure, orientation, discharge planning, referral letters"},
+      {name:"Vital signs assessment",sub:"Temperature, pulse, respiration, BP, SpO2, pain – normal values, documentation"},
+      {name:"Physical assessment (head-to-toe)",sub:"Inspection, palpation, percussion, auscultation – systematic approach"},
+      {name:"Bed making & patient positioning",sub:"Occupied/unoccupied beds, Fowler's, Trendelenburg, lateral, prone, supine"},
+      {name:"Personal hygiene & comfort",sub:"Bed bath, oral care, eye care, hair, nail care, perineal care"},
+      {name:"Nutrition & feeding assistance",sub:"Dietary assessment, oral feeding assistance, NGT feeding, PEG care"},
+      {name:"Elimination care",sub:"Urinary catheterisation (male & female), enema, stoma care, fluid balance chart"},
+      {name:"Wound care & dressings",sub:"Wound assessment, healing phases, aseptic technique, dressing types, suture removal"},
+      {name:"Medication administration",sub:"5 rights (+ 3 checks), oral, IM, IV, SC, ID, topical, inhalers, ear/eye drops"},
+      {name:"Specimen collection",sub:"Blood (venepuncture), urine (MSU/CSU), stool, sputum, wound swabs – technique & labelling"},
+      {name:"Oxygen therapy",sub:"Nasal prongs, simple mask, Venturi, non-rebreather, humidification, monitoring"},
+      {name:"Intravenous therapy",sub:"Peripheral IV cannulation, fluid types, flow rate, infiltration, phlebitis prevention"},
+    ]},
+    {title:"Safety, ethics & documentation",topics:[
+      {name:"Patient safety & falls prevention",sub:"SBAR, incident reporting, fall risk tools (Morse), restraints, call bells"},
+      {name:"Infection prevention & control",sub:"WHO 5 moments of hand hygiene, PPE, standard & transmission precautions, isolation"},
+      {name:"Legal & ethical issues in nursing",sub:"Consent, confidentiality, negligence, duty of care, liability, advocacy"},
+      {name:"Nursing documentation",sub:"Nursing notes, Kardex, care plans, SOAP notes, electronic records, legal implications"},
+      {name:"Pain assessment & management",sub:"Pain scales (NRS, VAS, FACES, ABBEY), WHO ladder, pharmacological & non-pharmacological"},
+    ]},
+  ]},
+  {week:2,label:"Anatomy, Physiology, Biochemistry & Nutrition",sections:[
+    {title:"Human anatomy",topics:[
+      {name:"Body organisation & terminology",sub:"Planes, cavities, directional terms, homeostasis, levels of organisation"},
+      {name:"Skeletal system",sub:"Bone types, joints, cartilage, bone repair, common fractures"},
+      {name:"Muscular system",sub:"Skeletal/smooth/cardiac muscle, contraction mechanism, disorders"},
+      {name:"Nervous system anatomy",sub:"CNS, PNS, autonomic nervous system, cranial nerves, dermatomes"},
+      {name:"Cardiovascular anatomy",sub:"Heart chambers, valves, coronary circulation, conduction system, great vessels"},
+      {name:"Respiratory anatomy",sub:"Upper & lower airways, lung lobes, pleura, surfactant, diaphragm"},
+      {name:"Digestive system anatomy",sub:"GI tract, accessory organs (liver, pancreas, GB), peritoneum, mesentery"},
+      {name:"Renal & urinary anatomy",sub:"Nephron structure, kidney position, ureters, bladder, urethra"},
+      {name:"Reproductive anatomy",sub:"Male & female structures, menstrual cycle anatomy, lymphatic drainage"},
+      {name:"Endocrine glands",sub:"Pituitary, thyroid, parathyroid, adrenal cortex/medulla, pancreatic islets, gonads"},
+      {name:"Lymphatic & immune anatomy",sub:"Lymph nodes, spleen, thymus, MALT, lymphatic vessels, drainage patterns"},
+      {name:"Integumentary system",sub:"Epidermis, dermis, subcutaneous; hair, nails, sweat glands, functions"},
+    ]},
+    {title:"Physiology",topics:[
+      {name:"Cell physiology",sub:"Membrane transport (active/passive/facilitated), cell cycle, organelle functions"},
+      {name:"Blood & haemopoiesis",sub:"RBC, WBC, platelets, clotting cascade (intrinsic/extrinsic), blood groups"},
+      {name:"Cardiac physiology",sub:"Cardiac cycle, output, preload/afterload, Frank-Starling, ECG basics"},
+      {name:"Respiratory physiology",sub:"Ventilation, gas exchange, O2-Hb dissociation curve, control of breathing"},
+      {name:"Renal physiology",sub:"GFR, tubular reabsorption & secretion, ADH, aldosterone, RAS, urine concentration"},
+      {name:"Fluid & electrolyte physiology",sub:"Osmolality, body fluid compartments, Na/K/Ca/Mg/PO4 regulation"},
+      {name:"Acid-base balance",sub:"Buffer systems, pH, ABG interpretation, compensation mechanisms"},
+      {name:"Neurophysiology",sub:"Action potentials, synaptic transmission, neurotransmitters, reflexes"},
+      {name:"Endocrine physiology",sub:"Hormone mechanisms, feedback loops, stress response (HPA axis)"},
+    ]},
+    {title:"Biochemistry",topics:[
+      {name:"Energy metabolism",sub:"Glycolysis, Krebs cycle, oxidative phosphorylation, ATP yield, gluconeogenesis"},
+      {name:"Macromolecule biochemistry",sub:"Carbohydrate, protein & lipid digestion, absorption, transport, metabolism"},
+      {name:"Enzyme kinetics",sub:"Michaelis-Menten, enzyme inhibition, cofactors, clinical enzyme markers (AST, ALT, CK)"},
+    ]},
+    {title:"Nutrition",isNew:true,topics:[
+      {name:"Nutritional assessment",sub:"Anthropometric (BMI, MUAC, skinfold), biochemical, clinical, dietary – ABCD method"},
+      {name:"Macronutrients in depth",sub:"Carbohydrates (glycaemic index), proteins (essential AAs), fats (saturated, PUFA, omega-3)"},
+      {name:"Micronutrients",sub:"Fat-soluble (A,D,E,K), water-soluble (B-complex, C) vitamins; iron, iodine, zinc, calcium, folate"},
+      {name:"Nutritional deficiency disorders",sub:"Anaemia, rickets, scurvy, pellagra, beriberi, kwashiorkor, marasmus, goitre"},
+      {name:"Therapeutic diets",sub:"Diabetic, low-sodium, renal (low K/P), low-fat, high-protein, gluten-free, soft/pureed"},
+      {name:"Enteral & parenteral nutrition",sub:"NG/NJ/PEG tubes, TPN composition, monitoring, complications, nursing care"},
+      {name:"Nutrition in special populations",sub:"Pregnant/lactating women, infants, elderly, HIV+, cancer patients, ICU patients"},
+      {name:"Food safety & hygiene",sub:"Foodborne illness pathogens, HACCP, storage temperatures, cross-contamination prevention"},
+    ]},
+  ]},
+  {week:3,label:"Microbiology, Immunology, Haematology & Pharmacology",sections:[
+    {title:"Microbiology",topics:[
+      {name:"Bacteriology",sub:"Gram staining, culture & sensitivity, pathogenic bacteria (TB, staph, strep, E.coli), resistance"},
+      {name:"Virology",sub:"Virus structure, replication cycle, HIV lifecycle, hepatitis A-E, COVID-19, herpes"},
+      {name:"Mycology & parasitology",sub:"Candida, Cryptococcus, malaria lifecycle, helminths, trypanosomiasis, schistosomiasis"},
+      {name:"Infection prevention & control",sub:"Sterilisation methods, disinfection levels, PPE donning/doffing, isolation categories"},
+      {name:"HAI prevention bundles",sub:"CAUTI bundle, CLABSI bundle, VAP bundle, SSI prevention, surveillance metrics"},
+    ]},
+    {title:"Immunology",isNew:true,topics:[
+      {name:"Innate immunity",sub:"Physical barriers, phagocytosis, complement cascade, NK cells, pattern recognition"},
+      {name:"Adaptive immunity overview",sub:"Primary vs secondary response, clonal selection, memory cells, antigen presentation"},
+      {name:"Humoral immunity",sub:"B cell activation, antibody classes (IgG/M/A/E/D), opsonisation, complement activation"},
+      {name:"Cell-mediated immunity",sub:"T helper (CD4), cytotoxic T (CD8), regulatory T cells, MHC class I & II, perforin"},
+      {name:"Hypersensitivity reactions",sub:"Type I (anaphylaxis), II (haemolytic), III (immune complex), IV (contact dermatitis) – Gell & Coombs"},
+      {name:"Autoimmune disorders",sub:"RA, SLE, MS, T1DM, Graves – immunopathology, ANA, nursing care"},
+      {name:"Immunodeficiency states",sub:"Primary (SCID, DiGeorge, XLA) vs secondary (HIV/AIDS) – opportunistic infections"},
+      {name:"Vaccines & immunisation science",sub:"Active vs passive immunity, live-attenuated, inactivated, mRNA, subunit vaccines, adjuvants"},
+      {name:"Immunosuppression nursing",sub:"Corticosteroids, biologics, transplant drugs – side effects, infection risk, nursing care"},
+    ]},
+    {title:"Haematology",isNew:true,topics:[
+      {name:"Blood composition & normal values",sub:"Plasma proteins, RBC (4.5-6M/µL), WBC (4-11K), Hb (M:13.5-17.5, F:12-15.5), platelets"},
+      {name:"Anaemia classification & management",sub:"Microcytic (iron, thalassaemia), macrocytic (B12/folate), normocytic (haemolytic, aplastic)"},
+      {name:"Sickle cell disease",sub:"HbS polymerisation, vaso-occlusive crisis, acute chest, stroke, hydroxyurea, transfusion"},
+      {name:"Leukaemia",sub:"ALL vs AML vs CLL vs CML – blast cells, bone marrow, induction/consolidation, GCSF"},
+      {name:"Lymphoma",sub:"Hodgkin (Reed-Sternberg) vs Non-Hodgkin, Ann Arbor staging, R-CHOP, nursing care"},
+      {name:"Bleeding & clotting disorders",sub:"Haemophilia A/B, vWD, ITP, DIC, thrombocytopaenia – factor replacement, nursing"},
+      {name:"Blood transfusion",sub:"ABO/Rh typing, cross-matching, compatibility testing, transfusion reactions (types & management)"},
+      {name:"Bone marrow & stem cell transplant",sub:"Allogeneic vs autologous, conditioning, engraftment, GVHD, infections, nursing support"},
+      {name:"Anticoagulant therapy",sub:"UFH (APTT), LMWH, warfarin (INR), DOACs – monitoring, reversal agents, nursing precautions"},
+    ]},
+    {title:"Pharmacology",topics:[
+      {name:"Pharmacokinetics (ADME)",sub:"Absorption routes, distribution (Vd), hepatic metabolism, renal clearance, half-life, bioavailability"},
+      {name:"Pharmacodynamics",sub:"Receptor types, agonist/antagonist, dose-response curve, therapeutic index, synergism"},
+      {name:"Cardiovascular drugs",sub:"ACEi, ARBs, beta-blockers, CCBs, diuretics, antiarrhythmics, anticoagulants, cardiac glycosides"},
+      {name:"CNS drugs",sub:"Opioid analgesics, NSAIDs, benzodiazepines, antiepileptics, antipsychotics, anaesthetics"},
+      {name:"Antimicrobials in clinical practice",sub:"Beta-lactams, aminoglycosides, macrolides, fluoroquinolones, antifungals, antivirals, antiparasitics"},
+      {name:"Endocrine & metabolic drugs",sub:"Insulin types & regimes, oral hypoglycaemics, levothyroxine, corticosteroids, bisphosphonates"},
+      {name:"GI drugs",sub:"PPIs, H2 blockers, antacids, antiemetics, laxatives, antidiarrhoeals, mesalazine"},
+      {name:"Drug calculations mastery",sub:"Oral dose, IV bolus, IV infusion rate (mL/hr & drops/min), weight-based, reconstitution"},
+      {name:"Adverse drug reactions",sub:"Type A (dose-related) & B (idiosyncratic), ADR reporting, yellow card, pharmacovigilance"},
+    ]},
+  ]},
+  {week:4,label:"Medical-Surgical Nursing",sections:[
+    {title:"Cardiovascular nursing",topics:[
+      {name:"Hypertension",sub:"JNC classification, lifestyle, stepwise drug therapy, hypertensive urgency vs emergency"},
+      {name:"Coronary artery disease & ACS",sub:"Stable angina, NSTEMI, STEMI – MONA, thrombolytics, PCI, post-PCI nursing"},
+      {name:"Heart failure",sub:"Left vs right, systolic vs diastolic, NYHA class, diuretics, ACEI, BiPAP, fluid restriction"},
+      {name:"Cardiac arrhythmias",sub:"Sinus/atrial/ventricular rhythms, AF, VF, SVT – cardioversion, defibrillation, pacing"},
+      {name:"Peripheral vascular disorders",sub:"DVT (Wells score, LMWH), PAD, varicose veins, Buerger's, Raynaud's"},
+    ]},
+    {title:"Respiratory nursing",topics:[
+      {name:"Asthma",sub:"Pathophysiology, BTS stepwise, PEFR, salbutamol, ICS, spacer technique, written action plan"},
+      {name:"COPD",sub:"GOLD staging, emphysema vs chronic bronchitis, LTOT, LABA/LAMA, pulmonary rehab, NIV"},
+      {name:"Pneumonia",sub:"CAP vs HAP vs VAP, CURB-65, antibiotics, physiotherapy, oxygen targets, prevention"},
+      {name:"Tuberculosis",sub:"PTB vs EPTB, smear/culture/GeneXpert, DOTS (2RHZE/4RH), MDR-TB, infection control"},
+      {name:"Pleural disorders",sub:"Effusion (transudate vs exudate), pneumothorax (spontaneous vs tension), haemothorax, chest drain"},
+    ]},
+    {title:"Gastrointestinal & hepatic nursing",topics:[
+      {name:"Peptic ulcer disease",sub:"H. pylori (triple therapy), NSAIDs, endoscopy prep & care, PPIs, complications"},
+      {name:"Liver disease",sub:"Viral hepatitis, cirrhosis (Child-Pugh), portal hypertension, ascites, SBP, hepatic encephalopathy"},
+      {name:"IBD – Crohn's & UC",sub:"Differences, colonoscopy care, biologics (infliximab), stoma care, nutrition"},
+      {name:"GI bleeding",sub:"Upper (haematemesis, melaena) vs lower, haemostasis, endoscopy, Blatchford score"},
+      {name:"Abdominal emergencies",sub:"Appendicitis, pancreatitis, bowel obstruction, peritonitis – assessment & surgical nursing"},
+    ]},
+    {title:"Renal & endocrine nursing",topics:[
+      {name:"Acute kidney injury (AKI)",sub:"KDIGO staging, pre-renal/intrinsic/post-renal, fluid resuscitation, dialysis, nursing care"},
+      {name:"Chronic kidney disease",sub:"CKD stages, renal diet (low K/P/Na/protein), EPO, HD vs PD, transplant preparation"},
+      {name:"Diabetes mellitus",sub:"T1 vs T2, insulin regimes, SMBG, HbA1c, sick-day rules, DKA, HHS, complications"},
+      {name:"Thyroid & parathyroid disorders",sub:"Hypothyroidism, hyperthyroidism, thyroid storm, post-thyroidectomy (tetany, airway)"},
+      {name:"Adrenal disorders",sub:"Cushing's (cortisol excess), Addison's (adrenal crisis), phaeochromocytoma, steroid therapy"},
+    ]},
+    {title:"Neurological & surgical nursing",topics:[
+      {name:"Stroke & TIA",sub:"Ischaemic vs haemorrhagic, FAST, thrombolysis window, stroke unit, dysphagia, rehab"},
+      {name:"Epilepsy & seizures",sub:"ILAE classification, status epilepticus (diazepam/lorazepam), AEDs, SUDEP, lifestyle"},
+      {name:"Head injury & raised ICP",sub:"GCS, Monroe-Kellie, ICP monitoring, herniation syndromes, nursing interventions"},
+      {name:"Meningitis & encephalitis",sub:"Bacterial vs viral, LP care, chemoprophylaxis (rifampicin), isolation, antibiotic timing"},
+      {name:"Musculoskeletal nursing",sub:"Fractures (closed/open/path), traction, POP care, compartment syndrome, arthritis, gout"},
+      {name:"Perioperative nursing",sub:"Pre-op checklist, surgical consent, anaesthesia types, intra-op roles, post-op complications"},
+    ]},
+  ]},
+  {week:5,label:"Communicable Diseases, Critical Care & Emergency Nursing",sections:[
+    {title:"Communicable diseases",isNew:true,topics:[
+      {name:"Principles of communicable disease",sub:"Chain of infection, epidemiological triad, modes of transmission, breaking the chain"},
+      {name:"HIV/AIDS nursing",sub:"Pathophysiology, WHO clinical staging, ART regimes (TDF/3TC/DTG), IRIS, adherence, disclosure"},
+      {name:"Tuberculosis management",sub:"PTB vs EPTB, DOTS (2RHZE/4RH), MDR-TB (BDQ regimes), co-infection, contact tracing"},
+      {name:"Malaria nursing",sub:"Plasmodium species, severe malaria criteria, IV artesunate, quinine, nursing monitoring"},
+      {name:"Viral haemorrhagic fevers",sub:"Ebola, Marburg, Lassa – Level 4 PPE, donning/doffing, decontamination, IPC in outbreak"},
+      {name:"Cholera & typhoid",sub:"Cholera (ORT, IV Ringer's, cholera cot), typhoid (Widal, ciprofloxacin), sanitation"},
+      {name:"STIs & BBVs",sub:"Syphilis, gonorrhoea, chlamydia, HPV, HSV – diagnosis, syndromic management, partner notification"},
+      {name:"Vaccine-preventable diseases",sub:"Measles, mumps, rubella, polio, pertussis, meningococcal – case management, notification"},
+      {name:"COVID-19 & respiratory infections",sub:"SARS-CoV-2, infection control, dexamethasone, prone ventilation, long COVID"},
+      {name:"Zoonoses & NTDs",sub:"Rabies (PEP), brucellosis, schistosomiasis, kala-azar, leishmaniasis – endemic in East Africa"},
+      {name:"Outbreak investigation steps",sub:"Case definition, epidemic curve, attack rate, contact tracing, line listing, WHO reporting"},
+    ]},
+    {title:"Critical care nursing",isNew:true,topics:[
+      {name:"ICU environment & setup",sub:"Bed space, monitoring lines, ventilators, infusion pumps, defibrillators, alarm management"},
+      {name:"Haemodynamic monitoring",sub:"Arterial line (MAP), CVP, PA catheter (PAWP), PICCO, SvO2 – interpretation & nursing"},
+      {name:"Mechanical ventilation",sub:"Modes (CMV/SIMV/CPAP/BiPAP/PRVC), settings (FiO2/PEEP/TV/RR), weaning criteria, SBT"},
+      {name:"Shock management",sub:"Hypovolaemic, distributive (septic/anaphylactic/neurogenic), cardiogenic, obstructive – resuscitation"},
+      {name:"Sepsis & septic shock",sub:"Sepsis-3 criteria, qSOFA, Surviving Sepsis Bundle (1h & 3h), vasopressors, lactate clearance"},
+      {name:"ARDS",sub:"Berlin definition, P/F ratio, lung-protective ventilation (6mL/kg IBW), prone positioning, NMBA"},
+      {name:"ICU sedation, analgesia & delirium",sub:"RASS/CAM-ICU, analgesia-first (A1C), daily awakening trial, propofol vs dexmedetomidine"},
+      {name:"Multi-organ dysfunction (MODS)",sub:"Sequential organ failure, scoring (SOFA/APACHE II), organ support priorities"},
+      {name:"ICU nutrition & metabolism",sub:"Early EN within 24-48h, target calories, refeeding syndrome, GRV monitoring, PN transition"},
+      {name:"ICU rehabilitation & family care",sub:"Early mobilisation (ABCDEF bundle), ICU diaries, family communication, ICU-acquired weakness"},
+    ]},
+    {title:"Emergency nursing",topics:[
+      {name:"Emergency triage",sub:"Manchester Triage System, START, SALT – colour categories, re-triage, documentation"},
+      {name:"Primary survey (ABCDE)",sub:"Airway, Breathing, Circulation, Disability, Exposure – simultaneous assessment & intervention"},
+      {name:"Advanced life support (ALS)",sub:"Adult ALS algorithm, CPR quality metrics, shockable vs non-shockable, ROSC, post-resus care"},
+      {name:"Major trauma",sub:"ATLS principles, damage control resuscitation, massive transfusion protocol, REBOA"},
+      {name:"Poisoning & overdose",sub:"Toxidromes, activated charcoal, antidotes (naloxone/flumazenil/atropine/N-acetylcysteine)"},
+      {name:"Burns nursing",sub:"Rule of nines, %TBSA, Parkland formula (4mL/kg/%TBSA/24h), inhalation injury, dressings"},
+      {name:"Disaster & mass casualty",sub:"HICS, METHANE report, surge capacity, triage in MCI, chemical decontamination"},
+    ]},
+  ]},
+  {week:6,label:"Maternal, Newborn & Gynaecology",sections:[
+    {title:"Antepartum & intrapartum care",topics:[
+      {name:"Reproductive anatomy & physiology",sub:"Menstrual cycle (follicular, ovulatory, luteal), fertilisation, implantation, placental hormones"},
+      {name:"Fetal development",sub:"Embryology by trimester, fetal circulation (ductus arteriosus, venosus, foramen ovale), teratogens"},
+      {name:"Antenatal care (ANC)",sub:"WHO 8-contact ANC, danger signs, PMTCT cascade, symphysis-fundal height, fetal movements"},
+      {name:"Minor disorders of pregnancy",sub:"Nausea (hyperemesis), heartburn, constipation, oedema, round ligament pain, varicosities"},
+      {name:"Hypertensive disorders",sub:"PIH, pre-eclampsia (BP ≥140/90 + proteinuria), eclampsia – MgSO4 protocol, antihypertensives"},
+      {name:"Antepartum haemorrhage",sub:"Placenta praevia (painless) vs abruption (painful) – USS, management, emergency delivery"},
+      {name:"Medical conditions in pregnancy",sub:"Anaemia, GDM (OGTT), malaria (IPTp), cardiac disease, epilepsy, SLE"},
+      {name:"Normal labour & delivery",sub:"Stages (1st-4th), mechanism of labour, partograph, active management of 3rd stage, episiotomy"},
+      {name:"Intrapartum complications",sub:"PPH (primary/secondary, uterotonic drugs), obstructed labour, cord prolapse, shoulder dystocia"},
+      {name:"Pain management in labour",sub:"Gate control theory, non-pharm (water/TENS/massage), Entonox, epidural, pethidine"},
+    ]},
+    {title:"Postnatal care & newborn",topics:[
+      {name:"Normal puerperium",sub:"Uterine involution, lochia (rubra/serosa/alba), lactation (prolactin/oxytocin), postnatal checks"},
+      {name:"Postnatal complications",sub:"Secondary PPH, puerperal sepsis, mastitis, postnatal depression/psychosis, DVT"},
+      {name:"Newborn assessment",sub:"APGAR (1 & 5 min), head-to-toe, Ballard/Dubowitz gestational age, anthropometrics"},
+      {name:"Essential newborn care",sub:"Cord care, eye prophylaxis (tetracycline), Vitamin K (phytomenadione IM), skin-to-skin, warmth"},
+      {name:"Neonatal resuscitation",sub:"NLS algorithm: warmth/dry/stimulate → airway → breathing (BVM) → CPR → drugs"},
+      {name:"Neonatal complications",sub:"LBW, prematurity, NNJ (phototherapy), hypoglycaemia (dextrose gel), sepsis, RDS, NEC"},
+      {name:"Breastfeeding",sub:"Latch, positioning (cradle/football/side-lying), engorgement, mastitis, inverted nipples, formula supplementation"},
+      {name:"Family planning",sub:"COC, POP, DMPA, implants (Jadelle/Implanon), IUDs (hormonal & copper), condoms, sterilisation, LAM"},
+    ]},
+    {title:"Gynaecology",isNew:true,topics:[
+      {name:"Gynaecological assessment",sub:"Gynaecological history, bimanual exam, speculum examination, cervical smear technique, chaperone"},
+      {name:"Menstrual disorders",sub:"Primary/secondary amenorrhoea, dysmenorrhoea, menorrhagia (PALM-COEIN), oligomenorrhoea"},
+      {name:"PCOS",sub:"Rotterdam criteria (2/3), hyperandrogenism, anovulation, USS, metformin, clomiphene, lifestyle"},
+      {name:"Endometriosis & fibroids",sub:"Revised ASRM staging, adenomyosis, uterine fibroids – GnRH analogues, myomectomy, hysterectomy"},
+      {name:"Pelvic inflammatory disease",sub:"Ascending infection, Fitz-Hugh-Curtis syndrome, antibiotic regimes, complications (ectopic, infertility)"},
+      {name:"Cervical cancer",sub:"HPV 16/18, screening (VIA, Pap, HPV test), colposcopy, LLETZ, FIGO staging, chemoradiotherapy"},
+      {name:"Uterine & ovarian pathology",sub:"Endometrial cancer, ovarian cysts, ovarian torsion, ovarian cancer (CA-125), staging, oophorectomy"},
+      {name:"Vulval & vaginal conditions",sub:"Vulvodynia, lichen sclerosus, BV, trichomoniasis, candidiasis – diagnosis & treatment"},
+      {name:"Urinary incontinence & prolapse",sub:"Stress/urge/overflow/mixed incontinence, pelvic organ prolapse grading, physiotherapy, pessary, TVT"},
+      {name:"Infertility investigation",sub:"Male (semen analysis) & female (hormonal, USS, HSG) factors, IVF, IUI, emotional support"},
+      {name:"Menopause & HRT",sub:"Perimenopause symptoms, FSH levels, HRT types (oestrogen-only/combined), risks (breast ca, VTE), alternatives"},
+      {name:"Ectopic pregnancy",sub:"Risk factors, tubal/cornual/ovarian, serum βhCG trend, methotrexate vs laparoscopic salpingostomy"},
+    ]},
+  ]},
+  {week:7,label:"Paediatric Nursing, Mental Health & Psychology",sections:[
+    {title:"Child health & paediatrics",topics:[
+      {name:"Growth & development milestones",sub:"WHO standards; gross motor, fine motor, language, social-emotional by age; red flags"},
+      {name:"Child nutrition",sub:"Infant feeding (EBF 6 months), complementary feeding, micronutrient supplementation, growth monitoring"},
+      {name:"Malnutrition management",sub:"SAM vs MAM, MUAC thresholds, F-75/F-100 milk, RUTF, refeeding syndrome, therapeutic care"},
+      {name:"KEPI immunisation schedule",sub:"BCG (birth), OPV 0/1/2/3, IPV, PCV, rotavirus, measles-rubella, yellow fever – doses & intervals"},
+      {name:"IMCI approach",sub:"Assess (danger signs), classify (colour-coded), treat/refer, counsel, follow-up – integrated approach"},
+      {name:"Febrile child management",sub:"Malaria (RDT/microscopy), fever assessment, paracetamol/ibuprofen, tepid sponging, when to refer"},
+      {name:"Paediatric pneumonia",sub:"WHO classification (fast breathing/chest indrawing/danger signs), amoxicillin, oxygen, nursng care"},
+      {name:"Diarrhoeal disease",sub:"Dehydration assessment (plan A/B/C), ORS preparation, zinc, continued feeding, mothers' education"},
+      {name:"Child with HIV",sub:"EID (DNA PCR at 6 wks), paediatric ART (LPV/r-based), IMCI adaptations, disclosure to child"},
+      {name:"Paediatric emergencies",sub:"Croup (nebulised adrenaline), epiglottitis, status epilepticus, severe dehydration, anaphylaxis"},
+      {name:"Child protection & safeguarding",sub:"Types of abuse, ACES, mandatory reporting, multi-agency safeguarding, Kenya Children Act 2022"},
+    ]},
+    {title:"Mental health nursing",topics:[
+      {name:"Mental status examination (MSE)",sub:"Appearance, behaviour, speech, mood, affect, thought form & content, perceptions, cognition, insight"},
+      {name:"Schizophrenia & psychotic disorders",sub:"Positive/negative/cognitive symptoms, first-episode psychosis, antipsychotics, depot injections, relapse prevention"},
+      {name:"Mood disorders",sub:"MDD (PHQ-9), bipolar I & II (YMRS), cyclothymia, ECT, antidepressants (SSRIs, SNRIs), lithium monitoring"},
+      {name:"Anxiety & related disorders",sub:"GAD, panic disorder, social anxiety, specific phobias, OCD, PTSD – CBT, EMDR, SSRIs, benzodiazepines"},
+      {name:"Substance use disorders",sub:"AUDIT-C, CAGE, alcohol withdrawal (CIWA, chlordiazepoxide), opioid substitution (methadone/buprenorphine)"},
+      {name:"Personality disorders",sub:"Cluster A/B/C overview, BPD (DBT), antisocial, narcissistic – therapeutic boundaries, risk management"},
+      {name:"Psychotropic medications",sub:"Typicals vs atypicals, EPS/tardive dyskinesia, NMS, SSRI discontinuation, lithium toxicity, monitoring"},
+      {name:"Mental Health Act Kenya 2022",sub:"Voluntary vs involuntary, rights during admission, community treatment orders, mental health courts"},
+    ]},
+    {title:"Psychology & educational psychology",topics:[
+      {name:"Foundations of psychology",sub:"History, major schools (behaviourism, psychoanalysis, humanism, cognitivism), biopsychosocial model"},
+      {name:"Developmental theories",sub:"Freud (psychosexual), Erikson (psychosocial), Piaget (cognitive), Vygotsky (ZPD), Kohlberg (moral)"},
+      {name:"Learning theories",sub:"Classical conditioning (Pavlov), operant (Skinner), social learning (Bandura), observational learning"},
+      {name:"Stress & coping",sub:"GAS – alarm/resistance/exhaustion, primary & secondary appraisal, problem vs emotion-focused coping"},
+      {name:"Educational psychology in nursing",sub:"Andragogy (Knowles), multiple intelligences (Gardner), learning styles (VARK), self-efficacy"},
+      {name:"Health behaviour models",sub:"Health Belief Model, Stages of Change (Prochaska), motivational interviewing, Theory of Planned Behaviour"},
+    ]},
+  ]},
+  {week:8,label:"Community Health, Biostatistics, Sociology, Anthropology & Communication",sections:[
+    {title:"Community & public health nursing",topics:[
+      {name:"Primary health care",sub:"Alma Ata 1978, Astana 2018, PHC components, UHC, Kenya Community Health Policy"},
+      {name:"Epidemiology principles",sub:"Descriptive (who/what/where/when), analytical (cohort, case-control), experimental (RCT)"},
+      {name:"Rates & measures",sub:"Incidence, prevalence, attack rate, case fatality rate, RR, OR, NNT, PAR"},
+      {name:"Disease surveillance",sub:"Passive vs active, sentinel surveillance, notifiable diseases (Kenya), EWARS, outbreak steps"},
+      {name:"Health promotion",sub:"Ottawa Charter 5 action areas, Lalonde model, 3 levels of prevention, behaviour change"},
+      {name:"Community health assessment",sub:"Community diagnosis, windshield survey, KAP studies, mapping, CHW roles (Kenya)"},
+      {name:"School & occupational health",sub:"School health programme, vision/hearing screening, deworming, workplace health promotion"},
+      {name:"Home-based care",sub:"HIV, palliative, elderly, wound care at home, CHEW supervision, family empowerment"},
+    ]},
+    {title:"Biostatistics",isNew:true,topics:[
+      {name:"Data types & measurement scales",sub:"Nominal, ordinal, interval, ratio; discrete vs continuous; primary vs secondary data"},
+      {name:"Data collection & tools",sub:"Questionnaire design (Likert, closed, open), interviews, observation, validity & reliability"},
+      {name:"Measures of central tendency",sub:"Mean (arithmetic/geometric), median, mode – calculation, use by data type, skewness"},
+      {name:"Measures of dispersion",sub:"Range, variance, SD, coefficient of variation, IQR, percentiles – clinical application"},
+      {name:"Probability & distributions",sub:"Normal curve (68-95-99.7 rule), z-scores, t-distribution, binomial, Poisson"},
+      {name:"Confidence intervals & estimation",sub:"95% CI interpretation, SE, sample size determination, margin of error"},
+      {name:"Hypothesis testing",sub:"Null/alternative hypotheses, Type I (α=0.05) & Type II errors, p-value, one vs two-tailed"},
+      {name:"Statistical tests",sub:"Independent t-test, paired t-test, chi-square, ANOVA, Mann-Whitney U, Kruskal-Wallis, Pearson/Spearman"},
+      {name:"Vital statistics",sub:"CBR, CDR, IMR, NMR, MMR, TFR, life expectancy – formula, Kenya values, SDG targets"},
+      {name:"Data presentation",sub:"Frequency tables, bar charts, histograms, frequency polygons, pie charts, scatter plots, box plots"},
+      {name:"Screening & diagnostic tests",sub:"Sensitivity, specificity, PPV, NPV, ROC curve, LR+/LR- – clinical decision-making"},
+    ]},
+    {title:"Sociology & anthropology",topics:[
+      {name:"Introduction to sociology",sub:"Sociological imagination, functionalism, conflict theory, symbolic interactionism, social institutions"},
+      {name:"Socialisation & culture",sub:"Primary/secondary socialisation, agents of socialisation, culture, norms, values, ethnocentrism"},
+      {name:"Social stratification & health",sub:"Class, caste, gender inequality, poverty – Dahlgren-Whitehead rainbow, Marmot review"},
+      {name:"Sociology of health & illness",sub:"Sick role (Parsons), medicalisation, iatrogenesis (Illich), lay referral, illness behaviour"},
+      {name:"Family structures & health",sub:"Nuclear, extended, single-parent, polygamous, same-sex – functions, dynamics, health impact"},
+      {name:"Medical anthropology",sub:"Ethnomedical systems (biomedical/personalistic/naturalistic), explanatory models, Kleinman's questions"},
+      {name:"Cultural beliefs & health practices",sub:"FGM/C, male circumcision, dietary taboos, birth rituals, death rites, health-seeking behaviour"},
+      {name:"Cultural competence & humility",sub:"LEARN model (Listen, Explain, Acknowledge, Recommend, Negotiate), cultural safety, implicit bias"},
+      {name:"Traditional medicine in Kenya",sub:"Herbalism, faith healing, TBA roles, WHO TM strategy 2019-2025, integration challenges"},
+    ]},
+    {title:"Communication in nursing",topics:[
+      {name:"Communication theory",sub:"Shannon-Weaver linear model, transactional model, sender-message-channel-receiver-feedback-noise"},
+      {name:"Types of communication",sub:"Verbal (paralanguage), non-verbal (kinesics, proxemics, haptics), written, digital, formal vs informal"},
+      {name:"Therapeutic communication",sub:"Active listening, open-ended questions, reflection, clarification, validation, silence, summarising"},
+      {name:"Barriers & facilitation",sub:"Language/literacy barriers, disability, cultural differences, power dynamics – strategies"},
+      {name:"Health communication & IEC/BCC",sub:"IEC vs BCC distinction, mass media, social media, community mobilisation, health campaigns"},
+      {name:"Clinical handover & SBAR",sub:"SBAR (Situation-Background-Assessment-Recommendation), ISBAR, bedside handover, shift report"},
+      {name:"Conflict resolution",sub:"Sources of workplace conflict, Thomas-Kilmann model, DESC script, negotiation, mediation"},
+      {name:"Breaking bad news",sub:"SPIKES protocol (Setting, Perception, Invitation, Knowledge, Emotions, Strategy/Summary)"},
+    ]},
+  ]},
+  {week:9,label:"Palliative Care, Env & Occupational Health, Leadership & Forensics",sections:[
+    {title:"Palliative & end-of-life care",isNew:true,topics:[
+      {name:"Philosophy of palliative care",sub:"WHO definition (2002 & 2014), principles, curative vs palliative continuum, hospice model"},
+      {name:"Pain assessment in palliative care",sub:"Total pain concept (Saunders), pain scales, opioid conversion, breakthrough pain, opiophobia"},
+      {name:"WHO analgesic ladder",sub:"Step 1 (non-opioid) → Step 2 (weak opioid) → Step 3 (strong opioid) + adjuvants at each step"},
+      {name:"Symptom management",sub:"Nausea/vomiting, dyspnoea, constipation (opioid-induced), fatigue, anorexia, delirium, death rattle"},
+      {name:"Psychosocial & spiritual care",sub:"Kübler-Ross 5 stages, anticipatory grief, existential distress, spiritual assessment (FICA/HOPE)"},
+      {name:"Communication in palliative care",sub:"SPIKES, goals-of-care conversations, advance directives, 'do not resuscitate' discussions"},
+      {name:"Palliative care in Kenya",sub:"KEHPCA, Nairobi Hospice, opioid availability (morphine oral solution), community-based PC"},
+      {name:"Paediatric palliative care",sub:"Age-appropriate communication about death, family-centred care, symptom control, sibling support"},
+      {name:"End-of-life care",sub:"Care in last 48-72h, recognising dying, comfort cares, syringe driver, death certification, last offices"},
+      {name:"Bereavement & grief support",sub:"Normal vs complicated grief (DSM-5 PGD), counselling approaches, cultural mourning, support groups"},
+    ]},
+    {title:"Environmental & occupational health",isNew:true,topics:[
+      {name:"Environmental health principles",sub:"Environmental determinants of health, burden of disease, planetary health, One Health concept"},
+      {name:"Water safety & WASH",sub:"Water quality standards (WHO), treatment (chlorination, boiling, filtration, UV), waterborne diseases"},
+      {name:"Air quality & respiratory hazards",sub:"Indoor air pollution (biomass fuels), silica, asbestos, fumes, mists – occupational lung diseases"},
+      {name:"Occupational health legislation Kenya",sub:"Work Injury Benefits Act (WIBA 2007), OSHA 2007, Factories Act, ILO conventions 155 & 161"},
+      {name:"Occupational hazards classification",sub:"Physical (noise, vibration, radiation, heat), chemical, biological, ergonomic, psychosocial"},
+      {name:"Occupational diseases",sub:"Silicosis, asbestosis, occupational asthma, NIHL, farmer's lung, byssinosis, HAVS, contact dermatitis"},
+      {name:"Work-related injuries",sub:"Needlestick/sharps (PEP protocol), MSDs, slips/trips, machinery injuries – prevention bundles"},
+      {name:"Occupational health nursing roles",sub:"Pre-employment & periodic medicals, OSHA compliance, workplace health promotion, first responder"},
+      {name:"Climate change & health",sub:"Heat stress (heat exhaustion, stroke), vector range shifts, food insecurity, flood-related infections"},
+      {name:"Healthcare waste management",sub:"Segregation, colour-coding (Kenya 2008 standards), sharps disposal, pharmaceutical, cytotoxic waste"},
+    ]},
+    {title:"Leadership & nursing management",isNew:true,topics:[
+      {name:"Leadership theories",sub:"Trait, behavioural (Ohio/Michigan), situational (Hersey & Blanchard), transformational, servant leadership"},
+      {name:"Management functions",sub:"Planning (strategic/operational/tactical), organising, staffing, directing, controlling – application in nursing"},
+      {name:"Ward management",sub:"Duty rota (off-duty), bed management, stores management, ward round preparation, shift handover"},
+      {name:"Human resource management",sub:"Recruitment/selection, job descriptions, performance appraisal (SMART objectives), disciplinary process"},
+      {name:"Staff motivation & retention",sub:"Herzberg two-factor theory, Maslow in workplace, intrinsic vs extrinsic motivation, recognition"},
+      {name:"Financial management",sub:"Budget types (zero-based, incremental), variance analysis, cost-containment, unit cost calculation"},
+      {name:"Quality improvement (QI) in nursing",sub:"PDSA cycle, fishbone diagram, run chart, FMEA, audit cycle, clinical indicators (KPIs)"},
+      {name:"Patient safety framework",sub:"WHO Patient Safety Goals, near-miss reporting, root cause analysis, Swiss cheese model, Just Culture"},
+      {name:"Change management",sub:"Lewin's unfreeze-change-refreeze, Kotter's 8 steps, managing resistance, nursing as change agent"},
+      {name:"Delegation & supervision",sub:"Delegation principles (NNC guidelines), accountability vs responsibility, supervision models, task allocation"},
+      {name:"Health policy & systems",sub:"KHSSP 2018-2023, Kenya Health Act 2017, devolution of health, health systems building blocks (WHO)"},
+    ]},
+    {title:"Forensic nursing",topics:[
+      {name:"Introduction to forensic nursing",sub:"Scope of practice, SANE/SAFE roles, medico-legal interface, IAFN competencies"},
+      {name:"Evidence collection & chain of custody",sub:"Forensic specimen collection, packaging, labelling, storage, chain of custody documentation"},
+      {name:"SGBV nursing care",sub:"Trauma-informed approach, SGBV clinical protocol, PEP (within 72h), emergency contraception, safe reporting"},
+      {name:"Child & elder abuse nursing",sub:"Indicators of abuse, mandatory reporting (Children Act 2022), multi-agency referral, safeguarding"},
+      {name:"Toxicology & substance abuse",sub:"Drug screening panels, BAC calculation, toxidrome identification, poisoning management, court requirements"},
+      {name:"Legal documentation & testimony",sub:"Nursing notes as legal evidence, P3 form completion, expert witness, testifying in court"},
+      {name:"Death & post-mortem nursing",sub:"Death certification, coroner notification, medico-legal post-mortem, preservation of forensic evidence"},
+    ]},
+    {title:"Nursing ethics & professional practice",topics:[
+      {name:"Ethical principles",sub:"Beneficence, non-maleficence, autonomy, justice, fidelity, veracity – applied case scenarios"},
+      {name:"Ethical theories",sub:"Utilitarianism, Kantian deontology, virtue ethics, care ethics, natural law, divine command"},
+      {name:"Ethical dilemmas in nursing",sub:"End-of-life decisions, resource allocation, truth-telling, assisted dying, conscientious objection"},
+      {name:"NNC Act & professional regulation",sub:"Cap 257 (NNC Act), licensure, scope of practice, disciplinary hearings, CPD requirements"},
+      {name:"Patients' rights in Kenya",sub:"Constitution Article 43 (right to health), Patient Charter, informed consent, POPIA/confidentiality"},
+    ]},
+  ]},
+  {week:10,label:"Research, Teaching Methodology & Final Revision",sections:[
+    {title:"Nursing research & EBP",topics:[
+      {name:"Introduction to nursing research",sub:"Research paradigms (positivism vs interpretivism), EBP models (IOWA, JBI, Stetler), research-practice gap"},
+      {name:"Literature review & critical appraisal",sub:"Research question, PICO/SPIDER, Boolean operators, CASP tools, levels of evidence (Oxford)"},
+      {name:"Quantitative research designs",sub:"Descriptive, correlational, quasi-experimental, RCT – features, strengths, limitations"},
+      {name:"Qualitative research designs",sub:"Phenomenology, grounded theory, ethnography, case study, action research"},
+      {name:"Sampling methods",sub:"Probability (simple random, stratified, cluster, systematic) vs non-probability (purposive, snowball, convenience)"},
+      {name:"Data collection tools",sub:"Questionnaires (Likert scale design, pre-testing), structured interviews, observation checklists, physiological"},
+      {name:"Data analysis",sub:"Descriptive stats, inferential tests (t-test, chi-square, ANOVA), thematic/content analysis, SPSS/NVivo overview"},
+      {name:"Research ethics",sub:"Informed consent process, anonymity vs confidentiality, beneficence, NACOSTI registration, Helsinki Declaration"},
+      {name:"Research proposal writing",sub:"Chapters 1-3: introduction, literature review, methodology – format, referencing (APA 7th), budget, timeline"},
+      {name:"Research report & dissemination",sub:"Chapters 4-5: results (tables/figures), discussion, conclusions, recommendations – publication & conference"},
+    ]},
+    {title:"Teaching methodology",topics:[
+      {name:"Principles of adult learning (andragogy)",sub:"Knowles 5 assumptions, experiential learning (Kolb 4-stage cycle), transformative learning (Mezirow)"},
+      {name:"Curriculum development",sub:"Tyler's objective model, Taba's inductive model, Bloom's revised taxonomy (remember→create), UbD"},
+      {name:"Teaching methods in nursing education",sub:"Lecture, demonstration, role-play, simulation (fidelity levels), PBL, case studies, flipped classroom"},
+      {name:"Teaching aids & e-learning",sub:"Flip charts, anatomical models, mannequins (low/high fidelity), AV aids, Moodle/Zoom, gamification"},
+      {name:"Patient & community health education",sub:"Health education process: assess needs → plan (SMART) → implement → evaluate; literacy-appropriate materials"},
+      {name:"Clinical teaching & preceptorship",sub:"Preceptor model, one-minute preceptor, Pendleton's rules, Gibbs reflective cycle, portfolios"},
+      {name:"Assessment & evaluation",sub:"Kirkpatrick's 4 levels (reaction/learning/behaviour/results), OSCE design, blueprinting, standard setting"},
+    ]},
+    {title:"Final comprehensive revision",topics:[
+      {name:"Drug calculations mega-set",sub:"50-question practice: oral, IV bolus, infusion rate (mL/hr & drops/min), weight-based, reconstitution"},
+      {name:"Normal values rapid review",sub:"Haematology, biochemistry, ABG, vital signs, urine, CSF, newborn – NCK favourite reference values"},
+      {name:"Mock exam I – basic sciences",sub:"100 MCQs: anatomy, physiology, biochemistry, pharmacology, microbiology, haematology (90 min)"},
+      {name:"Mock exam II – clinical nursing",sub:"100 MCQs: med-surg, maternal, paediatrics, mental health, critical care, fundamentals (90 min)"},
+      {name:"Mock exam III – community & professional",sub:"100 MCQs: community health, ethics, research, biostatistics, sociology, forensics, leadership (90 min)"},
+      {name:"Mock exam IV – comprehensive NCK simulation",sub:"150 MCQs: mixed all subjects under exam conditions – 2h 15min, OMR sheet practice"},
+      {name:"Weak areas consolidation",sub:"Review all in-progress topics; create summary cards, mind maps, mnemonics for difficult areas"},
+      {name:"High-yield NCK topic review",sub:"Past paper pattern analysis: top recurring themes, commonly tested drugs, priority nursing actions"},
+      {name:"Exam technique workshop",sub:"MCQ strategies (NCLEX/NCK style), eliminating distractors, 'LEAST/MOST/FIRST/BEST' questions"},
+      {name:"Final 48-hour review",sub:"Light revision only: key drug doses, lab normals, ethical principles, formulae – rest & sleep well!"},
+    ]},
+  ]},
+];
+
+/* ══════════════════════════════════
+   STATE (ONE-WAY: none → progress → done, DONE IS FINAL)
+══════════════════════════════════ */
+let states={};
+function load(){try{const s=localStorage.getItem('nck_v4');if(s)states=JSON.parse(s);}catch(e){}}
+function save(){try{localStorage.setItem('nck_v4',JSON.stringify(states));}catch(e){}}
+function tid(wi,si,ti){return `${wi}_${si}_${ti}`;}
+
+function cycleState(id){
+  const cur=states[id]||'none';
+  if(cur==='done') return; // LOCKED — done is final
+  states[id]=cur==='none'?'progress':'done';
+  save();render();
+}
+
+/* ══════════════════════════════════
+   PIN MODAL
+══════════════════════════════════ */
+const PIN='1234';
+let pin='';
+function openPinModal(){pin='';updateDots();document.getElementById('pinError').textContent='';document.getElementById('pinModal').classList.add('show');}
+function closePinModal(){document.getElementById('pinModal').classList.remove('show');pin='';}
+function pinPress(d){if(pin.length>=4)return;pin+=d;updateDots();if(pin.length===4){setTimeout(()=>{if(pin===PIN){states={};save();closePinModal();render();}else{document.getElementById('pinError').textContent='Incorrect PIN. Try again.';pin='';updateDots();}},200);}}
+function pinDel(){pin=pin.slice(0,-1);updateDots();document.getElementById('pinError').textContent='';}
+function updateDots(){for(let i=0;i<4;i++)document.getElementById('dot'+i).classList.toggle('filled',i<pin.length);}
+document.getElementById('pinModal').addEventListener('click',e=>{if(e.target.id==='pinModal')closePinModal();});
+
+/* ══════════════════════════════════
+   EXPAND / COLLAPSE
+══════════════════════════════════ */
+const openSet=new Set([0]);
+function expandAll(){weeks.forEach((_,i)=>openSet.add(i));render();}
+function collapseAll(){openSet.clear();render();}
+function toggleWeek(wi){openSet.has(wi)?openSet.delete(wi):openSet.add(wi);render();}
+
+/* ══════════════════════════════════
+   CALC STATS
+══════════════════════════════════ */
+function calcStats(){
+  let done=0,prog=0,total=0;
+  const byWeek=weeks.map(()=>({done:0,total:0}));
+  weeks.forEach((w,wi)=>w.sections.forEach((s,si)=>s.topics.forEach((_,ti)=>{
+    total++;byWeek[wi].total++;
+    const st=states[tid(wi,si,ti)]||'none';
+    if(st==='done'){done++;byWeek[wi].done++;}
+    else if(st==='progress')prog++;
+  })));
+  return{done,prog,rem:total-done-prog,total,byWeek};
+}
+
+/* ══════════════════════════════════
+   UPDATE ANALYTICS
+══════════════════════════════════ */
+function updateAnalytics(done,prog,rem,total,byWeek){
+  document.getElementById('sDone').textContent=done;
+  document.getElementById('sProg').textContent=prog;
+  document.getElementById('sRem').textContent=rem;
+  document.getElementById('sTotal').textContent=total;
+  const pct=total>0?Math.round((done/total)*100):0;
+  document.getElementById('ringPct').textContent=pct+'%';
+  document.getElementById('ringCaption').textContent=done+' of '+total+' completed';
+  document.getElementById('overallFill').style.width=pct+'%';
+  document.getElementById('overallText').textContent=pct+'%';
+  // Ring
+  const circ=314.16;
+  document.getElementById('ringFill').style.strokeDashoffset=(circ-(circ*pct/100)).toFixed(2);
+  const ringColor=pct>=100?'#97c459':pct>=50?'#5dcaa5':pct>=25?'#85b7eb':'#afa9ec';
+  document.getElementById('ringFill').style.stroke=ringColor;
+
+  // Week bars
+  const barHtml=byWeek.map((b,i)=>{
+    const bp=b.total>0?Math.round((b.done/b.total)*100):0;
+    const col=PALETTE[i%PALETTE.length].bar;
+    return `<div class="week-bar-row">
+      <div class="week-bar-label">W${i+1}</div>
+      <div class="week-bar-bg"><div class="week-bar-fill" style="width:${bp}%;background:${col}"></div></div>
+      <div class="week-bar-pct">${bp}%</div>
+    </div>`;
+  }).join('');
+  document.getElementById('weekBars').innerHTML=barHtml;
+
+  // Milestones
+  const mils=[
+    {icon:'🌱',label:'First step',desc:'First topic done',achieved:done>=1},
+    {icon:'⚡',label:'10 done',desc:'Momentum building',achieved:done>=10},
+    {icon:'🔥',label:'25 done',desc:'On fire!',achieved:done>=25},
+    {icon:'🎯',label:'50 done',desc:'Halfway warrior',achieved:done>=50},
+    {icon:'💪',label:'Half total',desc:`${Math.round(total/2)} topics done`,achieved:done>=Math.round(total/2)},
+    {icon:'🏆',label:'75% done',desc:'Almost there!',achieved:pct>=75},
+    {icon:'⭐',label:'All done',desc:'NCK ready!',achieved:done>=total&&total>0},
+  ];
+  document.getElementById('milestones').innerHTML=mils.map(m=>`
+    <div class="milestone${m.achieved?' achieved':''}">
+      <div class="milestone-icon">${m.icon}</div>
+      <div class="milestone-text"><strong>${m.label}</strong>${m.desc}</div>
+    </div>`).join('');
+
+  // Motivational line
+  const lines=['Keep going — every topic counts! 💪','Great progress! Stay consistent 🌟','You\'re building real NCK confidence! 🎯','Amazing dedication! NCK success awaits 🏆','Almost there — push through! ⚡','Outstanding! You\'re NCK-ready 🥇'];
+  const idx=Math.min(Math.floor(pct/20),lines.length-1);
+  document.getElementById('motiveLine').innerHTML=`<strong>${pct}% complete</strong> · ${lines[idx]}`;
+
+  // Time estimate
+  const remaining=rem+prog;
+  const minsLeft=Math.round(remaining*25);
+  const hrs=Math.floor(minsLeft/60),mins=minsLeft%60;
+  document.getElementById('timeEst').textContent=`⏱ Est. remaining: ${hrs>0?hrs+'h ':''} ${mins}min (avg 25 min/topic)`;
+}
+
+/* ══════════════════════════════════
+   MAIN RENDER
+══════════════════════════════════ */
+function render(){
+  const{done,prog,rem,total,byWeek}=calcStats();
+  updateAnalytics(done,prog,rem,total,byWeek);
+
+  const container=document.getElementById('timetable');
+  container.innerHTML='';
+
+  weeks.forEach((w,wi)=>{
+    const{done:wd,total:wt}=byWeek[wi];
+    const wpct=wt>0?Math.round((wd/wt)*100):0;
+    const pal=PALETTE[wi%PALETTE.length];
+    const isOpen=openSet.has(wi);
+    const hasProgress=w.sections.some((s,si)=>s.topics.some((_,ti)=>(states[tid(wi,si,ti)]||'none')==='progress'));
+    const badgeCls=wd===wt&&wt>0?'full':wd>0||hasProgress?'partial':'';
+
+    let sectHtml='';
+    w.sections.forEach((s,si)=>{
+      sectHtml+=`<div class="section-hd">
+        <div class="section-pip" style="background:${pal.a}"></div>
+        <div class="section-lbl">${s.title}${s.isNew?` <span class="new-badge">NEW</span>`:''}  </div>
+      </div><div class="topics-grid">`;
+      s.topics.forEach((t,ti)=>{
+        const id=tid(wi,si,ti);
+        const st=states[id]||'none';
+        const chk=st==='done'?'✓':st==='progress'?'›':'';
+        const clickable=st!=='done';
+        sectHtml+=`<div class="topic ${st}" ${clickable?`onclick="cycleState('${id}')"`:'title="Done — locked ✓"'}>
+          <div class="chk">${chk}</div>
+          <div style="min-width:0">
+            <div class="topic-name">${t.name}</div>
+            <div class="topic-sub">${t.sub}</div>
+          </div>
+          ${t.isNew?'<span class="topic-new-tag">new</span>':''}
+        </div>`;
+      });
+      sectHtml+='</div>';
+    });
+
+    const el=document.createElement('div');
+    el.className='week';
+    el.innerHTML=`
+      <div class="week-accent" style="background:${pal.a}"></div>
+      <div class="week-header" onclick="toggleWeek(${wi})">
+        <div class="week-num-badge" style="background:${pal.bg};color:${pal.a}">${w.week}</div>
+        <div class="week-info">
+          <div class="week-label">Week ${w.week}: ${w.label}${w.isNew?` <span class="new-badge">NEW</span>`:''}</div>
+          <div class="week-meta">${w.sections.reduce((a,s)=>a+s.topics.length,0)} topics · ${wpct}% complete</div>
+        </div>
+        <div class="week-right">
+          <div class="week-badge ${badgeCls}">${wd}/${wt}</div>
+          <span class="chevron ${isOpen?'open':''}">▾</span>
+        </div>
+      </div>
+      <div class="week-prog-bar"><div class="week-prog-fill" style="width:${wpct}%;background:${pal.a}"></div></div>
+      <div class="week-body ${isOpen?'open':''}">${sectHtml}</div>`;
+    container.appendChild(el);
+  });
+}
 
 // ── ADMIN & APPS SCRIPT INTEGRATION ──
 function openAdmin(){
   const m = document.getElementById('adminModal');
   if(!m) return;
-  // populate saved web app url
   try{ document.getElementById('webAppUrlInput').value = localStorage.getItem('nck_webapp_url') || ''; }catch(e){}
   m.classList.add('show');
 }
@@ -805,22 +1120,15 @@ async function adminAddInvite(){
   const email = document.getElementById('inviteEmail').value.trim();
   const name = document.getElementById('inviteName').value.trim();
   if(!email){ document.getElementById('adminResult').textContent = 'Enter friend email.'; return; }
-  // prompt for owner secret each time (not stored)
   const secret = prompt('Enter owner secret (keeps private)');
   if(!secret) { document.getElementById('adminResult').textContent = 'Cancelled.'; return; }
   document.getElementById('adminResult').textContent = 'Adding...';
   try{
     const res = await fetch(url, { method:'POST', body: new URLSearchParams({ secret, email, name }) });
-    if(!res.ok){
-      const text = await res.text();
-      throw new Error(`Server ${res.status}: ${text}`);
-    }
+    if(!res.ok){ const text = await res.text(); throw new Error(`Server ${res.status}: ${text}`); }
     const j = await res.json();
-    if(j.ok){
-      const token = j.token;
-      const link = buildInviteLink(token);
-      document.getElementById('adminResult').innerHTML = `Invite created. Token: <strong>${token}</strong><br><a href="${link}" target="_blank">Open invite link</a>`;
-    } else {
+    if(j.ok){ const token = j.token; const link = buildInviteLink(token); document.getElementById('adminResult').innerHTML = `Invite created. Token: <strong>${token}</strong><br><a href="${link}" target="_blank">Open invite link</a>`; }
+    else {
       let msg = 'Error: ' + (j.err||'unknown');
       if(j.err === 'email_failed' && j.emailError) msg += ` (${j.emailError})`;
       if(j.expectedSheet) msg += ` (expected sheet: ${j.expectedSheet})`;
@@ -830,166 +1138,11 @@ async function adminAddInvite(){
   }catch(e){ document.getElementById('adminResult').textContent = 'Request failed: ' + e.message }
 }
 
-function buildInviteLink(token){
-  const base = location.href.split('?')[0];
-  return base + '?invite=' + encodeURIComponent(token);
-}
+function buildInviteLink(token){ const base = location.href.split('?')[0]; return base + '?invite=' + encodeURIComponent(token); }
 
-// validate invite token with Apps Script (if configured)
-async function validateInviteWithServer(){
-  if(!INVITE_TOKEN) return true;
-  const url = getWebAppUrl();
-  if(!url) return true; // no server configured — allow but data stored locally per token
-  try{
-    const res = await fetch(url + '?token=' + encodeURIComponent(INVITE_TOKEN));
-    const j = await res.json();
-    return j && j.ok;
-  }catch(e){ return false; }
-}
+async function validateInviteWithServer(){ if(typeof INVITE_TOKEN === 'undefined' || !INVITE_TOKEN) return true; const url = getWebAppUrl(); if(!url) return true; try{ const res = await fetch(url + '?token=' + encodeURIComponent(INVITE_TOKEN)); const j = await res.json(); return j && j.ok; }catch(e){ return false; } }
 
-
-// ── STATE ──
-let states = {};
-function load() { try { const s = localStorage.getItem(STORAGE_KEY); if (s) states = JSON.parse(s); } catch (e){} }
-function save() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(states)); } catch (e){} }
-function topicId(wi, si, ti) { return `${wi}_${si}_${ti}`; }
-function cycleState(id) {
-  const cur = states[id] || 'none';
-  states[id] = cur === 'none' ? 'progress' : cur === 'progress' ? 'done' : 'none';
-  save(); render();
-}
-
-// ── EXPAND / COLLAPSE ──
-const openWeeks = new Set([0]);
-function expandAll() { weeks.forEach((_,i) => openWeeks.add(i)); render(); }
-function collapseAll() { openWeeks.clear(); render(); }
-function toggleWeek(wi) { openWeeks.has(wi) ? openWeeks.delete(wi) : openWeeks.add(wi); render(); }
-
-// ── STATS ──
-function calcStats() {
-  let done = 0, prog = 0, total = 0;
-  weeks.forEach((w, wi) => w.sections.forEach((s, si) => s.topics.forEach((_, ti) => {
-    total++;
-    const st = states[topicId(wi, si, ti)] || 'none';
-    if (st === 'done') done++; else if (st === 'progress') prog++;
-  })));
-  return { done, prog, rem: total - done - prog, total };
-}
-
-// ── RENDER ──
-function render() {
-  const { done, prog, rem, total } = calcStats();
-  document.getElementById('stat-done').textContent = done;
-  document.getElementById('stat-prog').textContent = prog;
-  document.getElementById('stat-rem').textContent = rem;
-  document.getElementById('stat-total').textContent = total;
-  const pct = total > 0 ? Math.round((done/total)*100) : 0;
-  document.getElementById('stat-pct').textContent = pct + '%';
-  document.getElementById('overall-fill').style.width = pct + '%';
-  document.getElementById('overall-label').textContent = done + ' of ' + total + ' topics completed';
-
-  const container = document.getElementById('timetable');
-  container.innerHTML = '';
-
-  weeks.forEach((w, wi) => {
-    let wDone = 0, wTotal = 0;
-    w.sections.forEach((s, si) => s.topics.forEach((_, ti) => {
-      wTotal++; if ((states[topicId(wi, si, ti)] || 'none') === 'done') wDone++;
-    }));
-    const wpct = wTotal > 0 ? Math.round((wDone/wTotal)*100) : 0;
-    const color = WEEK_COLORS[wi % WEEK_COLORS.length];
-    const isOpen = openWeeks.has(wi);
-    const wProg = w.sections.some((s,si) => s.topics.some((_,ti) => (states[topicId(wi,si,ti)]||'none') === 'progress'));
-    const badgeCls = wDone === wTotal ? 'full' : wProg || wDone > 0 ? 'partial' : '';
-
-    let sectionsHTML = '';
-    w.sections.forEach((s, si) => {
-      const hasNew = s.isNew || s.topics.some(t => t.isNew);
-      sectionsHTML += `
-        <div class="section-header">
-          <div class="section-dot" style="background:${color.accent}"></div>
-          <div class="section-label">${s.title}${hasNew && s.isNew ? ' <span style="background:var(--blue-50);color:var(--blue-600);font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;border:0.5px solid var(--blue-100);text-transform:uppercase;vertical-align:middle">NEW</span>' : ''}</div>
-        </div>
-        <div class="topics-grid">`;
-      s.topics.forEach((t, ti) => {
-        const id = topicId(wi, si, ti);
-        const st = states[id] || 'none';
-        const chk = st === 'done' ? '✓' : st === 'progress' ? '·' : '';
-        sectionsHTML += `<div class="topic ${st}" onclick="cycleState('${id}')">
-          <div class="chk">${chk}</div>
-          <div>
-            <div class="topic-name">${t.name}</div>
-            <div class="topic-sub">${t.sub}</div>
-          </div>
-          ${t.isNew ? '<span class="new-tag">new</span>' : ''}
-        </div>`;
-      });
-      sectionsHTML += '</div>';
-    });
-
-    const weekEl = document.createElement('div');
-    weekEl.className = 'week';
-    weekEl.innerHTML = `
-      <div class="week-accent" style="background:${color.accent}"></div>
-      <div class="week-header" onclick="toggleWeek(${wi})">
-        <div class="week-num-badge" style="background:${color.bg};color:${color.accent}">${w.week}</div>
-        <div class="week-info">
-          <div class="week-label">Week ${w.week}: ${w.label}</div>
-          <div class="week-meta">${w.sections.reduce((a,s)=>a+s.topics.length,0)} topics &nbsp;·&nbsp; ${wpct}% complete</div>
-        </div>
-        <div class="week-right">
-          <div class="week-badge ${badgeCls}">${wDone}/${wTotal}</div>
-          <span class="chevron ${isOpen?'open':''}">▾</span>
-        </div>
-      </div>
-      <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${wpct}%;background:${color.accent}"></div></div>
-      <div class="week-body ${isOpen?'open':''}">${sectionsHTML}</div>
-    `;
-    container.appendChild(weekEl);
-  });
-}
-
-// validate invite then render
-(async function boot(){
-  const serverOk = await validateInviteWithServer();
-  if(INVITE_TOKEN && !serverOk){
-    document.body.innerHTML = '<main style="padding:36px;font-family:Inter,system-ui;">Access denied — invalid invite token. Contact the owner for a valid invite.</main>';
-    return;
-  }
-  load();
-  render();
-})();
-// Theme: read/save user preference and apply
-function applyTheme(theme){
-  if(theme === 'dark') document.documentElement.setAttribute('data-theme','dark');
-  else if(theme === 'light') document.documentElement.setAttribute('data-theme','light');
-  else document.documentElement.removeAttribute('data-theme');
-  const btn = document.getElementById('themeToggle');
-  if(btn){
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || (!document.documentElement.hasAttribute('data-theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    btn.textContent = isDark ? '☀️ Light' : '🌙 Dark';
-    btn.title = isDark ? 'Switch to light theme' : 'Switch to dark theme';
-  }
-}
-function initTheme(){
-  try{
-    const t = localStorage.getItem('nck_theme');
-    if(t) applyTheme(t);
-    else applyTheme();
-  }catch(e){}
-}
-function toggleTheme(){
-  const cur = document.documentElement.getAttribute('data-theme');
-  const next = cur === 'dark' ? 'light' : cur === 'light' ? null : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark');
-  if(next) { applyTheme(next); try{ localStorage.setItem('nck_theme', next);}catch(e){} }
-  else { document.documentElement.removeAttribute('data-theme'); try{ localStorage.removeItem('nck_theme'); }catch(e){} }
-}
-initTheme();
-// indicate guest mode in UI
-if(IS_GUEST){
-  const el = document.getElementById('guestNotice');
-  if(el) el.style.display = 'block';
-}
+load();render();
 </script>
 </body>
 </html>
