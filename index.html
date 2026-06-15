@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NCK Nursing Revision Timetable – 10 Weeks</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js" integrity="sha512-v1Y1HYYwEo1Kq5aZ1v6a3qM7q2Q+Zxv8Jq2G3s4+gkzj2KJm3Q9m1k2bR6y5G9Vq3l7q3k2l5j6k3l2j5k3l2w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -293,6 +294,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg3);color:var(--
   </div>
 </div>
 
+<!-- PUBLIC RESTRICTED BANNER (shown when not authorized) -->
+<div id="publicBanner" style="display:none;background:var(--coral-50);border-bottom:0.5px solid var(--border2);padding:10px 20px;text-align:center;color:var(--coral-600);font-weight:600">Contact the admin for a personalised invite to unlock full access.</div>
+
 <!-- ANALYTICS DASHBOARD -->
 <div class="analytics">
   <div class="analytics-inner">
@@ -471,6 +475,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg3);color:var(--
     <p>Enter the Apps Script Web App URL and create invites for friends. The owner secret is not stored; you'll be prompted when adding an invite.</p>
     <label style="font-size:12px;color:var(--text2);">Web App URL</label>
     <input id="webAppUrlInput" type="text" placeholder="https://script.google.com/macros/s/XXX/exec" style="width:100%;padding:8px;border-radius:8px;border:0.5px solid var(--border);margin-bottom:10px">
+    <label style="font-size:12px;color:var(--text2);">Admin contact email (for public banner)</label>
+    <input id="adminContact" type="email" placeholder="admin@example.com" style="width:100%;padding:8px;border-radius:8px;border:0.5px solid var(--border);margin-bottom:10px">
     <div style="display:flex;gap:8px;margin-bottom:10px">
       <input id="inviteEmail" type="email" placeholder="friend@example.com" style="flex:1;padding:8px;border-radius:8px;border:0.5px solid var(--border)">
       <input id="inviteName" type="text" placeholder="Friend name" style="width:180px;padding:8px;border-radius:8px;border:0.5px solid var(--border)">
@@ -478,8 +484,16 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg3);color:var(--
     <div id="adminResult" style="font-size:13px;color:var(--text2);min-height:22px;margin-bottom:10px"></div>
     <div style="display:flex;gap:8px">
       <button class="btn btn-primary" onclick="adminAddInvite()">Add invite</button>
-      <button class="btn" onclick="saveWebAppUrl()">Save URL</button>
+      <button class="btn" onclick="saveWebAppUrl(); saveAdminContact();">Save URL</button>
       <button class="btn" onclick="closeAdmin()">Close</button>
+    </div>
+    <hr style="margin:12px 0">
+    <div style="font-size:12px;color:var(--text2);margin-bottom:6px">Export / Import progress (for manual transfer)</div>
+    <textarea id="backupExport" placeholder="Exported progress (compressed)" style="width:100%;height:80px;padding:8px;border-radius:8px;border:0.5px solid var(--border);background:var(--bg2);color:var(--text2);font-family:monospace;margin-bottom:8px"></textarea>
+    <div style="display:flex;gap:8px">
+      <button class="btn" onclick="exportState()">Export</button>
+      <button class="btn" onclick="importState()">Import</button>
+      <button class="btn" onclick="clearBackupExport()">Clear</button>
     </div>
   </div>
 </div>
@@ -507,6 +521,14 @@ function applyTheme(t){
 }
 function toggleTheme(){ theme = theme==='dark'?'light':'dark'; applyTheme(theme); }
 applyTheme(theme);
+
+// Invite / auth state
+let INVITE_TOKEN = null;
+let isAuthorized = false;
+
+function getQueryParam(key){
+  try{const params=new URLSearchParams(window.location.search);return params.get(key);}catch(e){return null}
+}
 
 /* ══════════════════════════════════
    FAB
@@ -937,14 +959,19 @@ const weeks=[
 ══════════════════════════════════ */
 let states={};
 function load(){try{const s=localStorage.getItem('nck_v4');if(s)states=JSON.parse(s);}catch(e){}}
-function save(){try{localStorage.setItem('nck_v4',JSON.stringify(states));}catch(e){}}
+function save(){try{localStorage.setItem('nck_v4',JSON.stringify(states));}catch(e){}
+  try{ localStorage.setItem('nck_v4_backup', JSON.stringify({ states: states, ts: Date.now() })); }catch(e){}
+}
 function tid(wi,si,ti){return `${wi}_${si}_${ti}`;}
 
 function cycleState(id){
+  if(!isAuthorized){ showPublicBlockMessage(); return; }
   const cur=states[id]||'none';
   if(cur==='done') return; // LOCKED — done is final
   states[id]=cur==='none'?'progress':'done';
   save();render();
+  // persist to server so invite restores across browsers
+  try{ if(INVITE_TOKEN) saveStatesToServer(); }catch(e){}
 }
 
 /* ══════════════════════════════════
@@ -1069,7 +1096,7 @@ function render(){
         const id=tid(wi,si,ti);
         const st=states[id]||'none';
         const chk=st==='done'?'✓':st==='progress'?'›':'';
-        const clickable=st!=='done';
+        const clickable=(st!=='done') && isAuthorized;
         sectHtml+=`<div class="topic ${st}" ${clickable?`onclick="cycleState('${id}')"`:'title="Done — locked ✓"'}>
           <div class="chk">${chk}</div>
           <div style="min-width:0">
@@ -1107,13 +1134,68 @@ function render(){
 function openAdmin(){
   const m = document.getElementById('adminModal');
   if(!m) return;
-  try{ document.getElementById('webAppUrlInput').value = localStorage.getItem('nck_webapp_url') || ''; }catch(e){}
+  try{
+    document.getElementById('webAppUrlInput').value = localStorage.getItem('nck_webapp_url') || '';
+    document.getElementById('adminContact').value = localStorage.getItem('nck_admin_contact') || '';
+  }catch(e){}
   m.classList.add('show');
 }
 function closeAdmin(){ document.getElementById('adminModal').classList.remove('show'); }
 function saveWebAppUrl(){ const v = document.getElementById('webAppUrlInput').value.trim(); try{ if(v) localStorage.setItem('nck_webapp_url', v); else localStorage.removeItem('nck_webapp_url'); document.getElementById('adminResult').textContent = 'Saved.' }catch(e){ document.getElementById('adminResult').textContent = 'Save failed.' } }
 
 function getWebAppUrl(){ try{ return localStorage.getItem('nck_webapp_url') || ''; }catch(e){ return ''; } }
+
+function saveAdminContact(){ try{ const v=document.getElementById('adminContact').value.trim(); if(v) localStorage.setItem('nck_admin_contact', v); else localStorage.removeItem('nck_admin_contact'); }catch(e){} }
+function getAdminContact(){ try{ return localStorage.getItem('nck_admin_contact') || ''; }catch(e){ return ''; } }
+
+function showPublicBanner(){
+  const b=document.getElementById('publicBanner'); if(!b) return;
+  const contact=getAdminContact();
+  let html = '';
+  if(contact) html += `Contact the admin for a personalised invite — <a href="mailto:${contact}">${contact}</a>`;
+  else html += 'Contact the admin for a personalised invite to unlock full access.';
+  html += ' <button class="btn" style="margin-left:12px" onclick="restoreLocal()">Restore local copy</button>';
+  b.innerHTML = html;
+  b.style.display='block';
+}
+
+function showPublicBlockMessage(){ const toast=document.getElementById('badgeToast'); if(!toast) return; document.getElementById('badgeToastTitle').textContent='Restricted'; document.getElementById('badgeToastDesc').textContent='Full interactivity requires a personalised invite. Contact the admin.'; document.getElementById('badgeToastIcon').textContent='🔒'; toast.style.display='flex'; setTimeout(()=>toast.style.display='none',3000); }
+
+function restoreLocal(){
+  try{
+    const b = localStorage.getItem('nck_v4_backup');
+    if(!b){ alert('No local backup found on this browser.'); return; }
+    const obj = JSON.parse(b);
+    if(obj && obj.states){ states = obj.states; save(); render();
+      document.getElementById('badgeToastTitle').textContent='Restored';
+      document.getElementById('badgeToastDesc').textContent='Local progress restored in this browser.';
+      document.getElementById('badgeToastIcon').textContent='🛠'; const toast=document.getElementById('badgeToast'); toast.style.display='flex'; setTimeout(()=>toast.style.display='none',3000);
+    }else{ alert('Backup format invalid.'); }
+  }catch(e){ alert('Restore failed: '+e.message); }
+}
+
+function exportState(){
+  try{
+    const raw = JSON.stringify(states);
+    const compressed = (typeof LZString !== 'undefined')? LZString.compressToBase64(raw) : btoa(raw);
+    document.getElementById('backupExport').value = compressed;
+    document.getElementById('badgeToastTitle').textContent='Exported'; document.getElementById('badgeToastDesc').textContent='Copied compressed state to box.'; document.getElementById('badgeToastIcon').textContent='📤'; const toast=document.getElementById('badgeToast'); toast.style.display='flex'; setTimeout(()=>toast.style.display='none',2500);
+  }catch(e){ alert('Export failed: '+e.message); }
+}
+
+function importState(){
+  try{
+    const v = document.getElementById('backupExport').value.trim(); if(!v){ alert('Paste exported compressed string into the box first.'); return; }
+    let decoded = null;
+    try{ if(typeof LZString !== 'undefined') decoded = LZString.decompressFromBase64(v); }catch(e){}
+    if(!decoded){ try{ decoded = atob(v); }catch(e){} }
+    if(!decoded){ alert('Decoding failed. Ensure this is a valid exported string.'); return; }
+    states = JSON.parse(decoded); save(); render();
+    document.getElementById('badgeToastTitle').textContent='Imported'; document.getElementById('badgeToastDesc').textContent='Progress imported into this browser.'; document.getElementById('badgeToastIcon').textContent='📥'; const toast=document.getElementById('badgeToast'); toast.style.display='flex'; setTimeout(()=>toast.style.display='none',2500);
+  }catch(e){ alert('Import failed: '+e.message); }
+}
+
+function clearBackupExport(){ document.getElementById('backupExport').value=''; }
 
 async function adminAddInvite(){
   const url = getWebAppUrl();
@@ -1140,10 +1222,59 @@ async function adminAddInvite(){
 }
 
 function buildInviteLink(token){ const base = location.href.split('?')[0]; return base + '?invite=' + encodeURIComponent(token); }
+async function validateInviteWithServer(){
+  isAuthorized = false;
+  if(!INVITE_TOKEN) return false;
+  const url = getWebAppUrl(); if(!url) return false;
+  try{
+    const res = await fetch(url + '?token=' + encodeURIComponent(INVITE_TOKEN));
+    if(!res.ok) return false;
+    const j = await res.json();
+    if(j && j.ok){
+      isAuthorized = true;
+      // restore states if present
+      if(j.states){
+        try{
+          const s = j.states||'';
+          let decoded = null;
+          try{ if(typeof LZString !== 'undefined') decoded = LZString.decompressFromBase64(s); }catch(e){}
+          if(!decoded){ try{ decoded = atob(s); }catch(e){} }
+          if(decoded){ states = JSON.parse(decoded); save(); }
+        }catch(e){}
+      }
+      return true;
+    }
+    return false;
+  }catch(e){ return false; }
+}
 
-async function validateInviteWithServer(){ if(typeof INVITE_TOKEN === 'undefined' || !INVITE_TOKEN) return true; const url = getWebAppUrl(); if(!url) return true; try{ const res = await fetch(url + '?token=' + encodeURIComponent(INVITE_TOKEN)); const j = await res.json(); return j && j.ok; }catch(e){ return false; } }
+async function saveStatesToServer(){
+  const url = getWebAppUrl(); if(!url || !INVITE_TOKEN) return;
+  try{
+    // compress states to reduce size
+    const raw = JSON.stringify(states);
+    const compressed = (typeof LZString !== 'undefined')? LZString.compressToBase64(raw) : btoa(raw);
+    const MAX_COMPRESSED = 30000; // client-side limit
+    if(compressed.length > MAX_COMPRESSED){
+      document.getElementById('badgeToastTitle').textContent='Save blocked';
+      document.getElementById('badgeToastDesc').textContent='Progress data too large to save to server.';
+      document.getElementById('badgeToastIcon').textContent='⚠️';
+      const toast=document.getElementById('badgeToast'); toast.style.display='flex'; setTimeout(()=>toast.style.display='none',3500);
+      return;
+    }
+    await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'save_states', token:INVITE_TOKEN, states: compressed }) });
+  }catch(e){ console.warn('Save states failed',e); }
+}
 
-load();render();
+// Init: load local state, check invite token, validate with server and render
+(async function init(){
+  load();
+  const q = getQueryParam('invite');
+  if(q){ INVITE_TOKEN = q; }
+  const ok = await validateInviteWithServer();
+  if(!ok){ showPublicBanner(); }
+  render();
+})();
 </script>
 </body>
 </html>
