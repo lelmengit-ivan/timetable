@@ -1154,7 +1154,8 @@ function showPublicBanner(){
   let html = '';
   if(contact) html += `Contact the admin for a personalised invite — <a href="mailto:${contact}">${contact}</a>`;
   else html += 'Contact the admin for a personalised invite to unlock full access.';
-  html += ' <button class="btn" style="margin-left:12px" onclick="restoreLocal()">Restore local copy</button>';
+  // only show restore if they have a local backup but no valid token
+  try{ if(localStorage.getItem('nck_v4_backup')) html += ' <button class="btn" style="margin-left:12px" onclick="restoreLocal()">Restore local copy</button>'; }catch(e){}
   b.innerHTML = html;
   b.style.display='block';
 }

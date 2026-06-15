@@ -36,7 +36,8 @@ Deployment checklist for Apps Script Web App (invite + state storage)
    - Open the invite link in a different browser or incognito window.
    - The page should validate the token with the web app; if valid, it will restore any saved progress.
    - Toggle some topics to change progress. The client will persist the state to the Apps Script (subject to size limits).
-   - Re-open the invite link in a different browser — the saved progress should be restored.
+   - **Cross-browser test:** Re-open the same invite link (with the same token) in a different browser — the saved progress should be restored.
+   - This works because the token persists in the URL, and the server always returns the latest saved state associated with that token.
 
 7. Troubleshooting
    - If you see `no_sheet` error: ensure the `friends` sheet exists and `SHEET_ID` is correct.
@@ -46,6 +47,13 @@ Deployment checklist for Apps Script Web App (invite + state storage)
 Security notes
 - Keep `OWNER_SECRET` private. The Add-in flow prompts for it and does not store it.
 - Invite tokens are UUIDs; do not publish invite links on public pages.
+
+How cross-browser sync works (for invited users)
+- The invite token is preserved in the URL: `?invite=TOKEN123`.
+- Regardless of which browser the user opens that link in, the token is the same.
+- On page load, the Apps Script is called with that token and returns the latest saved progress.
+- Any changes made sync back to the Apps Script and are immediately available in any other browser using the same token.
+- The "local backup" is only a fallback for uninvited/public users who want to restore progress from a previous browser session without an invite.
 
 Optional improvements
 - Move storage to a proper database (Firestore / Firebase / Cloud SQL) for larger state and better security.
