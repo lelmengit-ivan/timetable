@@ -288,6 +288,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg3);color:var(--
     <div class="nav-actions">
       <button class="btn btn-theme" id="themeBtn" onclick="toggleTheme()" title="Toggle dark/light mode">🌙</button>
       <button class="btn btn-primary" onclick="window.print()">🖨 Print / PDF</button>
+      <button class="btn" id="loginBtn" style="display:none" onclick="openLoginModal()" title="Login with PIN">🔓 Login</button>
+      <button class="btn" id="activitiesBtn" style="display:none" onclick="openActivitiesModal()" title="View your activities">📊 Activities</button>
+      <button class="btn" id="changePinBtn" style="display:none" onclick="openChangePinModal()" title="Change your PIN">🔐 PIN</button>
+      <button class="btn" id="logoutBtn" style="display:none" onclick="logout()" title="Logout">🚪 Logout</button>
       <button class="btn" id="adminToggle" onclick="openAdmin()" title="Owner admin">⚙️ Admin</button>
       <button class="btn btn-locked" onclick="openPinModal()" title="PIN protected — cannot undo done">🔒 Reset</button>
     </div>
@@ -295,7 +299,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg3);color:var(--
 </div>
 
 <!-- PUBLIC RESTRICTED BANNER (shown when not authorized) -->
-<div id="publicBanner" style="display:none;background:var(--coral-50);border-bottom:0.5px solid var(--border2);padding:10px 20px;text-align:center;color:var(--coral-600);font-weight:600">Contact the admin for a personalised invite to unlock full access.</div>
+<div id="publicBanner" style="display:none;background:var(--coral-50);border-bottom:0.5px solid var(--border2);padding:10px 20px;text-align:center;color:var(--coral-600);font-weight:600">Enter your PIN to unlock full access. <button class="btn" style="margin-left:12px" onclick="openLoginModal()">🔓 Login</button></div>
 
 <!-- ANALYTICS DASHBOARD -->
 <div class="analytics">
@@ -385,7 +389,53 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg3);color:var(--
 <!-- WEEKS -->
 <div class="page" id="timetable"></div>
 
-<!-- PIN MODAL -->
+<!-- LOGIN MODAL (PIN only) -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <div class="modal-icon">🔑</div>
+    <h3>Login with PIN</h3>
+    <p>Enter your PIN to access your timetable and activities.</p>
+    <div class="pin-dots" id="loginPinDots">
+      <div class="pin-dot" id="loginDot0"></div><div class="pin-dot" id="loginDot1"></div>
+      <div class="pin-dot" id="loginDot2"></div><div class="pin-dot" id="loginDot3"></div>
+      <div class="pin-dot" id="loginDot4"></div><div class="pin-dot" id="loginDot5"></div>
+    </div>
+    <div class="pin-error" id="loginPinError"></div>
+    <div class="pin-pad">
+      <button class="pin-key" onclick="loginPinPress('1')">1</button>
+      <button class="pin-key" onclick="loginPinPress('2')">2</button>
+      <button class="pin-key" onclick="loginPinPress('3')">3</button>
+      <button class="pin-key" onclick="loginPinPress('4')">4</button>
+      <button class="pin-key" onclick="loginPinPress('5')">5</button>
+      <button class="pin-key" onclick="loginPinPress('6')">6</button>
+      <button class="pin-key" onclick="loginPinPress('7')">7</button>
+      <button class="pin-key" onclick="loginPinPress('8')">8</button>
+      <button class="pin-key" onclick="loginPinPress('9')">9</button>
+      <button class="pin-key empty"></button>
+      <button class="pin-key" onclick="loginPinPress('0')">0</button>
+      <button class="pin-key del" onclick="loginPinDel()">⌫</button>
+    </div>
+    <button class="btn" style="width:100%;justify-content:center" onclick="closeLoginModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- ACTIVITIES MODAL -->
+<div class="modal-overlay" id="activitiesModal">
+  <div class="modal" style="max-width:520px;max-height:75vh;overflow-y:auto">
+    <div class="modal-icon">📊</div>
+    <h3>My Activities</h3>
+    <p>All topics you've viewed or marked as done.</p>
+    <div id="activitiesContent" style="margin-top:16px;margin-bottom:16px">
+      <div style="font-size:12px;color:var(--text2);padding:20px;text-align:center">Loading activities...</div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="exportActivitiesCSV()" style="flex:1;justify-content:center">📥 Export CSV</button>
+      <button class="btn" style="flex:1;justify-content:center" onclick="document.getElementById('activitiesModal').classList.remove('show')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- PIN RESET MODAL -->
 <div class="modal-overlay" id="pinModal">
   <div class="modal">
     <div class="modal-icon">🔒</div>
@@ -468,23 +518,21 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg3);color:var(--
   </div>
 </div>
 
-<!-- ADMIN MODAL: owner enters Web App URL and can add invites -->
+<!-- ADMIN MODAL: owner can create PIN-based user accounts -->
 <div class="modal-overlay" id="adminModal">
   <div class="modal">
-    <h3>⚙️ Admin — Issue Invite</h3>
-    <p>Enter the Apps Script Web App URL and create invites for friends. The owner secret is not stored; you'll be prompted when adding an invite.</p>
+    <h3>⚙️ Admin — Create Users</h3>
+    <p>Enter the Apps Script Web App URL and create PIN-based user accounts. Users will use their PIN to login.</p>
     <label style="font-size:12px;color:var(--text2);">Web App URL</label>
     <input id="webAppUrlInput" type="text" placeholder="https://script.google.com/macros/s/XXX/exec" style="width:100%;padding:8px;border-radius:8px;border:0.5px solid var(--border);margin-bottom:10px">
-    <label style="font-size:12px;color:var(--text2);">Admin contact email(ivan.danger.04@gmail.com)</label>
-    <input id="adminContact" type="email" placeholder="admin@example.com" style="width:100%;padding:8px;border-radius:8px;border:0.5px solid var(--border);margin-bottom:10px">
     <div style="display:flex;gap:8px;margin-bottom:10px">
-      <input id="inviteEmail" type="email" placeholder="friend@example.com" style="flex:1;padding:8px;border-radius:8px;border:0.5px solid var(--border)">
-      <input id="inviteName" type="text" placeholder="Friend name" style="width:180px;padding:8px;border-radius:8px;border:0.5px solid var(--border)">
+      <input id="adminUserEmail" type="email" placeholder="user@example.com" style="flex:1;padding:8px;border-radius:8px;border:0.5px solid var(--border)">
+      <input id="adminUserName" type="text" placeholder="User name" style="width:150px;padding:8px;border-radius:8px;border:0.5px solid var(--border)">
     </div>
     <div id="adminResult" style="font-size:13px;color:var(--text2);min-height:22px;margin-bottom:10px"></div>
-    <div style="display:flex;gap:8px">
-      <button class="btn btn-primary" onclick="adminAddInvite()">Add invite</button>
-      <button class="btn" onclick="saveWebAppUrl(); saveAdminContact();">Save URL</button>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <button class="btn btn-primary" onclick="adminCreateUser()">Create User (PIN)</button>
+      <button class="btn" onclick="saveWebAppUrl()">Save URL</button>
       <button class="btn" onclick="closeAdmin()">Close</button>
     </div>
     <hr style="margin:12px 0">
@@ -522,9 +570,29 @@ function applyTheme(t){
 function toggleTheme(){ theme = theme==='dark'?'light':'dark'; applyTheme(theme); }
 applyTheme(theme);
 
-// Invite / auth state
-let INVITE_TOKEN = null;
+/* ══════════════════════════════════
+   AUTHENTICATION (PIN-based)
+══════════════════════════════════ */
+let USER_PIN = null;
+let USER_NAME = '';
+let USER_EMAIL = '';
+let USER_ACTIVITIES = [];
 let isAuthorized = false;
+
+function getWebAppUrl(){ 
+  try{ return localStorage.getItem('nck_webapp_url') || ''; }catch(e){ return ''; } 
+}
+
+function saveWebAppUrl(){ 
+  const v = document.getElementById('webAppUrlInput').value.trim(); 
+  try{ 
+    if(v) localStorage.setItem('nck_webapp_url', v); 
+    else localStorage.removeItem('nck_webapp_url'); 
+    document.getElementById('adminResult').textContent = 'Saved.' 
+  }catch(e){ 
+    document.getElementById('adminResult').textContent = 'Save failed.' 
+  } 
+}
 
 function getQueryParam(key){
   try{const params=new URLSearchParams(window.location.search);return params.get(key);}catch(e){return null}
@@ -968,27 +1036,317 @@ function cycleState(id){
   if(!isAuthorized){ showPublicBlockMessage(); return; }
   const cur=states[id]||'none';
   if(cur==='done') return; // LOCKED — done is final
-  states[id]=cur==='none'?'progress':'done';
-  save();render();
-  // persist to server so invite restores across browsers
-  try{ if(INVITE_TOKEN) saveStatesToServer(); }catch(e){}
+  const newState = cur==='none'?'progress':'done';
+  states[id] = newState;
+  save();
+  
+  // Log activity to server
+  const [wi, si, ti] = id.split('_').map(Number);
+  const topic = weeks[wi].sections[si].topics[ti];
+  logActivityToServer(topic.name, newState);
+  
+  render();
+  // persist to server
+  try{ if(isAuthorized) saveStatesToServer(); }catch(e){}
+}
+
+async function logActivityToServer(topicName, state){
+  if(!isAuthorized || !USER_PIN) return;
+  const url = getWebAppUrl();
+  if(!url) return;
+  
+  try{
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: 'log_activity',
+        pin: USER_PIN,
+        topic: topicName,
+        state: state
+      })
+    });
+    
+    if(!res.ok) return;
+    const j = await res.json();
+    if(j && j.ok){
+      USER_ACTIVITIES = j.activities || [];
+    }
+  }catch(e){
+    console.warn('Failed to log activity:', e);
+  }
 }
 
 /* ══════════════════════════════════
-   PIN MODAL
+   LOGIN MODAL
 ══════════════════════════════════ */
-const PIN='1234';
-let pin='';
-function openPinModal(){pin='';updateDots();document.getElementById('pinError').textContent='';document.getElementById('pinModal').classList.add('show');}
-function closePinModal(){document.getElementById('pinModal').classList.remove('show');pin='';}
-function pinPress(d){if(pin.length>=4)return;pin+=d;updateDots();if(pin.length===4){setTimeout(()=>{if(pin===PIN){states={};save();closePinModal();render();}else{document.getElementById('pinError').textContent='Incorrect PIN. Try again.';pin='';updateDots();}},200);}}
-function pinDel(){pin=pin.slice(0,-1);updateDots();document.getElementById('pinError').textContent='';}
-function updateDots(){for(let i=0;i<4;i++)document.getElementById('dot'+i).classList.toggle('filled',i<pin.length);}
-document.getElementById('pinModal').addEventListener('click',e=>{if(e.target.id==='pinModal')closePinModal();});
+let loginPin = '';
+function openLoginModal(){ 
+  loginPin = ''; 
+  updateLoginPinDots(); 
+  document.getElementById('loginPinError').textContent = ''; 
+  document.getElementById('loginModal').classList.add('show'); 
+}
+function closeLoginModal(){ 
+  document.getElementById('loginModal').classList.remove('show'); 
+  loginPin = ''; 
+}
+function loginPinPress(d){ 
+  if(loginPin.length >= 6) return; 
+  loginPin += d; 
+  updateLoginPinDots(); 
+  if(loginPin.length === 6){ 
+    setTimeout(() => validatePinLogin(), 200); 
+  } 
+}
+function loginPinDel(){ 
+  loginPin = loginPin.slice(0, -1); 
+  updateLoginPinDots(); 
+  document.getElementById('loginPinError').textContent = ''; 
+}
+function updateLoginPinDots(){
+  for(let i=0; i<6; i++){
+    const dot = document.getElementById('loginDot' + i);
+    if(dot) dot.classList.toggle('filled', i < loginPin.length);
+  }
+}
+document.getElementById('loginModal').addEventListener('click', e => {
+  if(e.target.id === 'loginModal') closeLoginModal();
+});
+
+async function validatePinLogin(){
+  const url = getWebAppUrl();
+  if(!url){
+    document.getElementById('loginPinError').textContent = 'Web App URL not configured.';
+    return;
+  }
+  
+  try{
+    const res = await fetch(url + '?pin=' + encodeURIComponent(loginPin));
+    if(!res.ok) throw new Error('Server error');
+    const j = await res.json();
+    
+    if(j && j.ok){
+      // Login successful
+      USER_PIN = loginPin;
+      USER_NAME = j.name || '';
+      USER_EMAIL = j.email || '';
+      USER_ACTIVITIES = j.activities || [];
+      isAuthorized = true;
+      
+      // Save PIN to localStorage
+      try{ localStorage.setItem('nck_user_pin', USER_PIN); }catch(e){}
+      
+      // Restore states if present
+      if(j.states){
+        try{
+          let decoded = null;
+          if(typeof LZString !== 'undefined') decoded = LZString.decompressFromBase64(j.states);
+          if(!decoded){ try{ decoded = atob(j.states); }catch(e){} }
+          if(decoded){ states = JSON.parse(decoded); save(); }
+        }catch(e){}
+      }
+      
+      closeLoginModal();
+      updateUIAfterLogin();
+      render();
+    }else{
+      document.getElementById('loginPinError').textContent = 'Invalid PIN. Try again.';
+      loginPin = '';
+      updateLoginPinDots();
+    }
+  }catch(e){
+    document.getElementById('loginPinError').textContent = 'Connection error. Check Web App URL.';
+    console.error(e);
+  }
+}
+
+function logout(){
+  USER_PIN = null;
+  USER_NAME = '';
+  USER_EMAIL = '';
+  USER_ACTIVITIES = [];
+  isAuthorized = false;
+  try{ localStorage.removeItem('nck_user_pin'); }catch(e){}
+  updateUIAfterLogout();
+  render();
+  showPublicBanner();
+}
+
+function updateUIAfterLogin(){
+  document.getElementById('loginBtn').style.display = 'none';
+  document.getElementById('activitiesBtn').style.display = 'inline-flex';
+  document.getElementById('changePinBtn').style.display = 'inline-flex';
+  document.getElementById('logoutBtn').style.display = 'inline-flex';
+  document.getElementById('publicBanner').style.display = 'none';
+}
+
+function updateUIAfterLogout(){
+  document.getElementById('loginBtn').style.display = 'inline-flex';
+  document.getElementById('activitiesBtn').style.display = 'none';
+  document.getElementById('changePinBtn').style.display = 'none';
+  document.getElementById('logoutBtn').style.display = 'none';
+}
+
 
 /* ══════════════════════════════════
-   EXPAND / COLLAPSE
+   RESET (Clear all progress - PIN protected)
 ══════════════════════════════════ */
+const RESET_PIN = '1234';
+let resetPin = '';
+function openPinModal(){ 
+  resetPin = ''; 
+  updateResetDots(); 
+  document.getElementById('pinError').textContent = ''; 
+  document.getElementById('pinModal').classList.add('show'); 
+}
+function closePinModal(){ 
+  document.getElementById('pinModal').classList.remove('show'); 
+  resetPin = ''; 
+}
+function pinPress(d){ 
+  if(resetPin.length >= 4) return; 
+  resetPin += d; 
+  updateResetDots(); 
+  if(resetPin.length === 4){ 
+    setTimeout(() => {
+      if(resetPin === RESET_PIN){ 
+        states = {}; 
+        save(); 
+        closePinModal(); 
+        render(); 
+      }else{ 
+        document.getElementById('pinError').textContent = 'Incorrect PIN. Try again.'; 
+        resetPin = ''; 
+        updateResetDots(); 
+      }
+    }, 200); 
+  } 
+}
+function pinDel(){ 
+  resetPin = resetPin.slice(0, -1); 
+  updateResetDots(); 
+  document.getElementById('pinError').textContent = ''; 
+}
+function updateResetDots(){ 
+  for(let i=0; i<4; i++) 
+    document.getElementById('dot' + i).classList.toggle('filled', i < resetPin.length); 
+}
+document.getElementById('pinModal').addEventListener('click', e => {
+  if(e.target.id === 'pinModal') closePinModal();
+});
+
+/* ══════════════════════════════════
+   ACTIVITIES & PIN MANAGEMENT
+══════════════════════════════════ */
+async function openActivitiesModal(){
+  if(!isAuthorized) return;
+  document.getElementById('activitiesModal').classList.add('show');
+  renderActivitiesContent();
+}
+
+function renderActivitiesContent(){
+  if(USER_ACTIVITIES.length === 0){
+    document.getElementById('activitiesContent').innerHTML = '<div style="font-size:12px;color:var(--text2);padding:20px;text-align:center">No activities recorded yet.</div>';
+    return;
+  }
+  
+  let html = '<table style="width:100%;font-size:11px;border-collapse:collapse">';
+  html += '<tr style="border-bottom:1px solid var(--border2)"><th style="text-align:left;padding:8px">Topic</th><th style="text-align:left;padding:8px">Action</th><th style="text-align:right;padding:8px">Time</th></tr>';
+  
+  USER_ACTIVITIES.slice(-50).reverse().forEach(act => {
+    const date = new Date(act.timestamp);
+    const timeStr = date.toLocaleString();
+    const actionEmoji = act.state === 'done' ? '✓' : act.state === 'progress' ? '›' : '○';
+    html += `<tr style="border-bottom:0.5px solid var(--border)">
+      <td style="padding:8px;color:var(--text2)">${act.topic}</td>
+      <td style="padding:8px;color:var(--text3)">${actionEmoji} ${act.state}</td>
+      <td style="padding:8px;text-align:right;color:var(--text3)">${timeStr}</td>
+    </tr>`;
+  });
+  
+  html += '</table>';
+  document.getElementById('activitiesContent').innerHTML = html;
+}
+
+function exportActivitiesCSV(){
+  let csv = 'Topic,Action,Timestamp\n';
+  USER_ACTIVITIES.forEach(act => {
+    csv += `"${act.topic}","${act.state}","${act.timestamp}"\n`;
+  });
+  
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `activities_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+let changePinOldPin = '';
+let changePinNewPin = '';
+let changePinStep = 0;
+
+function openChangePinModal(){
+  if(!isAuthorized) return;
+  changePinOldPin = '';
+  changePinNewPin = '';
+  changePinStep = 0;
+  updateChangePinDisplay();
+  showChangePinPrompt();
+}
+
+function showChangePinPrompt(){
+  const msg = changePinStep === 0 
+    ? 'Enter your CURRENT PIN:'
+    : 'Enter your NEW PIN (6 digits):';
+  
+  const newPin = prompt(msg, '');
+  if(newPin === null) return;
+  
+  if(changePinStep === 0){
+    changePinOldPin = newPin;
+    changePinStep = 1;
+    showChangePinPrompt();
+  }else if(changePinStep === 1){
+    changePinNewPin = newPin;
+    submitChangePin();
+  }
+}
+
+async function submitChangePin(){
+  const url = getWebAppUrl();
+  if(!url) { alert('Web App URL not configured.'); return; }
+  
+  try{
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: 'change_pin',
+        pin: changePinOldPin,
+        newPin: changePinNewPin
+      })
+    });
+    
+    if(!res.ok) throw new Error('Server error');
+    const j = await res.json();
+    
+    if(j && j.ok){
+      alert('✓ PIN changed successfully. Please login again with your new PIN.');
+      logout();
+      openLoginModal();
+    }else{
+      alert('Error: ' + (j.err || 'Unknown error'));
+    }
+  }catch(e){
+    alert('Connection error: ' + e.message);
+  }
+}
+
+function updateChangePinDisplay(){}
+
 const openSet=new Set([0]);
 function expandAll(){weeks.forEach((_,i)=>openSet.add(i));render();}
 function collapseAll(){openSet.clear();render();}
@@ -1136,31 +1494,57 @@ function openAdmin(){
   if(!m) return;
   try{
     document.getElementById('webAppUrlInput').value = localStorage.getItem('nck_webapp_url') || '';
-    document.getElementById('adminContact').value = localStorage.getItem('nck_admin_contact') || '';
   }catch(e){}
   m.classList.add('show');
 }
 function closeAdmin(){ document.getElementById('adminModal').classList.remove('show'); }
-function saveWebAppUrl(){ const v = document.getElementById('webAppUrlInput').value.trim(); try{ if(v) localStorage.setItem('nck_webapp_url', v); else localStorage.removeItem('nck_webapp_url'); document.getElementById('adminResult').textContent = 'Saved.' }catch(e){ document.getElementById('adminResult').textContent = 'Save failed.' } }
 
-function getWebAppUrl(){ try{ return localStorage.getItem('nck_webapp_url') || ''; }catch(e){ return ''; } }
-
-function saveAdminContact(){ try{ const v=document.getElementById('adminContact').value.trim(); if(v) localStorage.setItem('nck_admin_contact', v); else localStorage.removeItem('nck_admin_contact'); }catch(e){} }
-function getAdminContact(){ try{ return localStorage.getItem('nck_admin_contact') || ''; }catch(e){ return ''; } }
-
-function showPublicBanner(){
-  const b=document.getElementById('publicBanner'); if(!b) return;
-  const contact=getAdminContact();
-  let html = '';
-  if(contact) html += `Contact the admin for a personalised invite — <a href="mailto:${contact}">${contact}</a>`;
-  else html += 'Contact the admin for a personalised invite to unlock full access.';
-  // only show restore if they have a local backup but no valid token
-  try{ if(localStorage.getItem('nck_v4_backup')) html += ' <button class="btn" style="margin-left:12px" onclick="restoreLocal()">Restore local copy</button>'; }catch(e){}
-  b.innerHTML = html;
-  b.style.display='block';
+function showPublicBlockMessage(){ 
+  const toast = document.getElementById('badgeToast'); 
+  if(!toast) return; 
+  document.getElementById('badgeToastTitle').textContent = 'Restricted'; 
+  document.getElementById('badgeToastDesc').textContent = 'Please login to interact with the timetable.'; 
+  document.getElementById('badgeToastIcon').textContent = '🔒'; 
+  toast.style.display = 'flex'; 
+  setTimeout(() => toast.style.display = 'none', 3000); 
 }
 
-function showPublicBlockMessage(){ const toast=document.getElementById('badgeToast'); if(!toast) return; document.getElementById('badgeToastTitle').textContent='Restricted'; document.getElementById('badgeToastDesc').textContent='Full interactivity requires a personalised invite. Contact the admin.'; document.getElementById('badgeToastIcon').textContent='🔒'; toast.style.display='flex'; setTimeout(()=>toast.style.display='none',3000); }
+function showPublicBanner(){
+  const b = document.getElementById('publicBanner'); 
+  if(!b) return;
+  b.style.display = 'block';
+}
+
+async function adminCreateUser(){
+  const url = getWebAppUrl();
+  if(!url){ document.getElementById('adminResult').textContent = 'Set the Web App URL first.'; return; }
+  
+  const email = document.getElementById('adminUserEmail').value.trim();
+  const name = document.getElementById('adminUserName').value.trim();
+  if(!email){ document.getElementById('adminResult').textContent = 'Enter user email.'; return; }
+  
+  const secret = prompt('Enter owner secret (keeps private)');
+  if(!secret) { document.getElementById('adminResult').textContent = 'Cancelled.'; return; }
+  
+  document.getElementById('adminResult').textContent = 'Creating...';
+  try{
+    const res = await fetch(url, { 
+      method:'POST', 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ action: 'create_user', secret, email, name })
+    });
+    if(!res.ok){ const text = await res.text(); throw new Error(`Server ${res.status}: ${text}`); }
+    
+    const j = await res.json();
+    if(j.ok){ 
+      document.getElementById('adminResult').innerHTML = `✓ User created!<br><strong>PIN: ${j.pin}</strong><br><strong>Name:</strong> ${j.name}<br><strong>Email:</strong> ${j.email}<br><br>Share the PIN with the user securely.`; 
+    }else {
+      document.getElementById('adminResult').textContent = 'Error: ' + (j.err || 'unknown');
+    }
+  }catch(e){ 
+    document.getElementById('adminResult').textContent = 'Request failed: ' + e.message 
+  }
+}
 
 function restoreLocal(){
   try{
@@ -1170,7 +1554,10 @@ function restoreLocal(){
     if(obj && obj.states){ states = obj.states; save(); render();
       document.getElementById('badgeToastTitle').textContent='Restored';
       document.getElementById('badgeToastDesc').textContent='Local progress restored in this browser.';
-      document.getElementById('badgeToastIcon').textContent='🛠'; const toast=document.getElementById('badgeToast'); toast.style.display='flex'; setTimeout(()=>toast.style.display='none',3000);
+      document.getElementById('badgeToastIcon').textContent='🛠'; 
+      const toast=document.getElementById('badgeToast'); 
+      toast.style.display='flex'; 
+      setTimeout(()=>toast.style.display='none',3000);
     }else{ alert('Backup format invalid.'); }
   }catch(e){ alert('Restore failed: '+e.message); }
 }
@@ -1180,100 +1567,108 @@ function exportState(){
     const raw = JSON.stringify(states);
     const compressed = (typeof LZString !== 'undefined')? LZString.compressToBase64(raw) : btoa(raw);
     document.getElementById('backupExport').value = compressed;
-    document.getElementById('badgeToastTitle').textContent='Exported'; document.getElementById('badgeToastDesc').textContent='Copied compressed state to box.'; document.getElementById('badgeToastIcon').textContent='📤'; const toast=document.getElementById('badgeToast'); toast.style.display='flex'; setTimeout(()=>toast.style.display='none',2500);
+    document.getElementById('badgeToastTitle').textContent='Exported'; 
+    document.getElementById('badgeToastDesc').textContent='Copied compressed state to box.'; 
+    document.getElementById('badgeToastIcon').textContent='📤'; 
+    const toast=document.getElementById('badgeToast'); 
+    toast.style.display='flex'; 
+    setTimeout(()=>toast.style.display='none',2500);
   }catch(e){ alert('Export failed: '+e.message); }
 }
 
 function importState(){
   try{
-    const v = document.getElementById('backupExport').value.trim(); if(!v){ alert('Paste exported compressed string into the box first.'); return; }
+    const v = document.getElementById('backupExport').value.trim(); 
+    if(!v){ alert('Paste exported compressed string into the box first.'); return; }
     let decoded = null;
     try{ if(typeof LZString !== 'undefined') decoded = LZString.decompressFromBase64(v); }catch(e){}
     if(!decoded){ try{ decoded = atob(v); }catch(e){} }
     if(!decoded){ alert('Decoding failed. Ensure this is a valid exported string.'); return; }
-    states = JSON.parse(decoded); save(); render();
-    document.getElementById('badgeToastTitle').textContent='Imported'; document.getElementById('badgeToastDesc').textContent='Progress imported into this browser.'; document.getElementById('badgeToastIcon').textContent='📥'; const toast=document.getElementById('badgeToast'); toast.style.display='flex'; setTimeout(()=>toast.style.display='none',2500);
+    states = JSON.parse(decoded); 
+    save(); 
+    render();
+    document.getElementById('badgeToastTitle').textContent='Imported'; 
+    document.getElementById('badgeToastDesc').textContent='Progress imported into this browser.'; 
+    document.getElementById('badgeToastIcon').textContent='📥'; 
+    const toast=document.getElementById('badgeToast'); 
+    toast.style.display='flex'; 
+    setTimeout(()=>toast.style.display='none',2500);
   }catch(e){ alert('Import failed: '+e.message); }
 }
 
 function clearBackupExport(){ document.getElementById('backupExport').value=''; }
 
-async function adminAddInvite(){
-  const url = getWebAppUrl();
-  if(!url){ document.getElementById('adminResult').textContent = 'Set the Web App URL first.'; return; }
-  const email = document.getElementById('inviteEmail').value.trim();
-  const name = document.getElementById('inviteName').value.trim();
-  if(!email){ document.getElementById('adminResult').textContent = 'Enter friend email.'; return; }
-  const secret = prompt('Enter owner secret (keeps private)');
-  if(!secret) { document.getElementById('adminResult').textContent = 'Cancelled.'; return; }
-  document.getElementById('adminResult').textContent = 'Adding...';
-  try{
-    const res = await fetch(url, { method:'POST', body: new URLSearchParams({ secret, email, name }) });
-    if(!res.ok){ const text = await res.text(); throw new Error(`Server ${res.status}: ${text}`); }
-    const j = await res.json();
-    if(j.ok){ const token = j.token; const link = buildInviteLink(token); document.getElementById('adminResult').innerHTML = `Invite created. Token: <strong>${token}</strong><br><a href="${link}" target="_blank">Open invite link</a>`; }
-    else {
-      let msg = 'Error: ' + (j.err||'unknown');
-      if(j.err === 'email_failed' && j.emailError) msg += ` (${j.emailError})`;
-      if(j.expectedSheet) msg += ` (expected sheet: ${j.expectedSheet})`;
-      if(j.availableSheets) msg += `; available sheets: ${j.availableSheets.join(', ')}`;
-      document.getElementById('adminResult').textContent = msg;
-    }
-  }catch(e){ document.getElementById('adminResult').textContent = 'Request failed: ' + e.message }
-}
-
-function buildInviteLink(token){ const base = location.href.split('?')[0]; return base + '?invite=' + encodeURIComponent(token); }
-async function validateInviteWithServer(){
-  isAuthorized = false;
-  if(!INVITE_TOKEN) return false;
-  const url = getWebAppUrl(); if(!url) return false;
-  try{
-    const res = await fetch(url + '?token=' + encodeURIComponent(INVITE_TOKEN));
-    if(!res.ok) return false;
-    const j = await res.json();
-    if(j && j.ok){
-      isAuthorized = true;
-      // restore states if present
-      if(j.states){
-        try{
-          const s = j.states||'';
-          let decoded = null;
-          try{ if(typeof LZString !== 'undefined') decoded = LZString.decompressFromBase64(s); }catch(e){}
-          if(!decoded){ try{ decoded = atob(s); }catch(e){} }
-          if(decoded){ states = JSON.parse(decoded); save(); }
-        }catch(e){}
-      }
-      return true;
-    }
-    return false;
-  }catch(e){ return false; }
-}
-
 async function saveStatesToServer(){
-  const url = getWebAppUrl(); if(!url || !INVITE_TOKEN) return;
+  if(!isAuthorized || !USER_PIN) return;
+  const url = getWebAppUrl(); 
+  if(!url) return;
+  
   try{
-    // compress states to reduce size
     const raw = JSON.stringify(states);
     const compressed = (typeof LZString !== 'undefined')? LZString.compressToBase64(raw) : btoa(raw);
-    const MAX_COMPRESSED = 30000; // client-side limit
+    const MAX_COMPRESSED = 30000;
     if(compressed.length > MAX_COMPRESSED){
-      document.getElementById('badgeToastTitle').textContent='Save blocked';
-      document.getElementById('badgeToastDesc').textContent='Progress data too large to save to server.';
-      document.getElementById('badgeToastIcon').textContent='⚠️';
-      const toast=document.getElementById('badgeToast'); toast.style.display='flex'; setTimeout(()=>toast.style.display='none',3500);
+      console.warn('States too large to save');
       return;
     }
-    await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'save_states', token:INVITE_TOKEN, states: compressed }) });
+    
+    await fetch(url, { 
+      method:'POST', 
+      headers:{'Content-Type':'application/json'}, 
+      body: JSON.stringify({ action:'save_states', pin: USER_PIN, states: compressed }) 
+    });
   }catch(e){ console.warn('Save states failed',e); }
 }
 
-// Init: load local state, check invite token, validate with server and render
+
+// Init: load local state, check saved PIN, restore session and render
 (async function init(){
   load();
-  const q = getQueryParam('invite');
-  if(q){ INVITE_TOKEN = q; }
-  const ok = await validateInviteWithServer();
-  if(!ok){ showPublicBanner(); }
+  
+  // Try to auto-login with saved PIN
+  const savedPin = localStorage.getItem('nck_user_pin');
+  if(savedPin){
+    USER_PIN = savedPin;
+    const url = getWebAppUrl();
+    if(url){
+      try{
+        const res = await fetch(url + '?pin=' + encodeURIComponent(USER_PIN));
+        if(res.ok){
+          const j = await res.json();
+          if(j && j.ok){
+            USER_NAME = j.name || '';
+            USER_EMAIL = j.email || '';
+            USER_ACTIVITIES = j.activities || [];
+            isAuthorized = true;
+            updateUIAfterLogin();
+            
+            // Restore states if present
+            if(j.states){
+              try{
+                let decoded = null;
+                if(typeof LZString !== 'undefined') decoded = LZString.decompressFromBase64(j.states);
+                if(!decoded){ try{ decoded = atob(j.states); }catch(e){} }
+                if(decoded){ states = JSON.parse(decoded); save(); }
+              }catch(e){}
+            }
+          }else{
+            // PIN invalid - clear it
+            localStorage.removeItem('nck_user_pin');
+            updateUIAfterLogout();
+          }
+        }
+      }catch(e){
+        console.warn('Auto-login failed:', e);
+      }
+    }
+  }else{
+    updateUIAfterLogout();
+  }
+  
+  if(!isAuthorized){
+    showPublicBanner();
+  }
+  
   render();
 })();
 </script>
